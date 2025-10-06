@@ -1,6 +1,17 @@
 # ChessMinitel
 
 
+popipopipo
+
+# Pour compiler :
+
+(pour le moment)
+
+cd build
+cmake ..
+make
+./bin/testAff
+
 
 ## Getting started
 
