@@ -5,7 +5,7 @@ using namespace std;
 #include <iostream>
 #include "Piece.h"
 
-class Cheval : public Piece {
+class Cavalier : public Piece {
   public:
     
 };
