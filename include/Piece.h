@@ -1,21 +1,25 @@
 #ifndef PIECE_H
 #define PIECE_H
 
-//#include <Arduino.h>  // Nécessaire pour utiliser String, etc.
-using namespace std;
-
+#include "Game.h"
 #include <iostream>
 
-
-
+using namespace std;
 
 class Piece {
+
+  private:
+
   public:
+    Game* game;
     string nom;
     int x, y;
+    int appartenancePlayer;
 
-    Piece(string n, int posX, int posY);
+    Piece(Game* game, string n, int posX, int posY, int appartenancePlayer);
+
     void deplacer(int newX, int newY);
+    virtual CoupleList* availableMoves(Plateau board);
     void afficher();
 };
 

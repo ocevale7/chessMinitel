@@ -1,9 +1,11 @@
 #include "../include/Piece.h"
 
-Piece::Piece(string n, int posX, int posY) {
+Piece::Piece(Game* game, string n, int posX, int posY, int player) {
+  game = game;
   nom = n;
   x = posX;
   y = posY;
+  appartenancePlayer = player;
 }
 
 void Piece::deplacer(int newX, int newY) {
