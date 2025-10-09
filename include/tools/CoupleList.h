@@ -3,6 +3,12 @@
 
 struct Couple {
     int x,y;
+
+    Couple(int x, int y) : x(x), y(y) {}
+
+    Couple operator+(const Couple& other) const {
+        return Couple(x + other.x, y + other.y);
+    }
 };
 
 struct Node {

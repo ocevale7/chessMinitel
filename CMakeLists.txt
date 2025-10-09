@@ -3,7 +3,18 @@ project(CMakeSFMLProject LANGUAGES CXX)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-add_executable(testAff tests/testAffichage.cpp src/Piece.cpp src/Plateau.cpp src/Game.cpp)
+file(GLOB PIECES_SRC "src/pieces/*.cpp")
+file(GLOB TOOLS_SRC "src/tools/*.cpp")
+
+add_executable(
+    testAff
+    tests/testAffichage.cpp
+    src/Piece.cpp
+    src/Plateau.cpp
+    src/Game.cpp
+    ${PIECES_SRC}
+    ${TOOLS_SRC}
+)
 
 target_include_directories(testAff PRIVATE include)
 target_compile_features(testAff PRIVATE cxx_std_20)
