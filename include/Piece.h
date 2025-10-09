@@ -16,14 +16,14 @@ class Piece {
   public:
     Game* game;
     string nom;
-    int x, y;
+    Couple pos;
     int appartenancePlayer;
 
-    Piece(Game* game, string n, int posX, int posY, int appartenancePlayer);
+    Piece(Game* game, string n, Couple pos, int appartenancePlayer);
     virtual ~Piece();
 
-    void deplacer(int newX, int newY);
-    virtual CoupleList* availableMoves(Plateau board) = 0;
+    void deplacer(Couple newPos);
+    virtual CoupleList* availableMoves(Plateau* board) = 0;
     void afficher();
 };
 

@@ -2,19 +2,21 @@
 #define GAME_H
 
 #include "tools/CoupleList.h"
-
-class Plateau;
-class Piece;
+#include "Plateau.h"
+#include "Piece.h"
+#include "pieces/pieces.h"
 
 class Game {
     private:
 
     public:
 
+        Plateau* board;
+
         Game();
 
         void start();
-        bool checkMove(Plateau* p, Couple old, Couple young);
+        bool checkMove(Couple old, Couple young);
 };
 
 #endif

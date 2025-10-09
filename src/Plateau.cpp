@@ -1,6 +1,8 @@
 #include "../include/Plateau.h"
 
 Plateau::Plateau(){
+
+    
 }
 
 void Plateau::afficher(){

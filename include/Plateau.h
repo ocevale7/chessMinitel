@@ -6,20 +6,22 @@ using namespace std;
 
 class Plateau {
     /*
-                        R_T R_C R_F R_D R_R R_F R_C R_T            
-                        R_P R_P R_P R_P R_P R_P R_P R_P            
-                        .   .   .   .   .   .   .   .              
-            G_T G_P .   .   .   .   .   .   .   .   .   .   B_P B_T
-            G_C G_P .   .   .   .   .   .   .   .   .   .   B_P B_C
-            G_F G_P .   .   .   .   .   .   .   .   .   .   B_P B_F
-            G_D G_P .   .   .   .   .   .   .   .   .   .   B_P B_D
-            G_R G_P .   .   .   .   .   .   .   .   .   .   B_P B_R
-            G_F G_P .   .   .   .   .   .   .   .   .   .   B_P B_F
-            G_C G_P .   .   .   .   .   .   .   .   .   .   B_P B_C
-            G_T G_P .   .   .   .   .   .   .   .   .   .   B_P B_T
-                        .   .   .   .   .   .   .   .              
-                        Y_P Y_P Y_P Y_P Y_P Y_P Y_P Y_P            
-                        Y_T Y_C Y_F Y_D Y_R Y_F Y_C Y_T            
+              0   1   2   3   4   5   6   7   8   9   10  11  12  13
+              
+    0                     R_T R_C R_F R_D R_R R_F R_C R_T            
+    1                     R_P R_P R_P R_P R_P R_P R_P R_P            
+    2                     .   .   .   .   .   .   .   .              
+    3         G_T G_P .   .   .   .   .   .   .   .   .   .   B_P B_T
+    4         G_C G_P .   .   .   .   .   .   .   .   .   .   B_P B_C
+    5         G_F G_P .   .   .   .   .   .   .   .   .   .   B_P B_F
+    6         G_D G_P .   .   .   .   .   .   .   .   .   .   B_P B_D
+    7         G_R G_P .   .   .   .   .   .   .   .   .   .   B_P B_R
+    8         G_F G_P .   .   .   .   .   .   .   .   .   .   B_P B_F
+    9         G_C G_P .   .   .   .   .   .   .   .   .   .   B_P B_C
+    10        G_T G_P .   .   .   .   .   .   .   .   .   .   B_P B_T
+    11                    .   .   .   .   .   .   .   .              
+    12                    Y_P Y_P Y_P Y_P Y_P Y_P Y_P Y_P            
+    13                    Y_T Y_C Y_F Y_D Y_R Y_F Y_C Y_T            
                 
     */
     public :

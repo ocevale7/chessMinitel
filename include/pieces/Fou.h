@@ -6,5 +6,7 @@ using namespace std;
 
 class Fou : public Piece {
   public:
-    Couple* availableMoves(Plateau board) override;
+    Fou(Game* game, Couple pos, int appartenancePlayer);
+
+    CoupleList* availableMoves(Plateau* board) override;
 };
