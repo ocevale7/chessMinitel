@@ -22,3 +22,6 @@ void Piece::afficher() {
 // Serial.println(y);
   cout << "P";
 }
+
+Piece::~Piece() {}
+
