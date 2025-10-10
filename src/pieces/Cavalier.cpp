@@ -11,7 +11,7 @@ CoupleList* Cavalier::availableMoves(Plateau* board) {
     Couple newPos = pos + Couple(2, 1);
     bool ok = true;
 
-    if (newPos.x < 14 && newPos.y < 14) {
+    if ((newPos.x < 14 && newPos.x > 0 && newPos.y < 11 && newPos.y > 2) || (newPos.x < 11 && newPos.x > 2 && ((newPos.y < 3 && newPos.y > -1) || (newPos.y < 14 && newPos.y > 10)))) {
         if (board->plateau[newPos.y][newPos.x] != nullptr) {
             ok = board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer;
         }
@@ -23,7 +23,7 @@ CoupleList* Cavalier::availableMoves(Plateau* board) {
     newPos = pos + Couple(2, -1);
     ok = true;
 
-    if (newPos.x < 14 && newPos.y > -1) {
+    if ((newPos.x < 14 && newPos.x > 0 && newPos.y < 11 && newPos.y > 2) || (newPos.x < 11 && newPos.x > 2 && ((newPos.y < 3 && newPos.y > -1) || (newPos.y < 14 && newPos.y > 10)))) {
         if (board->plateau[newPos.y][newPos.x] != nullptr) {
             ok = board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer;
         }
@@ -36,7 +36,7 @@ CoupleList* Cavalier::availableMoves(Plateau* board) {
     newPos = pos + Couple(-2, 1);
     ok = true;
 
-    if (newPos.x > -1 && newPos.y < 14) {
+    if ((newPos.x < 14 && newPos.x > 0 && newPos.y < 11 && newPos.y > 2) || (newPos.x < 11 && newPos.x > 2 && ((newPos.y < 3 && newPos.y > -1) || (newPos.y < 14 && newPos.y > 10)))) {
         if (board->plateau[newPos.y][newPos.x] != nullptr) {
             ok = board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer;
         }
@@ -48,7 +48,7 @@ CoupleList* Cavalier::availableMoves(Plateau* board) {
     newPos = pos + Couple(-2, -1);
     ok = true;
 
-    if (newPos.x > -1 && newPos.y > -1) {
+    if ((newPos.x < 14 && newPos.x > 0 && newPos.y < 11 && newPos.y > 2) || (newPos.x < 11 && newPos.x > 2 && ((newPos.y < 3 && newPos.y > -1) || (newPos.y < 14 && newPos.y > 10)))) {
         if (board->plateau[newPos.y][newPos.x] != nullptr) {
             ok = board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer;
         }
@@ -60,7 +60,7 @@ CoupleList* Cavalier::availableMoves(Plateau* board) {
     newPos = pos + Couple(1, 2);
     ok = true;
 
-    if (newPos.x < 14 && newPos.y < 14) {
+    if ((newPos.x < 14 && newPos.x > 0 && newPos.y < 11 && newPos.y > 2) || (newPos.x < 11 && newPos.x > 2 && ((newPos.y < 3 && newPos.y > -1) || (newPos.y < 14 && newPos.y > 10)))) {
         if (board->plateau[newPos.y][newPos.x] != nullptr) {
             ok = board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer;
         }
@@ -72,7 +72,7 @@ CoupleList* Cavalier::availableMoves(Plateau* board) {
     newPos = pos + Couple(1, -2);
     ok = true;
 
-    if (newPos.x < 14 && newPos.y > 0) {
+    if ((newPos.x < 14 && newPos.x > 0 && newPos.y < 11 && newPos.y > 2) || (newPos.x < 11 && newPos.x > 2 && ((newPos.y < 3 && newPos.y > -1) || (newPos.y < 14 && newPos.y > 10)))) {
         if (board->plateau[newPos.y][newPos.x] != nullptr) {
             ok = board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer;
         }
@@ -84,7 +84,7 @@ CoupleList* Cavalier::availableMoves(Plateau* board) {
     newPos = pos + Couple(-1, 2);
     ok = true;
 
-    if (newPos.x > 0 && newPos.y < 14) {
+    if ((newPos.x < 14 && newPos.x > 0 && newPos.y < 11 && newPos.y > 2) || (newPos.x < 11 && newPos.x > 2 && ((newPos.y < 3 && newPos.y > -1) || (newPos.y < 14 && newPos.y > 10)))) {
         if (board->plateau[newPos.y][newPos.x] != nullptr) {
             ok = board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer;
         }
@@ -96,7 +96,7 @@ CoupleList* Cavalier::availableMoves(Plateau* board) {
     newPos = pos + Couple(- 1, -2);
     ok = true;
 
-    if (newPos.x > 0 && newPos.y > 0) {
+    if ((newPos.x < 14 && newPos.x > 0 && newPos.y < 11 && newPos.y > 2) || (newPos.x < 11 && newPos.x > 2 && ((newPos.y < 3 && newPos.y > -1) || (newPos.y < 14 && newPos.y > 10)))) {
         if (board->plateau[newPos.y][newPos.x] != nullptr) {
             ok = board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer;
         }
@@ -104,6 +104,14 @@ CoupleList* Cavalier::availableMoves(Plateau* board) {
             coups->add(newPos);
         }
     }
+
+    CoupleList* tmp = coups;
+
+    while(tmp->head != nullptr) {
+        cout<<"("<<tmp->head->data.x<<", "<<tmp->head->data.y<<")";
+        tmp->head = tmp->head->next;
+    }
+    cout<<"\n";
 
     return coups;
 }
