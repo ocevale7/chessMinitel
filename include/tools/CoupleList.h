@@ -18,9 +18,9 @@ struct Node {
 
 class CoupleList {
 
-    Node* head;
-
     public:
+        Node* head;
+
         CoupleList();
 
         void add(int x, int y);

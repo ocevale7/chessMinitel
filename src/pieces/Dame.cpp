@@ -17,14 +17,12 @@ CoupleList* Dame::availableMoves(Plateau* board) {
         if (board->plateau[newPos.y][newPos.x] != nullptr) {
             if (board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer) {
                 if (game->checkMove(pos, newPos)) {
-                    cout<<"1. Coup ajouté (entré dans le if): ("<<newPos.x<<", "<<newPos.y<<")\n";
                     coups->add(newPos);
                 }
             }
             break;
         } else {
             if (game->checkMove(pos, newPos)) {
-                cout<<"1. Coup ajouté : ("<<newPos.x<<", "<<newPos.y<<")\n";
                 coups->add(newPos);
             }
         }
@@ -37,14 +35,12 @@ CoupleList* Dame::availableMoves(Plateau* board) {
         if (board->plateau[newPos.y][newPos.x] != nullptr) {
             if (board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer) {
                 if (game->checkMove(pos, newPos)) {
-                    cout<<"2. Coup ajouté (entré dans le if): ("<<newPos.x<<", "<<newPos.y<<")\n";
                     coups->add(newPos);
                 }
             }
              break;
         } else {
             if (game->checkMove(pos, newPos)) {
-                cout<<"2. Coup ajouté : ("<<newPos.x<<", "<<newPos.y<<")\n";
                 coups->add(newPos);
             }
         }

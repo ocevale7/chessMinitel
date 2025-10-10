@@ -4,62 +4,103 @@
 Cavalier::Cavalier (Game* game, Couple pos, int appartenancePlayer) :
     Piece(game, "Cavalier", pos, appartenancePlayer) {}
 
-CoupleList* Cavalier::availableMoves(Plateau*) {
+CoupleList* Cavalier::availableMoves(Plateau* board) {
 
     CoupleList* coups = new CoupleList();
 
     Couple newPos = pos + Couple(2, 1);
-    if (newPos.x < 14 && newPos.y < 14) {
-        if (game->checkMove(pos, newPos)) {
-            coups->add(newPos);
-        }
-    }
+    bool ok = true;
 
-    newPos = pos + Couple(2, -1);
-    if (pos.x + 2 < 14 && pos.y - 1 > -1) {
-        if (game->checkMove(pos, newPos)) {
+    if (newPos.x < 14 && newPos.y < 14) {
+        if (board->plateau[newPos.y][newPos.x] != nullptr) {
+            ok = board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer;
+        }
+        if (ok && game->checkMove(pos, newPos)) {
             coups->add(newPos);
         }
     }
     
+    newPos = pos + Couple(2, -1);
+    ok = true;
+
+    if (newPos.x < 14 && newPos.y > -1) {
+        if (board->plateau[newPos.y][newPos.x] != nullptr) {
+            ok = board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer;
+        }
+        if (ok && game->checkMove(pos, newPos)) {
+            coups->add(newPos);
+        }
+    }
+    
+    
     newPos = pos + Couple(-2, 1);
-    if (pos.x - 2 > -1 && pos.y + 1 < 14) {
-        if (game->checkMove(pos, newPos)) {
+    ok = true;
+
+    if (newPos.x > -1 && newPos.y < 14) {
+        if (board->plateau[newPos.y][newPos.x] != nullptr) {
+            ok = board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer;
+        }
+        if (ok && game->checkMove(pos, newPos)) {
             coups->add(newPos);
         }
     }
 
     newPos = pos + Couple(-2, -1);
-    if (pos.x - 2 > -1 && pos.y - 1 > -1) {
-        if (game->checkMove(pos, newPos)) {
+    ok = true;
+
+    if (newPos.x > -1 && newPos.y > -1) {
+        if (board->plateau[newPos.y][newPos.x] != nullptr) {
+            ok = board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer;
+        }
+        if (ok && game->checkMove(pos, newPos)) {
             coups->add(newPos);
         }
     }
 
-    newPos = pos + pos + Couple(1, 2);
-    if (pos.x + 1 < 14 && pos.y + 2 < 14) {
-        if (game->checkMove(pos, newPos)) {
+    newPos = pos + Couple(1, 2);
+    ok = true;
+
+    if (newPos.x < 14 && newPos.y < 14) {
+        if (board->plateau[newPos.y][newPos.x] != nullptr) {
+            ok = board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer;
+        }
+        if (ok && game->checkMove(pos, newPos)) {
             coups->add(newPos);
         }
     }
 
     newPos = pos + Couple(1, -2);
-    if (pos.x + 1 < 14 && pos.y - 2 > 0) {
-        if (game->checkMove(pos, newPos)) {
+    ok = true;
+
+    if (newPos.x < 14 && newPos.y > 0) {
+        if (board->plateau[newPos.y][newPos.x] != nullptr) {
+            ok = board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer;
+        }
+        if (ok && game->checkMove(pos, newPos)) {
             coups->add(newPos);
         }
     }
 
     newPos = pos + Couple(-1, 2);
-    if (pos.x - 1 > 0 && pos.y + 2 < 14) {
-        if (game->checkMove(pos, newPos)) {
+    ok = true;
+
+    if (newPos.x > 0 && newPos.y < 14) {
+        if (board->plateau[newPos.y][newPos.x] != nullptr) {
+            ok = board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer;
+        }
+        if (ok && game->checkMove(pos, newPos)) {
             coups->add(newPos);
         }
     }
 
     newPos = pos + Couple(- 1, -2);
-    if (pos.x - 1 > 0 && pos.y - 2 > 0) {
-        if (game->checkMove(pos, newPos)) {
+    ok = true;
+
+    if (newPos.x > 0 && newPos.y > 0) {
+        if (board->plateau[newPos.y][newPos.x] != nullptr) {
+            ok = board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer;
+        }
+        if (ok && game->checkMove(pos, newPos)) {
             coups->add(newPos);
         }
     }
