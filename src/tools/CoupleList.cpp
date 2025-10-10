@@ -1,4 +1,5 @@
 #include "../../include/tools/CoupleList.h"
+#include <ostream>
 
 CoupleList::CoupleList() {
     head = nullptr;
@@ -22,3 +23,10 @@ void CoupleList::add(Couple c) {
     Node* newNode = new Node{c, head};
     head = newNode;
 }
+
+/*
+std::ostream & operator<<(std::ostream &out, const Couple* c) {
+    out<<"("<<c->x<<", "<<c->y<<")";
+    return out;
+}
+*/

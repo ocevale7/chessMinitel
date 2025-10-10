@@ -6,6 +6,8 @@
 #include "Piece.h"
 #include "pieces/pieces.h"
 
+using namespace std;
+
 class Game {
     private:
 

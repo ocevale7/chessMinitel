@@ -1,7 +1,12 @@
 #include "../include/Game.h"
 
 Game::Game() {
+    board = new Plateau();
     this->start();
+    cout<<board->plateau[7][0]->nom<<"\n";
+    cout<<board->plateau[7][0]->pos.x<<",";
+    cout<<board->plateau[7][0]->pos.y<<"\n";
+    board->plateau[7][0]->availableMoves(board);
 }
 
 void Game::start() {
@@ -74,6 +79,6 @@ void Game::start() {
 
 }
 
-bool Game::checkMove(Couple old, Couple young) {
-    return old.x == young.x && old.y == young.y;
+bool Game::checkMove(Couple /*old*/, Couple /*young*/) {
+    return true;
 }
