@@ -3,33 +3,6 @@
 Game::Game() {
     board = new Plateau();
     this->start();
-    cout<<"###################\n";
-    cout<<board->plateau[0][4]->appartenancePlayer<<"\n";
-    cout<<board->plateau[0][4]->nom<<"\n";
-    cout<<board->plateau[0][4]->pos.x<<",";
-    cout<<board->plateau[0][4]->pos.y<<"\n";
-    board->plateau[0][4]->availableMoves(board);
-
-    cout<<"###################\n";
-    cout<<board->plateau[0][9]->appartenancePlayer<<"\n";
-    cout<<board->plateau[0][9]->nom<<"\n";
-    cout<<board->plateau[0][9]->pos.x<<",";
-    cout<<board->plateau[0][9]->pos.y<<"\n";
-    board->plateau[0][9]->availableMoves(board);
-
-    cout<<"###################\n";
-    cout<<board->plateau[13][4]->appartenancePlayer<<"\n";
-    cout<<board->plateau[13][4]->nom<<"\n";
-    cout<<board->plateau[13][4]->pos.x<<",";
-    cout<<board->plateau[13][4]->pos.y<<"\n";
-    board->plateau[13][4]->availableMoves(board);
-
-    cout<<"###################\n";
-    cout<<board->plateau[13][9]->appartenancePlayer<<"\n";
-    cout<<board->plateau[13][9]->nom<<"\n";
-    cout<<board->plateau[13][9]->pos.x<<",";
-    cout<<board->plateau[13][9]->pos.y<<"\n";
-    board->plateau[13][9]->availableMoves(board);
 }
 
 void Game::start() {
@@ -40,7 +13,7 @@ void Game::start() {
         board->plateau[1][i]  = new Pion(this, Couple(i, 1), 0);
         board->plateau[12][i] = new Pion(this, Couple(i, 12), 1);
         board->plateau[i][1]  = new Pion(this, Couple(1, i), 2);
-        board->plateau[i][12] = new Pion(this, Couple(12, 1), 3);
+        board->plateau[i][12] = new Pion(this, Couple(12, i), 3);
     }
 
     // On place les tours

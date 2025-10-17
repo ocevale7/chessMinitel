@@ -1,8 +1,11 @@
 #include "../include/Plateau.h"
 
 Plateau::Plateau(){
-
-    
+    for(int i = 0; i < width; i++) {
+        for(int j = 0; j < height; j++) {
+            plateau[i][j] = nullptr;
+        }
+    }
 }
 
 void Plateau::afficher(){

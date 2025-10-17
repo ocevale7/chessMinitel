@@ -8,12 +8,17 @@ CoupleList* Dame::availableMoves(Plateau* board) {
     CoupleList* coups = new CoupleList();
 
     Couple newPos = pos;
+    int posCurrent;
 
+    // Verticales
 
-    // Parcous verticale de la pos vers le 14
-    int limit = (pos.x >= 3 && pos.x <= 10) ? 14 - pos.y: 11 - pos.y;
-    for(int i = 1; i < limit; i++) {
-        newPos = pos + Couple(0, i);
+    // Direction : Haut
+
+    int limit = (pos.x >= 3 && pos.x <= 10) ? 14 : 11;
+    posCurrent = pos.y + 1;
+
+    while(posCurrent < limit) {
+        newPos = Couple(pos.x, posCurrent);
         if (board->plateau[newPos.y][newPos.x] != nullptr) {
             if (board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer) {
                 if (game->checkMove(pos, newPos)) {
@@ -26,12 +31,16 @@ CoupleList* Dame::availableMoves(Plateau* board) {
                 coups->add(newPos);
             }
         }
+        posCurrent++;
     }
 
-    // Parcous verticale de la pos vers le 0
-    limit = (pos.x >= 3 && pos.x <= 10) ? pos.y + 1 : pos.y - 2;
-    for(int i = 1; i < limit ; i++) {
-        newPos = pos + Couple(0, -i);
+    // Direction : Bas
+
+    limit = (pos.x >= 3 && pos.x <= 10) ? -1 : 2;
+    posCurrent = posY - 1;
+
+    while(pos > limit) {
+        newPos = Couple(pos.x, posCurrent);
         if (board->plateau[newPos.y][newPos.x] != nullptr) {
             if (board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer) {
                 if (game->checkMove(pos, newPos)) {
@@ -44,13 +53,18 @@ CoupleList* Dame::availableMoves(Plateau* board) {
                 coups->add(newPos);
             }
         }
+        posCurrent--;
     }
 
-    // Parcous horizontal de la pos vers le 14
+    // Horizontals
 
-    limit = (pos.y >= 3 && pos.y <= 10) ? 14 - pos.x: 11 - pos.x;
-    for(int i = 1; i < limit; i++) {
-        newPos = pos + Couple(i, 0);
+    // Direction : Droite
+
+    limit = (pos.y >= 3 && pos.y <= 10) ? 14 : 11;
+    posCurrent = pos.x + 1;
+
+    while(posCurrent < limit){
+        newPos = Couple(posCurrent, pos.y);
         if (board->plateau[newPos.y][newPos.x] != nullptr) {
             if (board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer) {
                 if (game->checkMove(pos, newPos)) {
@@ -63,13 +77,15 @@ CoupleList* Dame::availableMoves(Plateau* board) {
                 coups->add(newPos);
             }
         }
+        posCurrent++;
     }
 
-    // Parcous horizontal de la pos vers le 0
+    // Direction : Gauche
 
-    limit = (pos.y >= 3 && pos.y <= 10) ? pos.x + 1 : pos.x - 2;
-    for(int i = 1; i < limit ; i++) {
-        newPos = pos + Couple(-i, 0);
+    limit = (pos.y >= 3 && pos.y <= 10) ? -1 : 2;
+    posCurrent = pos.x - 1;
+    while(posCurrent > limit) {
+        newPos = Couple(posCurrent, pos.y); 
         if (board->plateau[newPos.y][newPos.x] != nullptr) {
             if (board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer) {
                 if (game->checkMove(pos, newPos)) {
@@ -82,9 +98,42 @@ CoupleList* Dame::availableMoves(Plateau* board) {
                 coups->add(newPos);
             }
         }
+        posCurrent--;
     }
 
+    /*
     // Diagonales
 
-    return coups;
+    // Direction : Haut-Gauche
+    int i = x - 1, j = y - 1;
+    while (i >= 0 && j >= 0) {
+        cout << "(" << i << ", " << j << ") ";
+        i--; j--;
+    }
+    cout << endl;
+
+    // Direction : Haut-Droite
+    i = x + 1; j = y - 1;
+    while (i < TAILLE && j >= 0) {
+        cout << "(" << i << ", " << j << ") ";
+        i++; j--;
+    }
+    cout << endl;
+
+    // Direction : Bas-Gauche
+    i = x - 1; j = y + 1;
+    while (i >= 0 && j < TAILLE) {
+        cout << "(" << i << ", " << j << ") ";
+        i--; j++;
+    }
+    cout << endl;
+
+    // Direction : Bas-Droite
+    i = x + 1; j = y + 1;
+    while (i < TAILLE && j < TAILLE) {
+        cout << "(" << i << ", " << j << ") ";
+        i++; j++;
+    }
+    cout << endl;
+    */
 }
