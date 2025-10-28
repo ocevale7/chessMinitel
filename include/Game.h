@@ -10,14 +10,15 @@ using namespace std;
 
 class Game {
     private:
+        int currentPlayer;
 
     public:
-
         Plateau* board;
 
         Game();
 
         void start();
+        void play(Couple from, Couple to);
         bool checkMove(Couple old, Couple young);
 };
 

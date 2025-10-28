@@ -4,6 +4,10 @@
 Cavalier::Cavalier (Game* game, Couple pos, int appartenancePlayer) :
     Piece(game, "Cavalier", pos, appartenancePlayer) {}
 
+void Cavalier::afficher() {
+  cout << "C" << appartenancePlayer;
+}
+
 CoupleList* Cavalier::availableMoves(Plateau* board) {
 
     CoupleList* coups = new CoupleList();

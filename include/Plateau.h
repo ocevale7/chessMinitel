@@ -31,4 +31,5 @@ class Plateau {
 
         Plateau();
         void afficher();
+        void swap(Couple pos1, Couple pos2);
 };  

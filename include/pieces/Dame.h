@@ -8,5 +8,6 @@ class Dame : public Piece {
   public:
     Dame(Game* game, Couple pos, int appartenancePlayer);
 
+    void afficher() override;
     CoupleList* availableMoves(Plateau* board) override;
 };

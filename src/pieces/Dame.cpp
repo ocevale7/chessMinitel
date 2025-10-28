@@ -4,15 +4,18 @@
 Dame::Dame (Game* game, Couple pos, int appartenancePlayer) :
     Piece(game, "Dame", pos, appartenancePlayer) {}
 
+void Dame::afficher() {
+  cout << "D" << appartenancePlayer;
+}
+
 CoupleList* Dame::availableMoves(Plateau* board) {
+    
     CoupleList* coups = new CoupleList();
 
-    Couple newPos = pos;
+    Couple newPos;
     int posCurrent;
 
-    // Verticales
-
-    // Direction : Haut
+    // Verticale -- Direction : Haut
 
     int limit = (pos.x >= 3 && pos.x <= 10) ? 14 : 11;
     posCurrent = pos.y + 1;
@@ -34,12 +37,12 @@ CoupleList* Dame::availableMoves(Plateau* board) {
         posCurrent++;
     }
 
-    // Direction : Bas
+    // Verticale -- Direction : Bas
 
     limit = (pos.x >= 3 && pos.x <= 10) ? -1 : 2;
-    posCurrent = posY - 1;
+    posCurrent = pos.y - 1;
 
-    while(pos > limit) {
+    while(posCurrent > limit) {
         newPos = Couple(pos.x, posCurrent);
         if (board->plateau[newPos.y][newPos.x] != nullptr) {
             if (board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer) {
@@ -56,9 +59,7 @@ CoupleList* Dame::availableMoves(Plateau* board) {
         posCurrent--;
     }
 
-    // Horizontals
-
-    // Direction : Droite
+    // Horizontal -- Direction : Droite
 
     limit = (pos.y >= 3 && pos.y <= 10) ? 14 : 11;
     posCurrent = pos.x + 1;
@@ -80,7 +81,7 @@ CoupleList* Dame::availableMoves(Plateau* board) {
         posCurrent++;
     }
 
-    // Direction : Gauche
+    // Horizontal -- Direction : Gauche
 
     limit = (pos.y >= 3 && pos.y <= 10) ? -1 : 2;
     posCurrent = pos.x - 1;
@@ -136,4 +137,5 @@ CoupleList* Dame::availableMoves(Plateau* board) {
     }
     cout << endl;
     */
+   return coups;
 }

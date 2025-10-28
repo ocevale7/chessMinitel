@@ -24,6 +24,17 @@ void CoupleList::add(Couple c) {
     head = newNode;
 }
 
+bool CoupleList::isInside(Couple c) {
+    Node* temp = head;
+    while (temp) {
+        if (temp->data.x == c.x && temp->data.y == c.y) {
+            return true;
+        }
+        temp = temp->next;
+    }
+    return false;
+}
+
 /*
 std::ostream & operator<<(std::ostream &out, const Couple* c) {
     out<<"("<<c->x<<", "<<c->y<<")";

@@ -7,18 +7,18 @@ file(GLOB PIECES_SRC "src/pieces/*.cpp")
 file(GLOB TOOLS_SRC "src/tools/*.cpp")
 
 add_executable(
-    testAff
-    tests/testAffichage.cpp
+    main
     src/Piece.cpp
     src/Plateau.cpp
     src/Game.cpp
+    src/Main.cpp
     ${PIECES_SRC}
     ${TOOLS_SRC}
 )
 
-target_include_directories(testAff PRIVATE include)
-target_compile_features(testAff PRIVATE cxx_std_20)
-target_compile_options(testAff PRIVATE
+target_include_directories(main PRIVATE include)
+target_compile_features(main PRIVATE cxx_std_20)
+target_compile_options(main PRIVATE
     -Wall        # tous les warnings classiques
     -Wextra      # warnings supplémentaires utiles
     -Werror      # transforme les warnings en erreurs
@@ -26,6 +26,6 @@ target_compile_options(testAff PRIVATE
 )
 
 
-# add_custom_target(testAff
-#     COMMAND ./bin/testAff
+# add_custom_target(main
+#     COMMAND ./bin/main
 # )

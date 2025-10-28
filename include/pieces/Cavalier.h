@@ -8,5 +8,6 @@ class Cavalier : public Piece {
   public:
     Cavalier(Game* game, Couple pos, int appartenancePlayer);
 
+    void afficher() override;
     CoupleList* availableMoves(Plateau* board) override;
 };

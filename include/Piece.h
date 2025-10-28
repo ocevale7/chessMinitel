@@ -24,7 +24,7 @@ class Piece {
 
     void deplacer(Couple newPos);
     virtual CoupleList* availableMoves(Plateau* board) = 0;
-    void afficher();
+    virtual void afficher() = 0;
 };
 
 #endif
