@@ -30,6 +30,11 @@ int main()
         cout << "Plateau actuel : " << endl;
         game->board->afficher();
 
+        cout << "Points des joueurs :" << endl;
+        for (int i = 0; i < 4; i++) {
+            cout << "Joueur " << i << " : " << game->points[i] << " points" << endl;
+        }
+
         cout << "Sélectionnez une pièce à déplacer :" << endl;
         Couple from = getCase();
 

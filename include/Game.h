@@ -11,15 +11,16 @@ using namespace std;
 class Game {
     private:
         int currentPlayer;
-
+        void move(Couple from, Couple to);
     public:
         Plateau* board;
+        int points[4] = {0, 0, 0, 0};
 
         Game();
 
         void start();
         void play(Couple from, Couple to);
-        bool checkMove(Couple old, Couple young);
+        bool isEchec(int player);
 };
 
 #endif

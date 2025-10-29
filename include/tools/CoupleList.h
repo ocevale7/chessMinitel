@@ -1,6 +1,10 @@
 #ifndef COUPLELIST_H
 #define COUPLELIST_H
 
+#include <iostream>
+
+using namespace std;
+
 struct Couple {
     int x,y;
 
@@ -29,6 +33,7 @@ class CoupleList {
         void add(int x, int y);
         bool isInside(Couple c);
         void add(Couple c);
+        void afficher();
 };
 
 #endif

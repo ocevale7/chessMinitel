@@ -30,6 +30,8 @@ class Plateau {
         Piece* plateau[height][width];
 
         Plateau();
+        ~Plateau();
+
         void afficher();
         void swap(Couple pos1, Couple pos2);
 };  

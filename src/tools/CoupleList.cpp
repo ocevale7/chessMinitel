@@ -1,5 +1,4 @@
 #include "../../include/tools/CoupleList.h"
-#include <ostream>
 
 CoupleList::CoupleList() {
     head = nullptr;
@@ -35,9 +34,11 @@ bool CoupleList::isInside(Couple c) {
     return false;
 }
 
-/*
-std::ostream & operator<<(std::ostream &out, const Couple* c) {
-    out<<"("<<c->x<<", "<<c->y<<")";
-    return out;
+void CoupleList::afficher() {
+    Node* tmp = this->head;
+    while(tmp != nullptr) {
+        cout << "( " << tmp->data.x << ", " << tmp->data.y << ") -> ";
+        tmp = tmp->next;
+    }
+    cout << "nullptr" << endl;
 }
-*/

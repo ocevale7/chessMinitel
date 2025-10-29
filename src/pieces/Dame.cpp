@@ -5,7 +5,7 @@ Dame::Dame (Game* game, Couple pos, int appartenancePlayer) :
     Piece(game, "Dame", pos, appartenancePlayer) {}
 
 void Dame::afficher() {
-  cout << "D" << appartenancePlayer;
+  cout << "\033[3" << appartenancePlayer + 1 << "m" << "D" << appartenancePlayer << "\033[0m";
 }
 
 CoupleList* Dame::availableMoves(Plateau* board) {
@@ -24,15 +24,11 @@ CoupleList* Dame::availableMoves(Plateau* board) {
         newPos = Couple(pos.x, posCurrent);
         if (board->plateau[newPos.y][newPos.x] != nullptr) {
             if (board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer) {
-                if (game->checkMove(pos, newPos)) {
-                    coups->add(newPos);
-                }
+                coups->add(newPos);
             }
             break;
         } else {
-            if (game->checkMove(pos, newPos)) {
-                coups->add(newPos);
-            }
+            coups->add(newPos);
         }
         posCurrent++;
     }
@@ -46,15 +42,11 @@ CoupleList* Dame::availableMoves(Plateau* board) {
         newPos = Couple(pos.x, posCurrent);
         if (board->plateau[newPos.y][newPos.x] != nullptr) {
             if (board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer) {
-                if (game->checkMove(pos, newPos)) {
-                    coups->add(newPos);
-                }
+                coups->add(newPos);
             }
              break;
         } else {
-            if (game->checkMove(pos, newPos)) {
-                coups->add(newPos);
-            }
+            coups->add(newPos);
         }
         posCurrent--;
     }
@@ -68,15 +60,11 @@ CoupleList* Dame::availableMoves(Plateau* board) {
         newPos = Couple(posCurrent, pos.y);
         if (board->plateau[newPos.y][newPos.x] != nullptr) {
             if (board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer) {
-                if (game->checkMove(pos, newPos)) {
-                    coups->add(newPos);
-                }
+                coups->add(newPos);
             }
             break;
         } else {
-            if (game->checkMove(pos, newPos)) {
-                coups->add(newPos);
-            }
+            coups->add(newPos);
         }
         posCurrent++;
     }
@@ -89,53 +77,166 @@ CoupleList* Dame::availableMoves(Plateau* board) {
         newPos = Couple(posCurrent, pos.y); 
         if (board->plateau[newPos.y][newPos.x] != nullptr) {
             if (board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer) {
-                if (game->checkMove(pos, newPos)) {
-                    coups->add(newPos);
-                }
+                coups->add(newPos);
             }
              break;
         } else {
-            if (game->checkMove(pos, newPos)) {
-                coups->add(newPos);
-            }
+            coups->add(newPos);
         }
         posCurrent--;
     }
 
-    /*
-    // Diagonales
+    // Diagonale -- Direction : Haut-Gauche
 
-    // Direction : Haut-Gauche
-    int i = x - 1, j = y - 1;
-    while (i >= 0 && j >= 0) {
-        cout << "(" << i << ", " << j << ") ";
-        i--; j--;
+    if (pos.x  >= pos.y) {
+        if(pos.x - 3 >= pos.y) {
+            limit = -1;
+            posCurrent = pos.y - 1;
+        } else {
+            limit = 2;
+            posCurrent = pos.x - 1;
+        }
+    } else {
+        if(pos.y - 3 >= pos.x) {
+            limit = -1;
+            posCurrent = pos.x - 1;
+        } else {
+            limit = 2;
+            posCurrent = pos.y - 1;
+        }
     }
-    cout << endl;
 
-    // Direction : Haut-Droite
-    i = x + 1; j = y - 1;
-    while (i < TAILLE && j >= 0) {
-        cout << "(" << i << ", " << j << ") ";
-        i++; j--;
-    }
-    cout << endl;
+    int posCurrentX = pos.x - 1;
+    int posCurrentY = pos.y - 1;
 
-    // Direction : Bas-Gauche
-    i = x - 1; j = y + 1;
-    while (i >= 0 && j < TAILLE) {
-        cout << "(" << i << ", " << j << ") ";
-        i--; j++;
+    while(posCurrent > limit) {
+        newPos = Couple(posCurrentX, posCurrentY);
+        if (board->plateau[newPos.y][newPos.x] != nullptr) {
+            if (board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer) {
+                coups->add(newPos);
+            }
+             break;
+        } else {
+            coups->add(newPos);
+        }
+        posCurrentX--;
+        posCurrentY--;
+        posCurrent--;
     }
-    cout << endl;
 
-    // Direction : Bas-Droite
-    i = x + 1; j = y + 1;
-    while (i < TAILLE && j < TAILLE) {
-        cout << "(" << i << ", " << j << ") ";
-        i++; j++;
+    // Diagonale -- Direction : Bas-Droite
+
+    if (pos.x  >= pos.y) {
+        if(pos.x - 3 >= pos.y) {
+            limit = 14;
+            posCurrent = pos.x + 1;
+        } else {
+            limit = 11;
+            posCurrent = pos.y + 1;
+        }
+    } else {
+        if(pos.y - 3 >= pos.x) {
+            limit = 14;
+            posCurrent = pos.y + 1;
+        } else {
+            limit = 11;
+            posCurrent = pos.x + 1;
+        }
     }
-    cout << endl;
-    */
-   return coups;
+
+    posCurrentX = pos.x + 1;
+    posCurrentY = pos.y + 1;
+
+    while(posCurrent < limit) {
+        newPos = Couple(posCurrentX, posCurrentY);
+        if (board->plateau[newPos.y][newPos.x] != nullptr) {
+            if (board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer) {
+                coups->add(newPos);
+            }
+             break;
+        } else {
+            coups->add(newPos);
+        }
+        posCurrentX++;
+        posCurrentY++;
+        posCurrent++;
+    }
+
+    // Diagonale -- Direction : Haut-Droite
+
+    if (pos.x  >= 13 - pos.y) {
+        if(pos.x - 3 >= 13 - pos.y) {
+            limit = 14;
+            posCurrent = pos.x + 1;
+        } else {
+            limit = 11;
+            posCurrent = (13 - pos.y) + 1;
+        }
+    } else {
+        if(10 - pos.y >= pos.x) {
+            limit = 14;
+            posCurrent = (13 - pos.y) + 1;
+        } else {
+            limit = 11;
+            posCurrent = pos.x + 1;
+        }
+    }
+
+    posCurrentX = pos.x + 1;
+    posCurrentY = pos.y - 1;
+
+    while(posCurrent < limit) {
+        newPos = Couple(posCurrentX, posCurrentY);
+        if (board->plateau[newPos.y][newPos.x] != nullptr) {
+            if (board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer) {
+                coups->add(newPos);
+            }
+             break;
+        } else {
+            coups->add(newPos);
+        }
+        posCurrentX++;
+        posCurrentY--;
+        posCurrent++;
+    }
+
+    // Diagonale -- Direction : Bas-Gauche
+
+    if (13 - pos.x  >= pos.y) {
+        if(10 - pos.x >= pos.y) {
+            limit = 14;
+            posCurrent = (13 - pos.x) + 1;
+        } else {
+            limit = 11;
+            posCurrent = pos.y + 1;
+        }
+    } else {
+        if(pos.y - 3 >= 13 - pos.x) {
+            limit = 14;
+            posCurrent = pos.y + 1;
+        } else {
+            limit = 12;
+            posCurrent = (13 - pos.x) + 1;
+        }
+    }
+
+    posCurrentX = pos.x - 1;
+    posCurrentY = pos.y + 1;
+
+    while(posCurrent < limit) {
+        newPos = Couple(posCurrentX, posCurrentY);
+        if (board->plateau[newPos.y][newPos.x] != nullptr) {
+            if (board->plateau[newPos.y][newPos.x]->appartenancePlayer != appartenancePlayer) {
+                coups->add(newPos);
+            }
+             break;
+        } else {
+            coups->add(newPos);
+        }
+        posCurrentX--;
+        posCurrentY++;
+        posCurrent++;
+    }
+
+    return coups;
 }

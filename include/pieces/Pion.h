@@ -10,4 +10,6 @@ class Pion : public Piece {
 
     void afficher() override;
     CoupleList* availableMoves(Plateau* board) override;
+
+    int getPoints() const override { return 1; }
 };

@@ -8,6 +8,16 @@ Plateau::Plateau(){
     }
 }
 
+Plateau::~Plateau(){
+    for(unsigned int y = 0; y < height; y++){
+        for(unsigned int x = 0; x < width; x++){
+            if(plateau[y][x] != nullptr){
+                delete plateau[y][x];
+            }
+        }
+    }
+}
+
 void Plateau::swap(Couple pos1, Couple pos2){
     Piece* temp = plateau[pos1.y][pos1.x];
     plateau[pos1.y][pos1.x] = plateau[pos2.y][pos2.x];

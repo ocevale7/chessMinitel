@@ -68,22 +68,69 @@ void Game::start() {
     board->plateau[6][0]  = new Roi(this, Couple(0, 6), 2);
     board->plateau[7][0]  = new Dame(this, Couple(0, 7), 2);
 
-    board->plateau[6][13]  = new Dame(this, Couple(13, 6), 0);
-    board->plateau[7][13]  = new Roi(this, Couple(13, 7), 0);
-
-
+    board->plateau[7][13]  = new Dame(this, Couple(13, 6), 0);
+    board->plateau[6][13]  = new Roi(this, Couple(13, 7), 0);
 }
 
-bool Game::checkMove(Couple /*old*/, Couple /*young*/) {
-    return true;
+bool Game::isEchec(int player) {
+    Couple kingPos(-1, -1);
+    // Trouver la position du roi du joueur donné
+    for(int y = 0; y < 14; y++) {
+        for(int x = 0; x < 14; x++) {
+            Piece* piece = board->plateau[y][x];
+            if(piece != nullptr && piece->appartenancePlayer == player && piece->nom == "Roi") {
+                kingPos = Couple(x, y);
+                break;
+            }
+        }
+        if(kingPos.x != -1) break;
+    }
+
+    // Vérifier si une pièce adverse peut attaquer le roi
+    for(int y = 0; y < 14; y++) {
+        for(int x = 0; x < 14; x++) {
+            Piece* piece = board->plateau[y][x];
+            if(piece != nullptr && piece->appartenancePlayer != player) {
+                Couple pos(x, y);
+                CoupleList* moves = piece->availableMoves(board);
+                if(moves->isInside(kingPos)) {
+                    delete moves;
+                    return true;
+                }
+                delete moves;
+            }
+        }
+    }
+
+    return false;
+}
+
+void Game::move(Couple from, Couple to) {
+
+    Piece* pieceFrom = board->plateau[from.y][from.x];
+    Piece* pieceTo = board->plateau[to.y][to.x];
+
+    board->plateau[from.y][from.x]->deplacer(to);
+    board->swap(from, to);
+
+    if (isEchec(currentPlayer)) {
+        cout << "Mouvement mettant en échec votre roi ! Annulation du mouvement." << endl;
+        board->plateau[from.y][from.x] = pieceFrom;
+        board->plateau[to.y][to.x] = pieceTo;
+    } else {
+        if (pieceTo != nullptr) {
+            points[currentPlayer] += pieceTo->getPoints();
+            delete pieceTo;
+        }
+        currentPlayer = (currentPlayer + 1) % 4;
+    }
 }
 
 void Game::play(Couple from, Couple to) {
     if(board->plateau[from.y][from.x] != nullptr) {
         if (board->plateau[from.y][from.x]->appartenancePlayer == currentPlayer) {
             if(board->plateau[from.y][from.x]->availableMoves(board)->isInside(to)) {
-                board->swap(from, to);
-                currentPlayer = (currentPlayer + 1) % 4;
+                move(from, to);
             } else {
                 cout << "Mouvement invalide !" << endl;
             }
