@@ -105,6 +105,51 @@ bool Game::isEchec(int player) {
     return false;
 }
 
+bool Game::isEchecEtMat(int player) {
+    // Vérifier si le joueur est en échec
+    if(!isEchec(player)) {
+        return false;
+    }
+
+    // Vérifier si le joueur a des mouvements légaux pour sortir de l'échec
+    for(int y = 0; y < 14; y++) {
+        for(int x = 0; x < 14; x++) {
+            Piece* piece = board->plateau[y][x];
+            if(piece != nullptr && piece->appartenancePlayer == player) {
+                Couple from(x, y);
+                CoupleList* moves = piece->availableMoves(board);
+                Node* current = moves->head;
+                while (current){
+
+                    Couple to = current->data;
+
+                    // Simuler le mouvement
+                    Piece* pieceFrom = board->plateau[from.y][from.x];
+                    Piece* pieceTo = board->plateau[to.y][to.x];
+
+                    board->plateau[from.y][from.x]->deplacer(to);
+
+                    bool stillInCheck = isEchec(player);
+
+                    // Annuler le mouvement
+                    board->plateau[from.y][from.x] = pieceFrom;
+                    board->plateau[to.y][to.x] = pieceTo;
+
+                    if(!stillInCheck) {
+                        delete moves;
+                        return false;
+                    }
+
+                    current = current->next;
+                }
+                delete moves;
+            }
+        }
+    }
+
+    return true;
+}
+
 void Game::move(Couple from, Couple to) {
 
     Piece* pieceFrom = board->plateau[from.y][from.x];
@@ -121,6 +166,15 @@ void Game::move(Couple from, Couple to) {
         if (pieceTo != nullptr) {
             points[currentPlayer] += pieceTo->getPoints();
             delete pieceTo;
+        }
+        if (pieceFrom->nom == "Pion" && (
+            (currentPlayer == 1 && to.y == 3)  || 
+            (currentPlayer == 3 && to.y == 10) || 
+            (currentPlayer == 0 && to.x == 3)  || 
+            (currentPlayer == 2 && to.x == 10))) {
+            cout << "Promotion du pion !" << endl;
+            board->plateau[to.y][to.x] = new Dame(this, to, currentPlayer);
+            delete pieceFrom;
         }
         currentPlayer = (currentPlayer + 1) % 4;
     }
