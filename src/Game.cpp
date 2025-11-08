@@ -8,7 +8,7 @@ void Game::start() {
 
     // On place les pions
 
-    for(int i = 3; i < 11; i++) {
+    for(int i = 4; i < 11; i++) {
         board->plateau[1][i]  = new Pion(this, Couple(i, 1), 3);
         board->plateau[12][i] = new Pion(this, Couple(i, 12), 1);
         board->plateau[i][1]  = new Pion(this, Couple(1, i), 2);
@@ -68,8 +68,8 @@ void Game::start() {
     board->plateau[6][0]  = new Roi(this, Couple(0, 6), 2);
     board->plateau[7][0]  = new Dame(this, Couple(0, 7), 2);
 
-    board->plateau[7][13]  = new Dame(this, Couple(13, 6), 0);
-    board->plateau[6][13]  = new Roi(this, Couple(13, 7), 0);
+    board->plateau[6][13]  = new Dame(this, Couple(13, 6), 0);
+    board->plateau[7][13]  = new Roi(this, Couple(13, 7), 0);
 }
 
 bool Game::isEchec(int player) {
@@ -150,18 +150,19 @@ bool Game::isEchecEtMat(int player) {
     return true;
 }
 
-void Game::move(Couple from, Couple to) {
+bool Game::move(Couple from, Couple to, int currentPlayer) {
 
     Piece* pieceFrom = board->plateau[from.y][from.x];
     Piece* pieceTo = board->plateau[to.y][to.x];
 
     board->plateau[from.y][from.x]->deplacer(to);
-    board->swap(from, to);
+    board->deplacer(from, to);
 
     if (isEchec(currentPlayer)) {
-        cout << "Mouvement mettant en échec votre roi ! Annulation du mouvement." << endl;
+        cout << "Mouvement mettant en échec votre roi ! Annulation du mouvement." << endl << endl;
         board->plateau[from.y][from.x] = pieceFrom;
         board->plateau[to.y][to.x] = pieceTo;
+        return false;
     } else {
         if (pieceTo != nullptr) {
             points[currentPlayer] += pieceTo->getPoints();
@@ -172,26 +173,28 @@ void Game::move(Couple from, Couple to) {
             (currentPlayer == 3 && to.y == 10) || 
             (currentPlayer == 0 && to.x == 3)  || 
             (currentPlayer == 2 && to.x == 10))) {
-            cout << "Promotion du pion !" << endl;
+            cout << "Promotion du pion !" << endl << endl;
             board->plateau[to.y][to.x] = new Dame(this, to, currentPlayer);
             delete pieceFrom;
         }
         currentPlayer = (currentPlayer + 1) % 4;
     }
+    return true;
 }
 
-void Game::play(Couple from, Couple to) {
+bool Game::play(Couple from, Couple to, int currentPlayer) {
     if(board->plateau[from.y][from.x] != nullptr) {
         if (board->plateau[from.y][from.x]->appartenancePlayer == currentPlayer) {
             if(board->plateau[from.y][from.x]->availableMoves(board)->isInside(to)) {
-                move(from, to);
+                return move(from, to, currentPlayer);
             } else {
-                cout << "Mouvement invalide !" << endl;
+                cout << "Mouvement invalide !" << endl << endl;
             }
         } else {
-            cout << "Ce n'est pas votre tour !" << endl;
+            cout << "Ce n'est pas votre tour !" << endl << endl;
         }
     } else {
-        cout << "Pas de pièce à cette position !" << endl;
+        cout << "Pas de pièce à cette position !" << endl << endl;
     }
+    return false;
 }

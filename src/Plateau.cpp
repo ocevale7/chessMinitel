@@ -18,14 +18,27 @@ Plateau::~Plateau(){
     }
 }
 
-void Plateau::swap(Couple pos1, Couple pos2){
-    Piece* temp = plateau[pos1.y][pos1.x];
-    plateau[pos1.y][pos1.x] = plateau[pos2.y][pos2.x];
-    plateau[pos2.y][pos2.x] = temp;
+void Plateau::deplacer(Couple from, Couple to){
+    plateau[to.y][to.x] = plateau[from.y][from.x];
+    plateau[from.y][from.x] = nullptr;
 }
 
 void Plateau::afficher(){
+    cout << "     ";
+    for (unsigned int x=0; x<width; x++){
+        if (x < 10) cout << " ";
+        cout << x << " | ";
+    }
+    cout << "\n";
+    cout << "     ";
+    for (unsigned int x=0; x<width; x++){
+        cout << "--" << " | ";
+    }
+    cout << "\n";
+
     for (unsigned int y=0; y<height; y++){
+        if (y < 10) cout << " ";
+        cout << y << " | ";
         for (unsigned int x=0; x<width; x++){
             //les coins
             if ((x<3 || x>=width-3) && (y<3 || y>=height-3)){
@@ -43,10 +56,18 @@ void Plateau::afficher(){
             }
             cout << " | ";
         }
-        cout << "\n";
+        if (y < 10) cout << " ";
+        cout << y << " | ";
+        cout << "\n     ";
         for (unsigned int x=0; x<width; x++){
             cout << "--" << " | ";
         }
         cout << "\n";
     }
+    cout << "     ";
+    for (unsigned int x=0; x<width; x++){
+        if (x < 10) cout << " ";
+        cout << x << " | ";
+    }
+    cout << "\n";
 }
