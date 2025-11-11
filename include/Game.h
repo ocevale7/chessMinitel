@@ -21,6 +21,8 @@ class Game {
         bool play(Couple from, Couple to, int currentPlayer);
         bool isEchec(int player);
         bool isEchecEtMat(int player);
+
+        void kill(int player);
 };
 
 #endif

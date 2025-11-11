@@ -2,7 +2,31 @@
 #include "../../include/Game.h"
 
 Pion::Pion (Game* game, Couple pos, int appartenancePlayer) :
-    Piece(game, "Pion", pos, appartenancePlayer) {}
+    Piece(game, "Pion", pos, appartenancePlayer) {
+    points = 1;
+    switch (appartenancePlayer) {
+      case 0:
+        coordPromotion = Couple(3, pos.y);
+        break;
+      case 1:
+        coordPromotion = Couple(pos.x, 3);
+        break;
+      case 2:
+        coordPromotion = Couple(10, pos.y);
+        break;
+      case 3:
+        coordPromotion = Couple(pos.x, 10);
+        break;
+    }
+}
+
+void Pion::action() {
+  if (pos.x == coordPromotion.x && pos.y == coordPromotion.y) {
+      cout << "Promotion du pion !" << endl << endl;
+      game->board->plateau[pos.y][pos.x] = new Dame(game, pos, appartenancePlayer);
+      delete this;
+  }
+}
 
 void Pion::afficher() {
   cout << "\033[3" << appartenancePlayer + 1 << "m" << "P" << appartenancePlayer << "\033[0m";

@@ -8,11 +8,13 @@ void Game::start() {
 
     // On place les pions
 
-    for(int i = 4; i < 11; i++) {
-        board->plateau[1][i]  = new Pion(this, Couple(i, 1), 3);
-        board->plateau[12][i] = new Pion(this, Couple(i, 12), 1);
-        board->plateau[i][1]  = new Pion(this, Couple(1, i), 2);
-        board->plateau[i][12] = new Pion(this, Couple(12, i), 0);
+    for(int i = 3; i < 11; i++) {
+        if (i != 7 ) {
+            board->plateau[1][i]  = new Pion(this, Couple(i, 1), 3);
+            board->plateau[12][i] = new Pion(this, Couple(i, 12), 1);
+            board->plateau[i][1]  = new Pion(this, Couple(1, i), 2);
+            board->plateau[i][12] = new Pion(this, Couple(12, i), 0);
+        }
     }
 
     // On place les tours
@@ -128,6 +130,7 @@ bool Game::isEchecEtMat(int player) {
                     Piece* pieceTo = board->plateau[to.y][to.x];
 
                     board->plateau[from.y][from.x]->deplacer(to);
+                    board->deplacer(from, to);
 
                     bool stillInCheck = isEchec(player);
 
@@ -146,7 +149,6 @@ bool Game::isEchecEtMat(int player) {
             }
         }
     }
-
     return true;
 }
 
@@ -165,18 +167,10 @@ bool Game::move(Couple from, Couple to, int currentPlayer) {
         return false;
     } else {
         if (pieceTo != nullptr) {
-            points[currentPlayer] += pieceTo->getPoints();
+            points[currentPlayer] += pieceTo->points;
             delete pieceTo;
         }
-        if (pieceFrom->nom == "Pion" && (
-            (currentPlayer == 1 && to.y == 3)  || 
-            (currentPlayer == 3 && to.y == 10) || 
-            (currentPlayer == 0 && to.x == 3)  || 
-            (currentPlayer == 2 && to.x == 10))) {
-            cout << "Promotion du pion !" << endl << endl;
-            board->plateau[to.y][to.x] = new Dame(this, to, currentPlayer);
-            delete pieceFrom;
-        }
+        pieceFrom->action();
         currentPlayer = (currentPlayer + 1) % 4;
     }
     return true;
@@ -191,10 +185,21 @@ bool Game::play(Couple from, Couple to, int currentPlayer) {
                 cout << "Mouvement invalide !" << endl << endl;
             }
         } else {
-            cout << "Ce n'est pas votre tour !" << endl << endl;
+            cout << "Cette pièce n'appartient pas au joueur courant !" << endl << endl;
         }
     } else {
         cout << "Pas de pièce à cette position !" << endl << endl;
     }
     return false;
+}
+
+void Game::kill(int player) {
+    for(int y = 0; y < 14; y++) {
+        for(int x = 0; x < 14; x++) {
+            Piece* piece = board->plateau[y][x];
+            if(piece != nullptr && piece->appartenancePlayer == player) {
+                piece->points = 0;
+            }
+        }
+    }
 }

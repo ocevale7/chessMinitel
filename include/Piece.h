@@ -18,6 +18,7 @@ class Piece {
     string nom;
     Couple pos;
     int appartenancePlayer;
+    int points;
 
     Piece(Game* game, string n, Couple pos, int appartenancePlayer);
     virtual ~Piece();
@@ -26,7 +27,7 @@ class Piece {
     virtual CoupleList* availableMoves(Plateau* board) = 0;
     virtual void afficher() = 0;
 
-    virtual int getPoints() const = 0;
+    virtual void action() = 0;
 };
 
 #endif

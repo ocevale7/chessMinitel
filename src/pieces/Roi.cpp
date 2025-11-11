@@ -2,7 +2,13 @@
 #include "../../include/Game.h"
 
 Roi::Roi (Game* game, Couple pos, int appartenancePlayer) :
-    Piece(game, "Roi", pos, appartenancePlayer) {}
+    Piece(game, "Roi", pos, appartenancePlayer) {
+    points = 0;
+}
+
+void Roi::action() {
+    // Le roi n'a pas d'action spéciale pour le moment
+}
 
 void Roi::afficher() {
   cout << "\033[3" << appartenancePlayer + 1 << "m" << "R" << appartenancePlayer << "\033[0m";
@@ -113,7 +119,7 @@ CoupleList* Roi::availableMoves(Plateau* board) {
 
     // Roque
 
-    // TODO
+    
 
     return coups;
 }

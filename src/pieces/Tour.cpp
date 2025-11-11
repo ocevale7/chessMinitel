@@ -2,7 +2,12 @@
 #include "../../include/Game.h"
 
 Tour::Tour (Game* game, Couple pos, int appartenancePlayer) :
-    Piece(game, "Tour", pos, appartenancePlayer) {}
+    Piece(game, "Tour", pos, appartenancePlayer) {
+    points = 5;
+}
+void Tour::action() {
+    // La tour n'a pas d'action spéciale pour le moment
+}
 
 void Tour::afficher() {
   cout << "\033[3" << appartenancePlayer + 1 << "m" << "T" << appartenancePlayer << "\033[0m";

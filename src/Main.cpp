@@ -1,5 +1,5 @@
 #include "Game.h"
-
+#include <limits>
 
 Couple getCase() {
     Couple input;
@@ -8,13 +8,13 @@ Couple getCase() {
         while(!(cin >> input.x) || input.x < 0 || input.x > 13) {
             cout << "Coordonnée invalide. Entrez une coordonnée en abcisse entre 0 et 13 : ";
             cin.clear();
-            cin >> input.x;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
         cout << "Entrez la coordonnée en ordonnée : ";
         while(!(cin >> input.y) || input.y < 0 || input.y > 13) {
             cout << "Coordonnée invalide. Entrez une coordonnée en ordonnée entre 0 et 13 : ";
             cin.clear();
-            cin >> input.y;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
     } while ((input.x<3 || input.x>=11) && (input.y<3 || input.y>=11));
     
@@ -36,6 +36,7 @@ int main()
                 cout << "Échec et mat pour le joueur " << currentPlayer << endl;
                 players[currentPlayer] = -1;
                 nbActivePlayers--;
+                game->kill(currentPlayer);
             } else {
 
                 Couple from;
