@@ -87,3 +87,10 @@ CoupleList* Tour::availableMoves(Plateau* board) {
 
     return coups;
 }
+
+void Tour::afficherMinitel(){
+    
+    //int buffer;
+    
+    cout << "Hello World !" << endl;
+}

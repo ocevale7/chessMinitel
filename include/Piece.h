@@ -25,6 +25,7 @@ class Piece {
     void deplacer(Couple newPos);
     virtual CoupleList* availableMoves(Plateau* board) = 0;
     virtual void afficher() = 0;
+    virtual void afficherMinitel() = 0;
 
     virtual int getPoints() const = 0;
 };

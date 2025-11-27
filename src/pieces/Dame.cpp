@@ -240,3 +240,10 @@ CoupleList* Dame::availableMoves(Plateau* board) {
 
     return coups;
 }
+
+void Dame::afficherMinitel(){
+    
+    //int buffer;
+    
+    cout << "Hello World !" << endl;
+}

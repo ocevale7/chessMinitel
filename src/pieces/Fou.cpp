@@ -169,3 +169,10 @@ CoupleList* Fou::availableMoves(Plateau* board) {
 
     return coups;
 }
+
+void Fou::afficherMinitel(){
+    
+    //int buffer;
+    
+    cout << "Hello World !" << endl;
+}

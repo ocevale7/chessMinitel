@@ -93,3 +93,10 @@ CoupleList* Pion::availableMoves(Plateau* board) {
 
     return coups;
 }
+
+void Pion::afficherMinitel(){
+    
+    //int buffer;
+    
+    cout << "Hello World !" << endl;
+}

@@ -117,3 +117,10 @@ CoupleList* Roi::availableMoves(Plateau* board) {
 
     return coups;
 }
+
+void Roi::afficherMinitel(){
+    
+    //int buffer;
+    
+    cout << "Hello World !" << endl;
+}

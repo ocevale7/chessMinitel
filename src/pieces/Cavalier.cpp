@@ -1,5 +1,7 @@
 #include "../../include/pieces/Cavalier.h"
 #include "../../include/Game.h"
+//#include "../../include/Minitel.h"
+
 
 Cavalier::Cavalier (Game* game, Couple pos, int appartenancePlayer) :
     Piece(game, "Cavalier", pos, appartenancePlayer) {}
@@ -110,4 +112,22 @@ CoupleList* Cavalier::availableMoves(Plateau* board) {
     }
 
     return coups;
+}
+
+void Cavalier::afficherMinitel(){
+    
+    //int buffer;
+
+
+    // if (this->appartenancePlayer == 0) {  // Joueur 1 (Bleu)
+    //     cout << ;  // Caractères bleus
+    // } else if (this->appartenancePlayer == 1) {  // Joueur 2 (Rouge)
+    //     cout << 0x7A 0x31;  // Caractères rouges
+    // } else if (this->appartenancePlayer == 2) {  // Joueur 3 (Magenta)
+    //     cout << ;  // Caractères magenta
+    // } else {  // Joueur 4 (Cyan)
+    //     cout << 0x7A 0x31;  // Caractères cyan
+    // }
+    
+    cout << "Hello World !" << endl;
 }
