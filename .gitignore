@@ -5,4 +5,7 @@ build
 *.elf
 *.map
 *.d
+preprocessor_successor.h
+riotbuild.h
+riotbuild.h.in
 
