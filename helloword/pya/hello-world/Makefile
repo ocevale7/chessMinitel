@@ -2,7 +2,7 @@
 APPLICATION = hello-world
 
 # This has to be the absolute path to the RIOT base directory:
-RIOTBASE ?= ../../../RIOT-OS/RIOT
+RIOTBASE ?= ../../RIOT-OS/RIOT
 
 EXTERNAL_BOARD_DIRS ?= ../boards
 

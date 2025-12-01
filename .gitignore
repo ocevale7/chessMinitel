@@ -3,3 +3,5 @@ build
 *.o
 *.bin
 *.elf
+*.map
+bin/
