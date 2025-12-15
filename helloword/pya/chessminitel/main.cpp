@@ -4,6 +4,8 @@
 #include "periph/uart.h"
 #include "stdio_uart.h"
 #include "xtimer.h"
+#include "include/Game.h"
+
 
 #define MINITEL_UART  UART_DEV(0)
 #define MINITEL_BAUD  1200U
@@ -18,7 +20,6 @@ static void rx_cb(void *uart, uint8_t c)
     msg.content.value = (uint32_t)c;
     msg_send(&msg, 1);
 }
-
 
 int main(void)
 {
@@ -38,16 +39,17 @@ int main(void)
 
     xtimer_sleep(1);
 
-    char message[] = "Hello Minitel !";
-    uart_write(MINITEL_UART, (uint8_t *)message, strlen(message));
+    Game* game = new Game();
+    game->start();
 
+    game->board->afficherMinitel();
+    
     while (1) {
-        uart_write(MINITEL_UART, (uint8_t *)".", 1);
+        //uart_write(MINITEL_UART, (uint8_t *)".", 1);
         LED_GREEN_ON;
         xtimer_sleep(1);
         LED_GREEN_OFF;
         xtimer_sleep(1);
     }
-
     return 0;
 }

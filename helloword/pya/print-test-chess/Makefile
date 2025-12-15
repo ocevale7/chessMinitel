@@ -4,6 +4,8 @@ APPLICATION = minitel
 # Absolute path to the RIOT base directory
 RIOTBASE ?= ../../RIOT-OS/RIOT
 
+FEATURES_REQUIRED+= cpp
+
 # Path to custom boards
 EXTERNAL_BOARD_DIRS ?= ../../campusiot/RIOT-wyres/boards
 
@@ -36,6 +38,15 @@ USEMODULE += periph_uart_modecfg
 CFLAGS += -I$(CURDIR)
 
 include $(RIOTBASE)/Makefile.include
+
+SRCXX = $(wildcard *.cpp) \
+        $(wildcard src/*.cpp) \
+        $(wildcard src/pieces/*.cpp) \
+        $(wildcard src/tools/*.cpp)
+
+INCLUDES += -I$(CURDIR)/include \
+            -I$(CURDIR)/include/pieces \
+            -I$(CURDIR)/include/tools
 
 myflash:
 	/usr/bin/openocd -f interface/stlink.cfg -f target/stm32l1.cfg \
