@@ -279,6 +279,7 @@ void set_fg_white(bool darker);
 void set_fg_black(bool lighter);
 
 void retour_ligne();
+void moveCursorXY(int x, int y);
 ////////////////////////////////////////////////////////////////////////
 
 #endif // Fin Si (MINITEL1B_H)

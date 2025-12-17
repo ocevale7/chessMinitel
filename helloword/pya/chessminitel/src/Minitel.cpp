@@ -75,3 +75,23 @@ void retour_ligne(){
   uint8_t* new_line = (uint8_t*)"\x0D\x0A";
   write_bytes(new_line,2);
 }
+
+void writeBytesP(int n) {
+  // Pn, Pr, Pc : Voir remarques p.95 et 96
+  if (n<=9) {
+    write_bytes((uint8_t*){0x30 + n},1);
+  }
+  else {
+    write_bytes((uint8_t*){0x30 + n/10},1);
+    write_bytes((uint8_t*){0x30 + n%10},1);
+  }
+}
+
+void moveCursorXY(int x, int y) {
+  uint8_t* CSI_ = (uint8_t*)"\x1B\x5B";
+  write_bytes(CSI_,2);   
+  writeBytesP(y);   // Pr : Voir section Private ci-dessous
+  write_bytes((uint8_t*){0x3B},1);
+  writeBytesP(x);   // Pc : Voir section Private ci-dessous
+  write_bytes((uint8_t*){0x48},1);
+}

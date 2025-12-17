@@ -60,20 +60,29 @@ void Plateau::afficherMinitel(){
     flush_minitel();
     graphic_mode();
     uint8_t* casevide=(uint8_t*)"\x20\x20";
+
+    moveCursorXY(3, 4);
+    for (unsigned int x= 0; x<16; x++){
+        if ((x+y)%2){
+            set_bg_black();
+        }else{
+            set_bg_white();
+        }
+        write_bytes((uint8_t*)casevide,2);
+    }
+    retour_ligne();
     for (unsigned int y=0; y<height; y++){
+        moveCursorXY(3,5+y);
         for (unsigned int x=0; x<width; x++){
             //les coins
             if ((x<3 || x>=width-3) && (y<3 || y>=height-3)){
-                //cout<<"##";
                 set_bg_color(FOND_ROUGE);
                 write_bytes((uint8_t*)casevide,2);
             }else{
                 if ((x+y)%2){
-                    //cout << "XX";
                     set_bg_black();
                 }else{
                     set_bg_white();
-                    //cout << "OO";
                 }
                 if (plateau[y][x]){
                     plateau[y][x]->afficherMinitel();
@@ -82,36 +91,9 @@ void Plateau::afficherMinitel(){
                 }
             }
         }
-        //cout << "\n";
         retour_ligne();
-    }
-    // char pion[3] = "\x78\x30";
-    // //flush
-    // flush_minitel();
-    // graphic_mode();
-    // //affiche un pion noir sur fond noir
-    // for (int i=0; i<50; i++){
-    //     set_fg_color(CARACTERE_NOIR);
-    //     set_bg_color(FOND_VERT);
-    //     write_bytes((uint8_t *)&pion, 2);
-
-    //     //affiche un pion noir sur fond blanc
-    //     set_fg_color(CARACTERE_NOIR);
-    //     set_bg_color(FOND_MAGENTA);
-    //     write_bytes((uint8_t *)&pion, 2);
-
-    //     //affiche un pion blanc sur fond noir
-    //     set_fg_color(CARACTERE_BLANC);
-    //     set_bg_color(FOND_VERT);
-    //     write_bytes((uint8_t *)&pion, 2);
-
-    //     //affiche un pion blanc sur fond blanc
-    //     set_fg_color(CARACTERE_BLANC);
-    //     set_bg_color(FOND_MAGENTA);
-    //     write_bytes((uint8_t *)&pion, 2);
-
         
-    // }
+    }
     text_mode();
     
 }
