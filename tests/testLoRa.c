@@ -60,11 +60,16 @@ void main_receiver(void)
 {
     initialize_lora();
 
-    uint8_t* coup_recu;
-    coup_recu = listen_for_message();
+    uint8_t* coup_recu = malloc(MESSAGE_LENGTH * sizeof(uint8_t));
+    if (coup_recu == NULL) {
+        puts("Memory allocation failed");
+        return;
+    }
+    listen_for_message(coup_recu);
 
     printf("Received move: %d, %d, %d, %d\n",
            coup_recu[0], coup_recu[1], coup_recu[2], coup_recu[3]);
+    free(coup_recu);
 }
 
 int main(void) {

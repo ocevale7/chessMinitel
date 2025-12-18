@@ -14,7 +14,12 @@ void initialize_lora(void)
 void decompose_message(const char* message, uint8_t* coup_recu)
 {
     // Example message format: "X_init,Y_init,X_final,Y_final"
-    sscanf(message, "%hhd,%hhd,%hhd,%hhd", &coup_recu[0], &coup_recu[1], &coup_recu[2], &coup_recu[3]);
+    int x_init, y_init, x_final, y_final;
+    sscanf(message, "%d,%d,%d,%d", &x_init, &y_init, &x_final, &y_final);
+    coup_recu[0] = (uint8_t)x_init;
+    coup_recu[1] = (uint8_t)y_init;
+    coup_recu[2] = (uint8_t)x_final;
+    coup_recu[3] = (uint8_t)y_final;
 }
 
 void get_message_details(uint8_t* coup_recu)
@@ -29,18 +34,16 @@ void get_message_details(uint8_t* coup_recu)
     }
 }
 
-uint8_t* listen_for_message(void)
+void listen_for_message(uint8_t* coup_recu)
 {
-    uint8_t* coup_recu = malloc(MESSAGE_LENGTH * sizeof(uint8_t));
     if (coup_recu == NULL) {
         puts("Memory allocation failed");
-        return NULL;
+        return;
     }
 
     listen_cmd(1,(char*[]){"listen"});
 
     get_message_details(coup_recu);
-    return coup_recu;
 }
 
 void send_lora_message(uint8_t* coup_a_envoyer)

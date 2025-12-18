@@ -18,7 +18,7 @@ extern "C" {
 #define LORA_MESSAGE_BUFFER_SIZE 64
 
 void initialize_lora(void);
-uint8_t* listen_for_message(void);
+void listen_for_message(uint8_t* coup_recu);
 void send_lora_message(uint8_t* coup_a_envoyer);
 
 #ifdef __cplusplus
