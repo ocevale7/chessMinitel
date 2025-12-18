@@ -6,6 +6,7 @@ extern volatile bool has_rx;
 void initialize_lora(void)
 {
     // Initialization code for LoRa module
+    xtimer_sleep(2); // Wait for module to power up
     init_sx1272_cmd(0,NULL);
     lora_setup_cmd(4,(char*[]){"setup","125","12","5"});
     channel_cmd(3,(char*[]){"channel","set","868000000"});
@@ -49,5 +50,6 @@ void send_lora_message(uint8_t* coup_a_envoyer)
     snprintf(message, LORA_MESSAGE_BUFFER_SIZE, "%d,%d,%d,%d", 
              coup_a_envoyer[0], coup_a_envoyer[1], 
              coup_a_envoyer[2], coup_a_envoyer[3]);
+    printf("Sending message: %s\n", message);
     send_cmd(2, (char*[]){"send", message});
 }
