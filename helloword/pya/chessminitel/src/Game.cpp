@@ -1,5 +1,5 @@
 #include "../include/Game.h"
-
+#include <string.h>
 
 Game::Game() {
     board = new Plateau();
@@ -210,6 +210,19 @@ string Game::recupInputMinitel(){
     bool input1_X_valid = false;
     while (!input1_X_valid){
         moveCursorXY(37,23);
+        msg_t msg;
+        char buffer[3] = "";
+        char buf=0;
+        while (buf != '\r'){
+            msg_receive(&msg);
+		    buf = (char)msg.content.value;
+            if (buf!=0){
+                strcat(buffer, &buf);
+            }
+        }
+        moveCursorXY(0,1);
+        write_bytes((uint8_t*)buffer, 2);
+        
     }
 
     bool input1_Y_valid = false;
