@@ -22,6 +22,7 @@ class Game {
         void play(Couple from, Couple to);
         bool isEchec(int player);
         bool isEchecEtMat(int player);
+        string recupInputMinitel();
 };
 
 #endif

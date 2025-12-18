@@ -43,6 +43,10 @@ int main(void)
     game->start();
 
     game->board->afficherMinitel();
+    while (1){
+        string move = game->recupInputMinitel();
+    }
+    
     
     while (1) {
         //uart_write(MINITEL_UART, (uint8_t *)".", 1);

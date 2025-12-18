@@ -1,5 +1,6 @@
 #include "../include/Game.h"
 
+
 Game::Game() {
     board = new Plateau();
 }
@@ -194,4 +195,27 @@ void Game::play(Couple from, Couple to) {
     } else {
         cout << "Pas de pièce à cette position !" << endl;
     }
+}
+
+string Game::recupInputMinitel(){
+    
+    char position1_X[] = "Entrer cord X de la piece a bouger: ..";
+    char position1_Y[] = "Entrer cord Y de la piece a bouger: ..";
+    set_fg_white(false);
+    moveCursorXY(0,23);
+    write_bytes((uint8_t*)position1_X, 40);
+    moveCursorXY(0,24);
+    write_bytes((uint8_t*)position1_Y, 40);
+
+    bool input1_X_valid = false;
+    while (!input1_X_valid){
+        moveCursorXY(37,23);
+    }
+
+    bool input1_Y_valid = false;
+    while (!input1_Y_valid){
+        moveCursorXY(37,24);
+    }
+
+    return "";
 }

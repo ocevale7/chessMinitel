@@ -63,11 +63,11 @@ void set_bg_white(){
 }
 
 void set_fg_white(bool darker){
-  if (darker) set_fg_color((uint8_t*)CARACTERE_BLANC);
+  if (!darker) set_fg_color((uint8_t*)CARACTERE_BLANC);
   else set_fg_color((uint8_t*)CARACTERE_CYAN);
 }
 void set_fg_black(bool lighter){
-  if (lighter) set_fg_color((uint8_t*)CARACTERE_NOIR);
+  if (!lighter) set_fg_color((uint8_t*)CARACTERE_NOIR);
   else set_fg_color((uint8_t*)CARACTERE_ROUGE);
 }
 
@@ -79,19 +79,29 @@ void retour_ligne(){
 void writeBytesP(int n) {
   // Pn, Pr, Pc : Voir remarques p.95 et 96
   if (n<=9) {
-    write_bytes((uint8_t*){0x30 + n},1);
+    char n1 = '\x30' + n;
+    write_bytes((uint8_t*)&n1,1);
   }
   else {
-    write_bytes((uint8_t*){0x30 + n/10},1);
-    write_bytes((uint8_t*){0x30 + n%10},1);
+    char n1 = '\x30' + n/10;
+    char n2 = '\x30' + n%10;
+    write_bytes((uint8_t*)&n1,1);
+    write_bytes((uint8_t*)&n2,1);
   }
 }
 
+void cursor() {
+  uint8_t con= CON;
+  write_bytes(&con, 1);
+}
+
 void moveCursorXY(int x, int y) {
+  cursor();
   uint8_t* CSI_ = (uint8_t*)"\x1B\x5B";
   write_bytes(CSI_,2);   
   writeBytesP(y);   // Pr : Voir section Private ci-dessous
-  write_bytes((uint8_t*){0x3B},1);
+  write_bytes((uint8_t*)"\x3B",1);
   writeBytesP(x);   // Pc : Voir section Private ci-dessous
-  write_bytes((uint8_t*){0x48},1);
+  write_bytes((uint8_t*)"\x48",1);
+  text_mode();
 }

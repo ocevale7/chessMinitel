@@ -58,23 +58,49 @@ void Plateau::afficher(){
 
 void Plateau::afficherMinitel(){
     flush_minitel();
+
+    moveCursorXY(5, 4);
+
     graphic_mode();
     uint8_t* casevide=(uint8_t*)"\x20\x20";
 
-    moveCursorXY(3, 4);
+    set_bg_color(FOND_JAUNE);
     for (unsigned int x= 0; x<16; x++){
-        if ((x+y)%2){
-            set_bg_black();
+        if (x>=1 && x<=14){
+            text_mode();
+            char x_char[3] = {(char)('0' + x / 10), (char)('0' + x % 10), '\0'};
+            if (x%2==0){
+                set_fg_color(CARACTERE_ROUGE); 
+            }else{
+                set_fg_color(CARACTERE_MAGENTA);
+            }
+            write_bytes((uint8_t*)x_char, 2);
         }else{
-            set_bg_white();
+            graphic_mode();
+            write_bytes((uint8_t*)casevide,2);
         }
-        write_bytes((uint8_t*)casevide,2);
+        
     }
+    text_mode();
     retour_ligne();
     for (unsigned int y=0; y<height; y++){
-        moveCursorXY(3,5+y);
+        text_mode();
+        moveCursorXY(5,5+y);
+        graphic_mode();
+        set_bg_color(FOND_JAUNE);
+        char y_char[3] = {(char)('0' + y / 10), (char)('0' + y % 10), '\0'};
+        if (y%2==0){
+            set_fg_color(CARACTERE_ROUGE); 
+        }else{
+            set_fg_color(CARACTERE_MAGENTA);
+        }
+        text_mode();
+        write_bytes((uint8_t*)y_char, 2);
+        graphic_mode();
+        // write_bytes((uint8_t*)casevide,2);
         for (unsigned int x=0; x<width; x++){
             //les coins
+            
             if ((x<3 || x>=width-3) && (y<3 || y>=height-3)){
                 set_bg_color(FOND_ROUGE);
                 write_bytes((uint8_t*)casevide,2);
@@ -91,7 +117,36 @@ void Plateau::afficherMinitel(){
                 }
             }
         }
+        set_bg_color(FOND_JAUNE);
+        if (y%2==0){
+            set_fg_color(CARACTERE_ROUGE); 
+        }else{
+            set_fg_color(CARACTERE_MAGENTA);
+        }
+        text_mode();
+        write_bytes((uint8_t*)y_char, 2);
+        graphic_mode();
+
         retour_ligne();
+        
+    }
+
+    moveCursorXY(5, 19);
+    set_bg_color(FOND_JAUNE);
+    for (unsigned int x= 0; x<16; x++){
+        if (x>=1 && x<=14){
+            text_mode();
+            char x_char[3] = {(char)('0' + x / 10), (char)('0' + x % 10), '\0'};
+            if (x%2==0){
+                set_fg_color(CARACTERE_ROUGE); 
+            }else{
+                set_fg_color(CARACTERE_MAGENTA);
+            }
+            write_bytes((uint8_t*)x_char, 2);
+        }else{
+            graphic_mode();
+            write_bytes((uint8_t*)casevide,2);
+        }
         
     }
     text_mode();
