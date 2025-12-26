@@ -4,7 +4,13 @@
 
 
 Cavalier::Cavalier (Game* game, Couple pos, int appartenancePlayer) :
-    Piece(game, "Cavalier", pos, appartenancePlayer) {}
+    Piece(game, "Cavalier", pos, appartenancePlayer) {
+    points = 3;
+}
+
+void Cavalier::action() {
+    // Le cavalier n'a pas d'action spéciale pour le moment
+}
 
 void Cavalier::afficher() {
   cout << "\033[3" << appartenancePlayer + 1 << "m" << "C" << appartenancePlayer << "\033[0m";

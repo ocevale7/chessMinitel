@@ -11,6 +11,6 @@ class Tour : public Piece {
     void afficher() override;
     void afficherMinitel() override;
     CoupleList* availableMoves(Plateau* board) override;
-
-    int getPoints() const override { return 5; }
+    
+    void action() override;
 };

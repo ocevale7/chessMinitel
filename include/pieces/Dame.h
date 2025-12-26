@@ -11,6 +11,6 @@ class Dame : public Piece {
     void afficher() override;
     void afficherMinitel() override;
     CoupleList* availableMoves(Plateau* board) override;
-
-    int getPoints() const override { return 9; }
+    
+    void action() override;
 };

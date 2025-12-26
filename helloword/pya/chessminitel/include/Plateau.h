@@ -35,6 +35,5 @@ class Plateau {
         void afficher();
         void afficherMinitel();
         
-        void swap(Couple pos1, Couple pos2);
-
+        void deplacer(Couple pos1, Couple pos2);
 };  

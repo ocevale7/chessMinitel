@@ -10,8 +10,7 @@ using namespace std;
 
 class Game {
     private:
-        int currentPlayer;
-        void move(Couple from, Couple to);
+        bool move(Couple from, Couple to, int currentPlayer);
     public:
         Plateau* board;
         int points[4] = {0, 0, 0, 0};
@@ -19,9 +18,12 @@ class Game {
         Game();
 
         void start();
-        void play(Couple from, Couple to);
+        bool play(Couple from, Couple to, int currentPlayer);
         bool isEchec(int player);
         bool isEchecEtMat(int player);
+
+        void kill(int player);
+
         string recupInputMinitel();
 };
 

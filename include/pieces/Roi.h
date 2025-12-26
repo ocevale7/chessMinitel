@@ -11,6 +11,6 @@ class Roi : public Piece {
     void afficher() override;
     void afficherMinitel() override;
     CoupleList* availableMoves(Plateau* board) override;
-
-    int getPoints() const override { return 0; }
+    
+    void action() override;
 };

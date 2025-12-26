@@ -23,10 +23,9 @@ Plateau::~Plateau(){
     }
 }
 
-void Plateau::swap(Couple pos1, Couple pos2){
-    Piece* temp = plateau[pos1.y][pos1.x];
-    plateau[pos1.y][pos1.x] = plateau[pos2.y][pos2.x];
-    plateau[pos2.y][pos2.x] = temp;
+void Plateau::deplacer(Couple from, Couple to){
+    plateau[to.y][to.x] = plateau[from.y][from.x];
+    plateau[from.y][from.x] = nullptr;
 }
 
 void Plateau::afficher(){

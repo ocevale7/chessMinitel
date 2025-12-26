@@ -12,7 +12,7 @@ extern "C" {
 #include <string.h>
 #include <inttypes.h>
 
-#include "utils_LoRa.h"
+#include "../include/utils_LoRa.h"
 
 #define MESSAGE_LENGTH 4
 #define LORA_MESSAGE_BUFFER_SIZE 64

@@ -2,7 +2,13 @@
 #include "../../include/Game.h"
 
 Dame::Dame (Game* game, Couple pos, int appartenancePlayer) :
-    Piece(game, "Dame", pos, appartenancePlayer) {}
+    Piece(game, "Dame", pos, appartenancePlayer) {
+    points = 9;
+}
+
+void Dame::action() {
+    // La dame n'a pas d'action spéciale pour le moment
+}
 
 void Dame::afficher() {
   cout << "\033[3" << appartenancePlayer + 1 << "m" << "D" << appartenancePlayer << "\033[0m";

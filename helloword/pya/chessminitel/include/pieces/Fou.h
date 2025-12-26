@@ -12,5 +12,5 @@ class Fou : public Piece {
     void afficherMinitel() override;
     CoupleList* availableMoves(Plateau* board) override;
 
-    int getPoints() const override { return 3; }
+    void action() override;
 };

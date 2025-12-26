@@ -2,7 +2,13 @@
 #include "../../include/Game.h"
 
 Fou::Fou (Game* game, Couple pos, int appartenancePlayer) :
-    Piece(game, "Fou", pos, appartenancePlayer) {}
+    Piece(game, "Fou", pos, appartenancePlayer) {
+    points = 3;
+}
+
+void Fou::action() {
+    // Le fou n'a pas d'action spéciale pour le moment
+}
 
 void Fou::afficher() {
   cout << "\033[3" << appartenancePlayer + 1 << "m" << "F" << appartenancePlayer << "\033[0m";
@@ -141,11 +147,11 @@ CoupleList* Fou::availableMoves(Plateau* board) {
         }
     } else {
         if(pos.y - 3 >= 13 - pos.x) {
-            limit = 11;
-            posCurrent = (13 - pos.x) + 1;
-        } else {
             limit = 14;
             posCurrent = pos.y + 1;
+        } else {
+            limit = 11;
+            posCurrent = (13 - pos.x) + 1;
         }
     }
 

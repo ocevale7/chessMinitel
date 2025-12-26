@@ -5,6 +5,8 @@
 using namespace std;
 
 class Pion : public Piece {
+  private:
+    Couple coordPromotion;
   public:
     Pion(Game* game, Couple pos, int appartenancePlayer);
 
@@ -12,5 +14,5 @@ class Pion : public Piece {
     void afficherMinitel() override;
     CoupleList* availableMoves(Plateau* board) override;
 
-    int getPoints() const override { return 1; }
+    void action() override;
 };
