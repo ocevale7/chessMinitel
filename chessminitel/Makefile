@@ -20,6 +20,9 @@ DEVELHELP ?= 1
 # Quiet compilation by default
 QUIET ?= 1
 
+JOUEUR ?= "1234"
+CFLAGS += -DJOUEUR=\"$(JOUEUR)\"
+
 # Include modules
 USEMODULE += xtimer       # for delays
 USEMODULE += periph_uart  # generic UART interface
@@ -34,10 +37,15 @@ USEMODULE += periph_gpio
 # pour avoir le uart_mode()
 USEMODULE += periph_uart_modecfg
 
+USEMODULE += sx127x
+
 # Add current directory to include path (optional)
 CFLAGS += -I$(CURDIR)
 
-include $(RIOTBASE)/Makefile.include
+SRC = $(wildcard *.c) \
+      $(wildcard src/*.c) \
+      $(wildcard src/pieces/*.c) \
+      $(wildcard src/tools/*.c)
 
 SRCXX = $(wildcard *.cpp) \
         $(wildcard src/*.cpp) \
@@ -47,6 +55,8 @@ SRCXX = $(wildcard *.cpp) \
 INCLUDES += -I$(CURDIR)/include \
             -I$(CURDIR)/include/pieces \
             -I$(CURDIR)/include/tools
+
+include $(RIOTBASE)/Makefile.include
 
 myflash:
 	/usr/bin/openocd -f interface/stlink.cfg -f target/stm32l1.cfg \

@@ -12,18 +12,18 @@ void initialize_lora(void)
     channel_cmd(3,(char*[]){"channel","set","868000000"});
 }
 
-void decompose_message(const char* message, uint8_t* coup_recu)
+void decompose_message(const char* message, int* coup_recu)
 {
     // Example message format: "X_init,Y_init,X_final,Y_final"
     int x_init, y_init, x_final, y_final;
     sscanf(message, "%d,%d,%d,%d", &x_init, &y_init, &x_final, &y_final);
-    coup_recu[0] = (uint8_t)x_init;
-    coup_recu[1] = (uint8_t)y_init;
-    coup_recu[2] = (uint8_t)x_final;
-    coup_recu[3] = (uint8_t)y_final;
+    coup_recu[0] = x_init;
+    coup_recu[1] = y_init;
+    coup_recu[2] = x_final;
+    coup_recu[3] = y_final;
 }
 
-void get_message_details(uint8_t* coup_recu)
+void get_message_details(int* coup_recu)
 {
     while (1) {
         if (has_rx) {
@@ -35,7 +35,7 @@ void get_message_details(uint8_t* coup_recu)
     }
 }
 
-void listen_for_message(uint8_t* coup_recu)
+void listen_for_message(int* coup_recu)
 {
     if (coup_recu == NULL) {
         puts("Memory allocation failed");
@@ -47,7 +47,7 @@ void listen_for_message(uint8_t* coup_recu)
     get_message_details(coup_recu);
 }
 
-void send_lora_message(uint8_t* coup_a_envoyer)
+void send_lora_message(int* coup_a_envoyer)
 {
     char message[LORA_MESSAGE_BUFFER_SIZE];
     snprintf(message, LORA_MESSAGE_BUFFER_SIZE, "%d,%d,%d,%d", 
