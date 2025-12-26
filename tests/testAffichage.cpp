@@ -1,7 +1,9 @@
-#include "../include/Plateau.h"
+#include "../include/Game.h"
 
 int main(){
-    Plateau* plateau = new Plateau();
-    plateau->afficher();
+
+    Game* game = new Game();
+    game->start();
+    
     return 0;
 }

@@ -2,3 +2,12 @@
 build
 bin
 tests/bin
+*.o
+*.bin
+*.elf
+*.map
+*.d
+preprocessor_successor.h
+riotbuild.h
+riotbuild.h.in
+
