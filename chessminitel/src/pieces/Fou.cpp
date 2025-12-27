@@ -3,7 +3,7 @@
 
 Fou::Fou (Game* game, Couple pos, int appartenancePlayer) :
     Piece(game, "Fou", pos, appartenancePlayer) {
-    points = 3;
+    points = 5;
 }
 
 void Fou::action() {

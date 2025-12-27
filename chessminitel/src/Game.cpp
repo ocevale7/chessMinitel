@@ -151,6 +151,49 @@ bool Game::isEchecEtMat(int player) {
     return true;
 }
 
+bool Game::isPat(int player) {
+    // Vérifier si le joueur a des mouvements légaux
+    for(int y = 0; y < 14; y++) {
+        for(int x = 0; x < 14; x++) {
+            Piece* piece = board->plateau[y][x];
+            if(piece != nullptr && piece->appartenancePlayer == player) {
+                Couple from(x, y);
+                CoupleList* moves = piece->availableMoves(board);
+                if(moves->head != nullptr) {
+                    delete moves;
+                    return false;
+                }
+                delete moves;
+            }
+        }
+    }
+    return true;
+}
+
+int Game::checkMatAndPat(int currentPlayer, int players[4]) {
+    int count_elimination = 0;
+    for(int player = 0; player < 4; player++) {
+        if(players[player] != -1) {
+            if (player != currentPlayer && isEchecEtMat(player)) {
+                kill(player);
+                players[player] = -1;
+                count_elimination++;
+                points[currentPlayer] += BONUS_POINTS_MAT;
+            } else if (isPat(player)) {
+                kill(player);
+                players[player] = -1;
+                count_elimination++;
+                if (player == currentPlayer) {
+                    points[currentPlayer] += BONUS_POINTS_SELF_PAT;
+                } else {
+                    points[currentPlayer] += BONUS_POINTS_OTHER_PAT;
+                }
+            }
+        }
+    }
+    return count_elimination;
+}
+
 bool Game::move(Couple from, Couple to, int currentPlayer) {
 
     Piece* pieceFrom = board->plateau[from.y][from.x];
@@ -160,7 +203,6 @@ bool Game::move(Couple from, Couple to, int currentPlayer) {
     board->deplacer(from, to);
 
     if (isEchec(currentPlayer)) {
-        cout << "Mouvement mettant en échec votre roi ! Annulation du mouvement." << endl << endl;
         board->plateau[from.y][from.x] = pieceFrom;
         board->plateau[to.y][to.x] = pieceTo;
         return false;

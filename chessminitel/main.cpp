@@ -70,29 +70,23 @@ int main(void)
     
     while (nbActivePlayers > 1) {
         if (players[currentPlayer] != -1) {
-            if (game->isEchecEtMat(currentPlayer)) {
-                players[currentPlayer] = -1;
-                nbActivePlayers--;
-                game->kill(currentPlayer);
+            if(isMyTurn(currentPlayer)) {
+                Couple from = Couple(0,0);
+                Couple to = Couple(0,0);
+                do {
+                    string move = game->recupInputMinitel();
+                } while (!game->play(from, to, currentPlayer));
+                int coup_a_envoyer[4] = {from.x, from.y, to.x, to.y};
+                send_lora_message(coup_a_envoyer);
             } else {
-
-                if(isMyTurn(currentPlayer)) {
-                    Couple from = Couple(0,0);
-                    Couple to = Couple(0,0);
-
-                    do {
-                        string move = game->recupInputMinitel();
-
-                    } while (!game->play(from, to, currentPlayer));
-                } else {
-                    int* coup_recu = (int*)malloc(MESSAGE_LENGTH * sizeof(int));
-                    listen_for_message(coup_recu);
-                    Couple from(coup_recu[0], coup_recu[1]);
-                    Couple to(coup_recu[2], coup_recu[3]);
-                    game->play(from, to, currentPlayer);
-                    free(coup_recu);
-                }
+                int* coup_recu = (int*)malloc(MESSAGE_LENGTH * sizeof(int));
+                listen_for_message(coup_recu);
+                Couple from(coup_recu[0], coup_recu[1]);
+                Couple to(coup_recu[2], coup_recu[3]);
+                game->play(from, to, currentPlayer);
+                free(coup_recu);
             }
+            nbActivePlayers -= game->checkMatAndPat(currentPlayer, players);
         }
         currentPlayer = (currentPlayer + 1) % 4;
     }
