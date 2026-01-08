@@ -67,6 +67,8 @@ int main(void)
     game->start();
 
     game->board->afficherMinitel();
+
+    write_bytes((uint8_t*)JOUEUR, 32);
     
     while (nbActivePlayers > 1) {
         if (players[currentPlayer] != -1) {
