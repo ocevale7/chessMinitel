@@ -68,8 +68,6 @@ int main(void)
 
     game->board->afficherMinitel();
 
-    write_bytes((uint8_t*)JOUEUR, 32);
-    
     while (nbActivePlayers > 1) {
         if (players[currentPlayer] != -1) {
             if(isMyTurn(currentPlayer)) {

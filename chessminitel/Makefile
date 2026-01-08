@@ -20,7 +20,7 @@ DEVELHELP ?= 1
 # Quiet compilation by default
 QUIET ?= 1
 
-JOUEUR ?= "1234"
+JOUEUR ?= "0123"
 CFLAGS += -DJOUEUR=\"$(JOUEUR)\"
 
 # Include modules
