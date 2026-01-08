@@ -58,12 +58,14 @@ void Plateau::afficher(){
 void Plateau::afficherMinitel(){
     flush_minitel();
 
-    moveCursorXY(5, 4);
+    moveCursorXY(4, 3);
 
     graphic_mode();
     uint8_t* casevide=(uint8_t*)"\x20\x20";
 
+    // affichage indices 
     set_bg_color(FOND_JAUNE);
+    write_bytes((uint8_t*)casevide,1);
     for (unsigned int x= 0; x<16; x++){
         if (x>=1 && x<=14){
             text_mode();
@@ -80,13 +82,15 @@ void Plateau::afficherMinitel(){
         }
         
     }
+    write_bytes((uint8_t*)casevide,1);
     text_mode();
     retour_ligne();
     for (unsigned int y=0; y<height; y++){
         text_mode();
-        moveCursorXY(5,5+y);
+        moveCursorXY(4,4+y);
         graphic_mode();
         set_bg_color(FOND_JAUNE);
+        write_bytes((uint8_t*)casevide,1);
         char y_char[3] = {(char)('0' + y / 10), (char)('0' + y % 10), '\0'};
         if (y%2==0){
             set_fg_color(CARACTERE_ROUGE); 
@@ -117,6 +121,7 @@ void Plateau::afficherMinitel(){
             }
         }
         set_bg_color(FOND_JAUNE);
+        write_bytes((uint8_t*)casevide,1);
         if (y%2==0){
             set_fg_color(CARACTERE_ROUGE); 
         }else{
@@ -130,8 +135,9 @@ void Plateau::afficherMinitel(){
         
     }
 
-    moveCursorXY(5, 19);
+    moveCursorXY(4, 18);
     set_bg_color(FOND_JAUNE);
+    write_bytes((uint8_t*)casevide,1);
     for (unsigned int x= 0; x<16; x++){
         if (x>=1 && x<=14){
             text_mode();
@@ -148,6 +154,7 @@ void Plateau::afficherMinitel(){
         }
         
     }
+    write_bytes((uint8_t*)casevide,1);
     text_mode();
     
 }
