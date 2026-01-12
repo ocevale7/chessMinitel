@@ -147,11 +147,11 @@ CoupleList* Fou::availableMoves(Plateau* board) {
         }
     } else {
         if(pos.y - 3 >= 13 - pos.x) {
-            limit = 11;
-            posCurrent = (13 - pos.x) + 1;
-        } else {
             limit = 14;
             posCurrent = pos.y + 1;
+        } else {
+            limit = 11;
+            posCurrent = (13 - pos.x) + 1;
         }
     }
 

@@ -39,8 +39,11 @@ USEMODULE += periph_uart_modecfg
 
 USEMODULE += sx127x
 
+DRIVER ?= sx1272
+USEMODULE += $(DRIVER)
+
 # Add current directory to include path (optional)
-CFLAGS += -I$(CURDIR)
+CFLAGS += -I$(CURDIR) -Os
 
 SRC = $(wildcard *.c) \
       $(wildcard src/*.c) \

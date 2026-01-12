@@ -29,6 +29,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 #include "../include/Minitel.h"
+#include <string.h>
 
 void graphic_mode(){
   uart_write(MINITEL_UART, (uint8_t *)SO, 1);
@@ -104,4 +105,9 @@ void moveCursorXY(int x, int y) {
   writeBytesP(x);   // Pc : Voir section Private ci-dessous
   write_bytes((uint8_t*)"\x48",1);
   text_mode();
+}
+
+void outMinitel(const char* str) {
+  moveCursorXY(0,1);
+    write_bytes((uint8_t*)str, strlen(str));
 }

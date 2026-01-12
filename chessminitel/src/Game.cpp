@@ -76,6 +76,7 @@ void Game::start() {
 bool Game::isEchec(int player) {
     Couple kingPos(-1, -1);
     // Trouver la position du roi du joueur donné
+    outMinitel("Recherche du roi...\n");
     for(int y = 0; y < 14; y++) {
         for(int x = 0; x < 14; x++) {
             Piece* piece = board->plateau[y][x];
@@ -86,13 +87,15 @@ bool Game::isEchec(int player) {
         }
         if(kingPos.x != -1) break;
     }
-
+    outMinitel("Roi trouve.\n");
     // Vérifier si une pièce adverse peut attaquer le roi
     for(int y = 0; y < 14; y++) {
         for(int x = 0; x < 14; x++) {
             Piece* piece = board->plateau[y][x];
             if(piece != nullptr && piece->appartenancePlayer != player) {
                 Couple pos(x, y);
+                std::string s_piece = std::string("piece trouvee: ") + piece->nom + std::string(" en ") + std::to_string(x) + std::string(", ") + std::to_string(y) + std::string("\n");
+                outMinitel(s_piece.c_str());
                 CoupleList* moves = piece->availableMoves(board);
                 if(moves->isInside(kingPos)) {
                     delete moves;
@@ -102,7 +105,7 @@ bool Game::isEchec(int player) {
             }
         }
     }
-
+    outMinitel("Aucune menace detectee.\n");
     return false;
 }
 
@@ -199,38 +202,47 @@ bool Game::move(Couple from, Couple to, int currentPlayer) {
     Piece* pieceFrom = board->plateau[from.y][from.x];
     Piece* pieceTo = board->plateau[to.y][to.x];
 
+    outMinitel("Deplacement de la piece...");
     board->plateau[from.y][from.x]->deplacer(to);
     board->deplacer(from, to);
-
+    outMinitel("Verification de l'echec...");
     if (isEchec(currentPlayer)) {
         board->plateau[from.y][from.x] = pieceFrom;
         board->plateau[to.y][to.x] = pieceTo;
         return false;
     } else {
+        outMinitel("Pas echec.\n");
         if (pieceTo != nullptr) {
             points[currentPlayer] += pieceTo->points;
             delete pieceTo;
         }
         pieceFrom->action();
+        outMinitel("action effectuée\n");
         currentPlayer = (currentPlayer + 1) % 4;
     }
+    outMinitel("Deplacement effectue.");
     return true;
 }
 
 bool Game::play(Couple from, Couple to, int currentPlayer) {
+    outMinitel("Verification du coup...\n");
     if(board->plateau[from.y][from.x] != nullptr) {
+        outMinitel("Piece trouvee a la position.\n");
         if (board->plateau[from.y][from.x]->appartenancePlayer == currentPlayer) {
+            outMinitel("Piece appartient au joueur courant.\n");
             if(board->plateau[from.y][from.x]->availableMoves(board)->isInside(to)) {
+                outMinitel("Mouvement valide.\n");
                 return move(from, to, currentPlayer);
             } else {
-                cout << "Mouvement invalide !" << endl << endl;
+                outMinitel("Mouvement invalide.\n");
             }
         } else {
-            cout << "Cette pièce n'appartient pas au joueur courant !" << endl << endl;
+            outMinitel("Cette piece n'appartient pas au joueur courant !\n\n");
         }
     } else {
-        cout << "Pas de pièce à cette position !" << endl << endl;
+        outMinitel("Pas de piece a cette position !\n\n");
     }
+    
     return false;
 }
 
@@ -245,39 +257,46 @@ void Game::kill(int player) {
     }
 }
 
-
-string Game::recupInputMinitel(){
+int askIntMinitel(const char* label, int x, int y) {
+    moveCursorXY(0, y);
+    write_bytes((uint8_t*)label, strlen(label));
     
-    char position1_X[] = "Entrer cord X de la piece a bouger: ..";
-    char position1_Y[] = "Entrer cord Y de la piece a bouger: ..";
-    set_fg_white(false);
-    moveCursorXY(0,23);
-    write_bytes((uint8_t*)position1_X, 40);
-    moveCursorXY(0,24);
-    write_bytes((uint8_t*)position1_Y, 40);
+    char buffer[3] = {0};
+    int i = 0;
+    
+    // On place le curseur juste après le label (adapté à tes coordonnées 37)
+    moveCursorXY(x, y);
 
-    bool input1_X_valid = false;
-    while (!input1_X_valid){
-        moveCursorXY(37,23);
+    while (i < 2) {
         msg_t msg;
-        char buffer[3] = "";
-        char buf=0;
-        while (buf != '\r'){
-            msg_receive(&msg);
-		    buf = (char)msg.content.value;
-            if (buf!=0){
-                strcat(buffer, &buf);
-            }
+        msg_receive(&msg);
+        char c = (char)msg.content.value;
+
+        if (c >= '0' && c <= '9') {
+            buffer[i++] = c;
+            //write_bytes((uint8_t*)&c, 1); // Écho du caractère saisi
         }
-        moveCursorXY(0,1);
-        write_bytes((uint8_t*)buffer, 2);
-        
     }
+    
+    return atoi(buffer);
+}
 
-    bool input1_Y_valid = false;
-    while (!input1_Y_valid){
-        moveCursorXY(37,24);
-    }
+void Game::recupInputMinitel(Couple& from, Couple& to) {
+    set_fg_white(false);
 
-    return "";
+    // 1. Récupération du point de départ
+    from.x = askIntMinitel("Entrer cord X de la piece a bouger: ..", 37, 23);
+    from.y = askIntMinitel("Entrer cord Y de la piece a bouger: ..", 37, 24);
+
+    // on print from
+    std::string s_from = std::string("Depart     : (") + std::to_string(from.x) + ", " + std::to_string(from.y) + ")\n";
+    outMinitel(s_from.c_str());
+
+    // 2. Récupération de la destination
+    to.x = askIntMinitel("Entrer cord X de la case dest     : ..", 37, 23);
+    to.y = askIntMinitel("Entrer cord Y de la case dest     : ..", 37, 24);
+
+    // on print to
+    std::string s_to = std::string("Destination : (") + std::to_string(to.x) + ", " + std::to_string(to.y) + ")\n";
+    outMinitel(s_to.c_str());
 }

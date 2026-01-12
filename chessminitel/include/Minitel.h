@@ -264,6 +264,9 @@
 #include "xtimer.h"
 
 ////////////////////////////////////////////////////////////////////////
+
+
+
 void graphic_mode();
 void text_mode();
 void flush_minitel();
@@ -280,6 +283,7 @@ void set_fg_black(bool lighter);
 
 void retour_ligne();
 void moveCursorXY(int x, int y);
+void outMinitel(const char* str);
 ////////////////////////////////////////////////////////////////////////
 
 #endif // Fin Si (MINITEL1B_H)

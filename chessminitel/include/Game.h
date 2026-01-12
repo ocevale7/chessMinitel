@@ -31,7 +31,7 @@ class Game {
 
         void kill(int player);
 
-        string recupInputMinitel();
+        void recupInputMinitel(Couple& from, Couple& to);
 };
 
 #endif
