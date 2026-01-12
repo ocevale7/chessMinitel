@@ -69,7 +69,7 @@ void Plateau::afficherMinitel(){
     for (unsigned int x= 0; x<16; x++){
         if (x>=1 && x<=14){
             text_mode();
-            char x_char[3] = {(char)('0' + x / 10), (char)('0' + x % 10), '\0'};
+            char x_char[3] = {(char)('0' + (x-1) / 10), (char)('0' + (x-1) % 10), '\0'};
             if (x%2==0){
                 set_fg_color(CARACTERE_ROUGE); 
             }else{
@@ -141,7 +141,7 @@ void Plateau::afficherMinitel(){
     for (unsigned int x= 0; x<16; x++){
         if (x>=1 && x<=14){
             text_mode();
-            char x_char[3] = {(char)('0' + x / 10), (char)('0' + x % 10), '\0'};
+            char x_char[3] = {(char)('0' + (x-1) / 10), (char)('0' + (x-1) % 10), '\0'};
             if (x%2==0){
                 set_fg_color(CARACTERE_ROUGE); 
             }else{
