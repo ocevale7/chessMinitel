@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "xtimer.h"
-#include "../include/utils_LoRa.h"
+#include "../include/tools/utils_LoRa.h"
 
 extern lora_rx_msg_t last_rx;
 extern volatile bool has_rx;

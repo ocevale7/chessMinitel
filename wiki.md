@@ -7,7 +7,7 @@
 
 ## 2. Description du projet
 
-Notre projet était de développer un jeu d'échecs à quatre joueurs en réseau, utilisant quatre Minitels comme interfaces utilisateur. Chacun étant connecté à une carte RiotOS équipée d'un module LoRa pour la communication sans fil. L'objectif est de réaliser une partie complète, stable et synchronisée en réseau.
+Notre projet était de développer un jeu d'échecs à quatre joueurs en réseau, utilisant quatre Minitels comme interfaces utilisateur. Chacun étant connecté à une carte RiotOS équipée d'un module LoRa pour la communication sans fil. L'objectif est de réaliser une partie complète, stable et synchronisée en réseau. Chaque joueur peut voir l'état du plateau de jeu, les pièces en mouvement, et effectuer ses propres mouvements en utilisant le clavier du Minitel. La communication entre les Minitels est assurée par les modules LoRa, garantissant que chaque joueur voit les mises à jour en temps réel malgré la distance qui les sépare.
 
 ## 3. Problématique
 
