@@ -1,6 +1,5 @@
 #include "../../include/pieces/Cavalier.h"
 #include "../../include/Game.h"
-//#include "../../include/Minitel.h"
 
 
 Cavalier::Cavalier (Game* game, Couple pos, int appartenancePlayer) :

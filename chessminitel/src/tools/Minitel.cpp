@@ -28,7 +28,7 @@
 */
 ////////////////////////////////////////////////////////////////////////
 
-#include "../include/Minitel.h"
+#include "../include/tools/Minitel.h"
 
 void graphic_mode(){
   uart_write(MINITEL_UART, (uint8_t *)SO, 1);

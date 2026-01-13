@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include "tools/CoupleList.h"
-#include "Minitel.h"
+#include "tools/Minitel.h"
 
 using namespace std;
 

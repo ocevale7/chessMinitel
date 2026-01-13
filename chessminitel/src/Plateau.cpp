@@ -1,5 +1,5 @@
 #include "../include/Plateau.h"
-#include "../include/Minitel.h"
+#include "../include/tools/Minitel.h"
 
 #include <stdio.h>
 #include <string.h>
