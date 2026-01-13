@@ -30,6 +30,7 @@ class Piece {
     virtual void afficherMinitel() = 0;
 
     virtual void action() = 0;
+
 };
 
 #endif

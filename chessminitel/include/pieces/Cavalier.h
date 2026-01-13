@@ -13,4 +13,5 @@ class Cavalier : public Piece {
     CoupleList* availableMoves(Plateau* board) override;
 
     void action() override;
+    static uint8_t* getMinitel(bool side);
 };

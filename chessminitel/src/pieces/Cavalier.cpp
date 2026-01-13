@@ -139,3 +139,11 @@ void Cavalier::afficherMinitel(){
     }
 
 }
+
+uint8_t* Cavalier::getMinitel(bool side){
+    if (!side){
+        return (uint8_t*)"\x7A\x31";
+    }else{
+        return (uint8_t*)"\x3D\x34";
+    }
+}
