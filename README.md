@@ -107,7 +107,7 @@ Les messages affichés guident l'utilisateur à chaque étape (sélection des co
 
 ## Documentation du code
 
-Les dossiers **boards** et **RIOT-OS** contiennent le code nécessaire à l'utilisation d'une carte RIOT-wyres (voir : [Github Riot-OS](https://github.com/CampusIoT/RIOT-wyres/) )
+Les dossiers **boards** et **RIOT-OS** contiennent le code nécessaire à l'utilisation d'une carte RIOT-wyres (voir : [Github Riot-OS](https://github.com/CampusIoT/RIOT-wyres/))
 
 Le dossier **chessminitel** contient notre code. Voici un descriptif des classes et des fonctions principales :
 
@@ -193,9 +193,9 @@ Les méthodes utiles pour le LoRa sont dans ```chessminitel/src/tools/LoRa.c```.
 
 ### Communication Minitel
 
-Gestion de l'affichage du plateau grâce aux semi-caractères du minitel. Voici un glossaire des pièces :
+Gestion de l'affichage du plateau grâce aux semi-caractères du Minitel. Voici un glossaire des pièces :
 
-Piece | Code semi-graphique pièce droite | Code semi graphique pièce coté| Rendu
+Piece | Code semi-graphique pièce droite | Code semi-graphique pièce coté| Rendu
 ------|---------------------|---------------------|-------
 Pion  |      ```0x78 0x30```      | ```0x3D 0x20```| ![Affichage Pion](images/affichage_pion.png)
 Tour  |      ```0xD7 0x35```      | ```0xF5 0x13``` | ![Affichage Tour](images/affichage_tour.png)
@@ -210,9 +210,9 @@ Les méthodes utiles pour la communication avec le Minitel sont dans ```chessmin
 
 | Spécification | Description|
 |---------------|------------|
-| ```void moveCursorXY(int x, int y)``` | Bouge le curseur à la position (x,y) sur le minitel|
-| ```void write_bytes(uint8_t* b, size_t len)``` | Ecrit b à l'emplacement du curseur sur le minitel |
-| ```void recupInputMinitel(Couple& from, Couple& to)``` | Récupère un coup depuis le clavier du minitel|
+| ```void moveCursorXY(int x, int y)``` | Bouge le curseur à la position (x,y) sur le Minitel|
+| ```void write_bytes(uint8_t* b, size_t len)``` | Écrit b à l'emplacement du curseur sur le Minitel |
+| ```void recupInputMinitel(Couple& from, Couple& to)``` | Récupère un coup depuis le clavier du Minitel|
 
 ## Annexe
 
