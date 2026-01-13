@@ -286,4 +286,8 @@ void moveCursorXY(int x, int y);
 void outMinitel(const char* str);
 ////////////////////////////////////////////////////////////////////////
 
+#include "CoupleList.h"
+
+void recupInputMinitel(Couple& from, Couple& to);
+
 #endif // Fin Si (MINITEL1B_H)

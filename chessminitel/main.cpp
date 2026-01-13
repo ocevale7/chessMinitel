@@ -5,6 +5,7 @@
 #include "stdio_uart.h"
 #include "xtimer.h"
 #include "include/Game.h"
+#include "include/tools/Minitel.h"
 #include "include/tools/LoRa.h"
 
 #define MINITEL_UART  UART_DEV(0)
@@ -84,7 +85,7 @@ int main(void)
                 Couple from = Couple(0,0);
                 Couple to = Couple(0,0);
                 do {
-                    game->recupInputMinitel(from, to);
+                    recupInputMinitel(from, to);
                 } while (!game->play(from, to, currentPlayer));
                 //int coup_a_envoyer[4] = {from.x, from.y, to.x, to.y};
                 //send_lora_message(coup_a_envoyer);

@@ -30,8 +30,6 @@ class Game {
         int checkMatAndPat(int currentPlayer, int players[4]);
 
         void kill(int player);
-
-        void recupInputMinitel(Couple& from, Couple& to);
 };
 
 #endif

@@ -38,9 +38,11 @@ Ils entament une partie, chaque joueur effectuant ses mouvements à tour de rôl
 
 ## 6. Budget approximatif
 
+7 * 3 h de cours + 5 * 3h de jeudi aprem + ~15h de dev du jeux + ? 
 
 ## 7. Bilan du projet
 
 
 ## 8. Idées d'améliorations
 
+Mettre un bot contre qui ont peut jouer, pouvoir avoir plusieurs types d'interface homme - machine

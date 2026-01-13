@@ -161,13 +161,15 @@ Le code est organisé de la manière suivante :
 
 Les méthodes utiles pour le LoRa sont dans ```chessminitel/src/tools/LoRa.c```.
 
+**Méthodes principales :**
+
 | Spécification | Description|
 |---------------|------------|
 |  ```void initialize_lora(void)``` | Initialise le module LoRa (125 kHz, SF12, CR=5, fréquence 868 MHz)  |
 | ```void send_lora_message(int coup_a_envoyer[4])``` | Envoie un coup : coordonnées de départ et d'arrivée |
 | ```void listen_for_message(int coup_recu[4])``` | Attend et reçoit un coup depuis une autre carte (fonction bloquante)|
 
-### Affichage sur Minitel
+### Communication Minitel
 
 Gestion de l'affichage du plateau grace aux semi-caractères du minitel. Voici un glossaire des pièces :
 
@@ -180,6 +182,15 @@ Fou | ```0x7E 0x30``` | ```0x3F 0x24``` | ![Affichage Fou](images/affichage_fou.
 Dame | ```0x76 0x34``` | ```0x77 0x24``` | ![Affichage Dame](images/affichage_dame.png)
 Roi | ```0x6D 0x25``` | ```0x6E 0x31``` | ![Affichage Roi](images/affichage_roi.png) 
 
+Les méthodes utiles pour la communication avec le Minitel sont dans ```chessminitel/src/tools/Minitel.cpp```.
+
+**Méthodes principales :**
+
+| Spécification | Description|
+|---------------|------------|
+| ```void moveCursorXY(int x, int y)``` | Bouge le curseur à la position (x,y) sur le minitel|
+| ```void write_bytes(uint8_t* b, size_t len)``` | Ecris b à l'emplacement du curseur sur le minitel |
+| ```void recupInputMinitel(Couple& from, Couple& to)``` | Récupère un coup depuis le clavier du minitel|
 
 ## Annexe
 
