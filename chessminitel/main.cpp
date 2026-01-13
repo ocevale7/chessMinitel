@@ -8,6 +8,11 @@
 #include "include/tools/Minitel.h"
 #include "include/tools/LoRa.h"
 
+#ifdef PARTIE_FILE
+#include <fcntl.h>
+#include <unistd.h>
+#endif
+
 #define MINITEL_UART  UART_DEV(0)
 #define MINITEL_BAUD  1200U
 
@@ -40,6 +45,42 @@ static void rx_cb(void *uart, uint8_t c)
     msg_send(&msg, main_pid);
 }
 
+#ifdef PARTIE_FILE
+static int partie_fd = -1;
+
+bool getMoveFromFile(Couple &from, Couple &to)
+{
+    char buffer[64];
+    int idx = 0;
+    char c;
+
+    while (read(partie_fd, &c, 1) == 1) {
+        if (c == '\n') {
+            buffer[idx] = '\0';
+            break;
+        }
+        buffer[idx++] = c;
+        if (idx >= (int)sizeof(buffer) - 1) {
+            break;
+        }
+    }
+
+    if (idx == 0) {
+        return false; // fin du fichier
+    }
+
+    int fx, fy, tx, ty;
+    if (sscanf(buffer, "%d %d %d %d", &fx, &fy, &tx, &ty) != 4) {
+        return false;
+    }
+
+    from = Couple(fx, fy);
+    to   = Couple(tx, ty);
+    return true;
+}
+#endif
+
+
 void launch_game()
 {
     uart_write(MINITEL_UART, (uint8_t *)"\x0C", 1); 
@@ -58,12 +99,21 @@ void launch_game()
             if(isMyTurn(currentPlayer)) {
                 Couple from = Couple(0,0);
                 Couple to = Couple(0,0);
+#ifdef PARTIE_FILE
+                if (!getMoveFromFile(from, to)) {
+                    outMinitel("Fin du fichier de partie.\n");
+                    break;
+                }
+                game->play(from, to, currentPlayer);
+#else
                 do {
                     recupInputMinitel(from, to);
                 } while (!game->play(from, to, currentPlayer));
-                //int coup_a_envoyer[4] = {from.x, from.y, to.x, to.y};
-                //send_lora_message(coup_a_envoyer);
+
+                int coup_a_envoyer[4] = {from.x, from.y, to.x, to.y};
+                send_lora_message(coup_a_envoyer);
                 outMinitel("Coup envoye via LoRa.\n");
+#endif
             } else {
                 int* coup_recu = (int*)malloc(MESSAGE_LENGTH * sizeof(int));
                 listen_for_message(coup_recu);
@@ -118,9 +168,19 @@ int main(void)
 
     // START OF THE CHESS GAME
 
+#ifdef PARTIE_FILE
+    partie_fd = open(PARTIE_FILE, O_RDONLY);
+    if (partie_fd < 0) {
+        return 1;
+    }
+#endif
+
     do {
         launch_game();
     } while(askIntMinitel("Voulez vous refaire une partie ? (Non = 0 / Oui = autre chose)", 0, 1) != 0);
     
+#ifdef PARTIE_FILE
+    close(partie_fd);
+#endif
     return 0;
 }

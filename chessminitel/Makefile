@@ -23,6 +23,11 @@ QUIET ?= 1
 JOUEUR ?= "0123"
 CFLAGS += -DJOUEUR=\"$(JOUEUR)\"
 
+# Partie enregistrée
+ifdef PARTIE
+CFLAGS += -DPARTIE_FILE=\"$(PARTIE)\"
+endif
+
 # Include modules
 USEMODULE += xtimer       # for delays
 USEMODULE += periph_uart  # generic UART interface
