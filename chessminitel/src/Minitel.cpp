@@ -109,5 +109,8 @@ void moveCursorXY(int x, int y) {
 
 void outMinitel(const char* str) {
   moveCursorXY(0,1);
-    write_bytes((uint8_t*)str, strlen(str));
+  uint8_t cleanCode = 0x18;
+  write_bytes(&cleanCode, 1);
+  
+  write_bytes((uint8_t*)str, strlen(str));
 }
