@@ -87,17 +87,17 @@ Les messages affichés guident l'utilisateur à chaque étape (sélection des co
 
 Les dossiers **boards** et **RIOT-OS** contiennent le code nécessaire à l'utilisation d'une carte RIOT-wyres (voir : https://github.com/CampusIoT/RIOT-wyres/ )
 
-Le dossier chessminitel contient notre code. Voici un descriptif des classes et des fonctions principales :
+Le dossier **chessminitel** contient notre code. Voici un descriptif des classes et des fonctions principales :
 
 ### Structure générale du code
 
 Le code est organisé de la manière suivante :
 
-* Une fonction ```main```, point d'entrée du programme, qui gère la boucle principale et l'enchaînement des tours de jeu.
+* Une fonction ```main```, point d'entrée du programme, qui gère les initialisations (UART, module LoRa et logique du jeu), la boucle principale, l'enchaînement des tours de jeu ainsi que la récupération des coups (via LoRa ou via le clavier du Minitel).
 
 * Une classe ```Game```, responsable de l'état global du jeu et de la logique principale.
 
-* Une classe abstraite ```Piece```, dont héritent toutes les pièces du jeu.
+* Une classe abstraite ```Piece```, dont héritent toutes les pièces du jeu, chacune disposant d'une classe dédiée.
 
 * Une classe ```Plateau```, chargée de la représentation et de la gestion du plateau.
 
@@ -159,9 +159,7 @@ Le code est organisé de la manière suivante :
 
 ### Communication LoRa
 
-Les méthodes utiles pour le LoRa sont dans ```chessminitel/src/tools/LoRa.c```
-
-
+Les méthodes utiles pour le LoRa sont dans ```chessminitel/src/tools/LoRa.c```.
 
 | Spécification | Description|
 |---------------|------------|

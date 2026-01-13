@@ -91,11 +91,6 @@ int main(void)
         currentPlayer = (currentPlayer + 1) % 4;
     }
 
-    // cout << "Partie terminée!" << endl << endl;
-    // cout << "Points des joueurs :" << endl;
-    // for (int i = 0; i < 4; i++) {
-    //     cout << "Joueur " << i << " : " << game->points[i] << " points" << endl;
-    // }
     delete game;
     
     return 0;
