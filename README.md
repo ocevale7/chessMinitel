@@ -59,15 +59,15 @@ Se placer dans le dossier **chessminitel** du projet puis lancer :
 
     * Par défaut, les quatre joueurs sont regroupés sur un seul Minitel.
 
-* L'option PARTIE permet de faire jouer une partie pré-enregistrée sur le Minitel.
+* L'option ```PARTIE``` permet de faire jouer une partie pré-enregistrée sur le Minitel.
 
-    * Une partie peut être enregistrée dans deux fichiers .txt distincts, afin de jouer sur deux Minitels différents et permettre la communication normale entre eux via LoRa.
+    * Une partie peut être enregistrée dans deux fichiers ```.txt``` distincts, afin de jouer sur deux Minitels différents et permettre la communication normale entre eux via LoRa.
 
     * Par exemple :
 
-        - input1.txt contient les coups des joueurs 0 et 1.
+        - ```input1.txt``` contient les coups des joueurs 0 et 1.
 
-        - input2.txt contient les coups des joueurs 2 et 3.
+        - ```input2.txt``` contient les coups des joueurs 2 et 3.
 
         - Sur le premier Minitel :
 
@@ -91,11 +91,11 @@ Se placer dans le dossier **chessminitel** du projet puis lancer :
 
 ```make flash```
 
-4. Une fois le flash terminé, bébrancher et rebrancher la carte (le reset peut mal se faire sur cetraines cartes). 
+4. Une fois le flash terminé, débrancher et rebrancher la carte (le reset peut mal se faire sur certaines cartes). 
 
 ### 5. Utilisation
 
-Les règles du jeu implémentées correspondent aux échecs à quatre joueurs : https://www.chess.com/fr/terms/les-echecs-a-quatre-joueurs
+Les règles du jeu implémentées correspondent aux échecs à quatre joueurs : [Chess.com](https://www.chess.com/fr/terms/les-echecs-a-quatre-joueurs)
 
 * Le programme communique avec un Minitel (ou un émulateur compatible) via l'interface série.
 
@@ -107,7 +107,7 @@ Les messages affichés guident l'utilisateur à chaque étape (sélection des co
 
 ## Documentation du code
 
-Les dossiers **boards** et **RIOT-OS** contiennent le code nécessaire à l'utilisation d'une carte RIOT-wyres (voir : https://github.com/CampusIoT/RIOT-wyres/ )
+Les dossiers **boards** et **RIOT-OS** contiennent le code nécessaire à l'utilisation d'une carte RIOT-wyres (voir : [Github Riot-OS](https://github.com/CampusIoT/RIOT-wyres/) )
 
 Le dossier **chessminitel** contient notre code. Voici un descriptif des classes et des fonctions principales :
 
@@ -125,7 +125,7 @@ Le code est organisé de la manière suivante :
 
 * Des fonctions utilitaires pour la communication Minitel et LoRa.
 
-### Descriptions des classses
+### Descriptions des classes
 
 #### Classe ```Piece```
 
@@ -193,7 +193,7 @@ Les méthodes utiles pour le LoRa sont dans ```chessminitel/src/tools/LoRa.c```.
 
 ### Communication Minitel
 
-Gestion de l'affichage du plateau grace aux semi-caractères du minitel. Voici un glossaire des pièces :
+Gestion de l'affichage du plateau grâce aux semi-caractères du minitel. Voici un glossaire des pièces :
 
 Piece | Code semi-graphique pièce droite | Code semi graphique pièce coté| Rendu
 ------|---------------------|---------------------|-------
@@ -211,7 +211,7 @@ Les méthodes utiles pour la communication avec le Minitel sont dans ```chessmin
 | Spécification | Description|
 |---------------|------------|
 | ```void moveCursorXY(int x, int y)``` | Bouge le curseur à la position (x,y) sur le minitel|
-| ```void write_bytes(uint8_t* b, size_t len)``` | Ecris b à l'emplacement du curseur sur le minitel |
+| ```void write_bytes(uint8_t* b, size_t len)``` | Ecrit b à l'emplacement du curseur sur le minitel |
 | ```void recupInputMinitel(Couple& from, Couple& to)``` | Récupère un coup depuis le clavier du minitel|
 
 ## Annexe
