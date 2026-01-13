@@ -186,4 +186,5 @@ Roi | ```0x6D 0x25``` | ```0x6E 0x31``` | ![Affichage Roi](images/affichage_roi.
 ## Annexe
 
 Table des caractères semi-graphique :
+
 ![Table des caractères semi-graphique](images/table_semi_graph.png)
