@@ -113,3 +113,11 @@ void Tour::afficherMinitel(){
     
 
 }
+
+uint8_t* Tour::getMinitel(bool side){
+    if (!side){
+        return (uint8_t*)"\x7D\x35";
+    }else{
+        return (uint8_t*)"\x5F\x31";
+    }
+}

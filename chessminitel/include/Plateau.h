@@ -36,4 +36,7 @@ class Plateau {
         void afficherMinitel();
         
         void deplacer(Couple pos1, Couple pos2);
+        void updateMinitelCase(Couple pos);
+        void updateDeplacementMinitel(Couple pos1, Couple pos2);
+        void printGuide();
 };  

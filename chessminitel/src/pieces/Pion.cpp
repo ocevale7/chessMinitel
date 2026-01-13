@@ -138,3 +138,11 @@ void Pion::afficherMinitel(){
     
 
 }
+
+uint8_t* Pion::getMinitel(bool side){
+    if (!side){
+        return (uint8_t*)"\x78\x30";
+    }else{
+        return (uint8_t*)"\x3D\x20";
+    }
+}

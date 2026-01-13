@@ -266,3 +266,12 @@ void Dame::afficherMinitel(){
     }
 
 }
+
+
+uint8_t* Dame::getMinitel(bool side){
+    if (!side){
+        return (uint8_t*)"\x76\x34";
+    }else{
+        return (uint8_t*)"\x77\x24";
+    }
+}

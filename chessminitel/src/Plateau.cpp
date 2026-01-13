@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "../include/pieces/pieces.h"
 
 Plateau::Plateau(){
     for(unsigned int i = 0; i < width; i++) {
@@ -157,4 +158,91 @@ void Plateau::afficherMinitel(){
     write_bytes((uint8_t*)casevide,1);
     text_mode();
     
+}
+
+void Plateau::updateMinitelCase(Couple pos){
+    graphic_mode();
+    uint8_t* casevide=(uint8_t*)"\x20\x20";
+    unsigned int x = pos.x;
+    unsigned int y = pos.y;
+    moveCursorXY(7 + x * 2, 5 + y);
+    if ((x<3 || x>=width-3) && (y<3 || y>=height-3)){
+        set_bg_color(FOND_ROUGE);
+        write_bytes((uint8_t*)casevide,2);
+    }else{
+        if ((x+y)%2){
+            set_bg_black();
+        }else{
+            set_bg_white();
+        }
+        if (plateau[y][x]){
+            plateau[y][x]->afficherMinitel();
+        }else{
+            write_bytes((uint8_t*)casevide,2);
+        }
+    }
+}
+
+void Plateau::updateDeplacementMinitel(Couple pos1, Couple pos2){
+    updateMinitelCase(pos1);
+    updateMinitelCase(pos2);
+}
+
+void Plateau::printGuide(){
+    graphic_mode();
+    moveCursorXY(9,2);
+    // affichage d'un pion droit
+    set_bg_black();
+    set_fg_white(false);
+    write_bytes(Pion::getMinitel(false),2);
+    // affichage d'un pion sur le cote
+    set_bg_white();
+    set_fg_black(false);
+    write_bytes(Pion::getMinitel(true),2);
+    // affichage d'un fou droit
+    set_bg_black();
+    set_fg_white(false);
+    write_bytes(Fou::getMinitel(false),2);
+    // affichage d'un fou sur le cote
+    set_bg_white();
+    set_fg_black(false);
+    write_bytes(Fou::getMinitel(true),2);
+    // affichage d'une tour droite
+    set_bg_black();
+    set_fg_white(false);
+    write_bytes(Tour::getMinitel(false),2);
+    // affichage d'une tour sur le cote
+    set_bg_white();
+    set_fg_black(false);
+    write_bytes(Tour::getMinitel(true),2);
+    // affichage d'un cavalier droit
+    set_bg_black();
+    set_fg_white(false);
+    write_bytes(Cavalier::getMinitel(false),2);
+    // affichage d'un cavalier sur le cote
+    set_bg_white();
+    set_fg_black(false);
+    write_bytes(Cavalier::getMinitel(true),2);
+    // affichage d'une dame droite
+    set_bg_black();
+    set_fg_white(false);
+    write_bytes(Dame::getMinitel(false),2);
+    // affichage d'une dame sur le cote
+    set_bg_white();
+    set_fg_black(false);
+    write_bytes(Dame::getMinitel(true),2);
+    // affichage d'un roi droit
+    set_bg_black();
+    set_fg_white(false);
+    write_bytes(Roi::getMinitel(false),2);
+    // affichage d'un roi sur le cote
+    set_bg_white();
+    set_fg_black(false);
+    write_bytes(Roi::getMinitel(true),2);
+
+    // affichage nom des pieces
+    text_mode();
+    set_fg_white(true);
+    moveCursorXY(9,3);
+    write_bytes((uint8_t*)" P.  F.  T.  C.  D.  R. ",24);
 }

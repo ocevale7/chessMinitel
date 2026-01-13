@@ -195,3 +195,11 @@ void Fou::afficherMinitel(){
     }
 
 }
+
+uint8_t* Fou::getMinitel(bool side){
+    if (!side){
+        return (uint8_t*)"\x7E\x30";
+    }else{
+        return (uint8_t*)"\x3F\x24";
+    }
+}

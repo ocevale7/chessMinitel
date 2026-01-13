@@ -143,3 +143,11 @@ void Roi::afficherMinitel(){
     }
 
 }
+
+uint8_t* Roi::getMinitel(bool side){
+    if (!side){
+        return (uint8_t*)"\x6D\x25";
+    }else{
+        return (uint8_t*)"\x6E\x31";
+    }
+}
