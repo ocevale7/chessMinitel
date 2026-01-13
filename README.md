@@ -6,7 +6,7 @@ Ardisson Noémie - Py Antonin - Boisset Valentin
 
 Ce document décrit pas à pas l'installation, la compilation, le flash et l'utilisation du projet ChessMinitel. Il est destiné à tout utilisateur disposant d'un environnement Linux et d'une carte compatible RIOT-OS.
 
-### 1. Clonage du dépôt
+### 1. Clonage du dépôt
 
 ```
 git clone [URL_DU_DEPOT]
@@ -59,7 +59,7 @@ L'option ```JOUEUR``` permet de définir quels joueurs sont associés à la cart
 
 * Par défaut, les quatre joueurs sont regroupés sur un seul Minitel.
 
-### 4. Flash 
+### 4. Flash 
 
 1. Brancher la carte en USB.
 
