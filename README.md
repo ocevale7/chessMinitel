@@ -47,17 +47,39 @@ openocd --version
 
 Se placer dans le dossier **chessminitel** du projet puis lancer :
 
-```make -j 4 [JOUEUR=0123]```
+```make -j 4 [JOUEUR=0123] [PARTIE=input.txt]```
 
-L'option ```JOUEUR``` permet de définir quels joueurs sont associés à la carte courante.
+* L'option ```JOUEUR``` permet de définir quels joueurs sont associés à la carte courante.
 
-* Les chiffres possibles sont ```0```, ```1```, ```2``` et ```3```.
+    * Les chiffres possibles sont ```0```, ```1```, ```2``` et ```3```.
 
-* Toutes les combinaisons sont autorisées.
+    * Toutes les combinaisons sont autorisées.
 
-* Chaque joueur doit être déclaré une seule fois sur l'ensemble des cartes.
+    * Chaque joueur doit être déclaré une seule fois sur l'ensemble des cartes.
 
-* Par défaut, les quatre joueurs sont regroupés sur un seul Minitel.
+    * Par défaut, les quatre joueurs sont regroupés sur un seul Minitel.
+
+* L'option PARTIE permet de faire jouer une partie pré-enregistrée sur le Minitel.
+
+    * Une partie peut être enregistrée dans deux fichiers .txt distincts, afin de jouer sur deux Minitels différents et permettre la communication normale entre eux via LoRa.
+
+    * Par exemple :
+
+        - input1.txt contient les coups des joueurs 0 et 1.
+
+        - input2.txt contient les coups des joueurs 2 et 3.
+
+        - Sur le premier Minitel :
+
+            ```make -j4 JOUEUR=01 PARTIE=input1.txt```
+
+
+        - Sur le second Minitel :
+
+            ```make -j4 JOUEUR=23 PARTIE=input2.txt```
+
+
+        - La partie se joue alors entre les deux Minitels, avec communication LoRa pour transmettre les coups.
 
 ### 4. Flash 
 
