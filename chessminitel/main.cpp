@@ -40,35 +40,9 @@ static void rx_cb(void *uart, uint8_t c)
     msg_send(&msg, main_pid);
 }
 
-int main(void)
+void launch_game()
 {
-    main_pid = thread_getpid();
-    msg_init_queue(_main_msg_queue, MAIN_QUEUE_SIZE);
-
-    // INITILIZATION OF THE UART FOR THE MINITEL
-    if (uart_init(MINITEL_UART, MINITEL_BAUD, rx_cb, (void *)MINITEL_UART) < 0) {
-        return 1;
-    }
-    // if (false){
-    //     uart_init(MINITEL_UART, MINITEL_BAUD, rx_cb, (void *)MINITEL_UART);
-    // }
-    uart_mode(MINITEL_UART, UART_DATA_BITS_7, UART_PARITY_EVEN, UART_STOP_BITS_1);
-
-    LED_RED_TOGGLE;
-
-    xtimer_sleep(1);
-    LED_RED_TOGGLE;
-
-    // Clear screen
     uart_write(MINITEL_UART, (uint8_t *)"\x0C", 1); 
-
-    xtimer_sleep(1);
-
-    // INITILIZATION OF THE LORA MODULE
-
-    initialize_lora();
-
-    // START OF THE CHESS GAME
 
     int players[4] = {0, 1, 2, 3};
     int currentPlayer = 0;
@@ -105,7 +79,48 @@ int main(void)
         currentPlayer = (currentPlayer + 1) % 4;
     }
 
+    /////////////////////////////////////////////////////////
+    //  Affichage écran de fin de partie
+    //   .
+    //   .
+    //   .
+    /////////////////////////////////////////////////////////
+
     delete game;
+}
+
+int main(void)
+{
+    main_pid = thread_getpid();
+    msg_init_queue(_main_msg_queue, MAIN_QUEUE_SIZE);
+
+    // INITILIZATION OF THE UART FOR THE MINITEL
+    if (uart_init(MINITEL_UART, MINITEL_BAUD, rx_cb, (void *)MINITEL_UART) < 0) {
+        return 1;
+    }
+    // if (false){
+    //     uart_init(MINITEL_UART, MINITEL_BAUD, rx_cb, (void *)MINITEL_UART);
+    // }
+    uart_mode(MINITEL_UART, UART_DATA_BITS_7, UART_PARITY_EVEN, UART_STOP_BITS_1);
+
+    LED_RED_TOGGLE;
+
+    xtimer_sleep(1);
+    LED_RED_TOGGLE;
+
+    // Clear screen
+    uart_write(MINITEL_UART, (uint8_t *)"\x0C", 1); 
+    xtimer_sleep(1);
+
+    // INITILIZATION OF THE LORA MODULE
+
+    initialize_lora();
+
+    // START OF THE CHESS GAME
+
+    do {
+        launch_game();
+    } while(askIntMinitel("Voulez vous refaire une partie ? (Non = 0 / Oui = autre chose)", 0, 1) != 0);
     
     return 0;
 }
