@@ -28,7 +28,7 @@
 */
 ////////////////////////////////////////////////////////////////////////
 
-#include "../include/Minitel.h"
+#include "../include/tools/Minitel.h"
 #include <string.h>
 
 void graphic_mode(){
