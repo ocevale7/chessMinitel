@@ -92,13 +92,19 @@ void launch_game()
     Game* game = new Game();
     game->start();
 
+    game->board->printBackground();
+    game->board->printGuide();
     game->board->afficherMinitel();
+    game->board->updateCorners(game);
+    
 
+    Couple from(0,0);
+    Couple to(0,0);
     while (nbActivePlayers > 1) {
         if (players[currentPlayer] != -1) {
             if(isMyTurn(currentPlayer)) {
-                Couple from = Couple(0,0);
-                Couple to = Couple(0,0);
+                //Couple from = Couple(0,0);
+                //Couple to = Couple(0,0);
 #ifdef PARTIE_FILE
                 if (!getMoveFromFile(from, to)) {
                     outMinitel("Fin du fichier de partie.\n");
@@ -117,13 +123,17 @@ void launch_game()
             } else {
                 int* coup_recu = (int*)malloc(MESSAGE_LENGTH * sizeof(int));
                 listen_for_message(coup_recu);
-                Couple from(coup_recu[0], coup_recu[1]);
-                Couple to(coup_recu[2], coup_recu[3]);
+                //Couple from(coup_recu[0], coup_recu[1]);
+                //Couple to(coup_recu[2], coup_recu[3]);
+                from.x = coup_recu[0];
+                from.y = coup_recu[1];
+                to.x = coup_recu[2];
+                to.y = coup_recu[3];
                 game->play(from, to, currentPlayer);
                 
                 free(coup_recu);
             }
-            game->board->afficherMinitel();
+            game->board->updateDeplacementMinitel(from, to);
             nbActivePlayers -= game->checkMatAndPat(currentPlayer, players);
         }
         currentPlayer = (currentPlayer + 1) % 4;

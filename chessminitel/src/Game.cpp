@@ -94,8 +94,8 @@ bool Game::isEchec(int player) {
             Piece* piece = board->plateau[y][x];
             if(piece != nullptr && piece->appartenancePlayer != player) {
                 Couple pos(x, y);
-                std::string s_piece = std::string("piece trouvee: ") + piece->nom + std::string(" en ") + std::to_string(x) + std::string(", ") + std::to_string(y) + std::string("\n");
-                outMinitel(s_piece.c_str());
+                //std::string s_piece = std::string("piece trouvee: ") + piece->nom + std::string(" en ") + std::to_string(x) + std::string(", ") + std::to_string(y) + std::string("\n");
+                //outMinitel(s_piece.c_str());
                 CoupleList* moves = piece->availableMoves(board);
                 if(moves->isInside(kingPos)) {
                     delete moves;
