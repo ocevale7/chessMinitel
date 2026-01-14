@@ -76,7 +76,6 @@ void Game::start() {
 bool Game::isEchec(int player) {
     Couple kingPos(-1, -1);
     // Trouver la position du roi du joueur donné
-    outMinitel("Recherche du roi...\n");
     for(int y = 0; y < 14; y++) {
         for(int x = 0; x < 14; x++) {
             Piece* piece = board->plateau[y][x];
@@ -87,15 +86,12 @@ bool Game::isEchec(int player) {
         }
         if(kingPos.x != -1) break;
     }
-    outMinitel("Roi trouve.\n");
     // Vérifier si une pièce adverse peut attaquer le roi
     for(int y = 0; y < 14; y++) {
         for(int x = 0; x < 14; x++) {
             Piece* piece = board->plateau[y][x];
             if(piece != nullptr && piece->appartenancePlayer != player) {
                 Couple pos(x, y);
-                //std::string s_piece = std::string("piece trouvee: ") + piece->nom + std::string(" en ") + std::to_string(x) + std::string(", ") + std::to_string(y) + std::string("\n");
-                //outMinitel(s_piece.c_str());
                 CoupleList* moves = piece->availableMoves(board);
                 if(moves->isInside(kingPos)) {
                     delete moves;
@@ -105,7 +101,6 @@ bool Game::isEchec(int player) {
             }
         }
     }
-    outMinitel("Aucune menace detectee.\n");
     return false;
 }
 
@@ -202,36 +197,27 @@ bool Game::move(Couple from, Couple to, int currentPlayer) {
     Piece* pieceFrom = board->plateau[from.y][from.x];
     Piece* pieceTo = board->plateau[to.y][to.x];
 
-    outMinitel("Deplacement de la piece...");
     board->plateau[from.y][from.x]->deplacer(to);
     board->deplacer(from, to);
-    outMinitel("Verification de l'echec...");
     if (isEchec(currentPlayer)) {
         board->plateau[from.y][from.x] = pieceFrom;
         board->plateau[to.y][to.x] = pieceTo;
         return false;
     } else {
-        outMinitel("Pas echec.\n");
         if (pieceTo != nullptr) {
             points[currentPlayer] += pieceTo->points;
             delete pieceTo;
         }
         pieceFrom->action();
-        outMinitel("action effectuée\n");
         currentPlayer = (currentPlayer + 1) % 4;
     }
-    outMinitel("Deplacement effectue.");
     return true;
 }
 
 bool Game::play(Couple from, Couple to, int currentPlayer) {
-    outMinitel("Verification du coup...\n");
     if(board->plateau[from.y][from.x] != nullptr) {
-        outMinitel("Piece trouvee a la position.\n");
         if (board->plateau[from.y][from.x]->appartenancePlayer == currentPlayer) {
-            outMinitel("Piece appartient au joueur courant.\n");
             if(board->plateau[from.y][from.x]->availableMoves(board)->isInside(to)) {
-                outMinitel("Mouvement valide.\n");
                 return move(from, to, currentPlayer);
             } else {
                 outMinitel("Mouvement invalide.\n");
