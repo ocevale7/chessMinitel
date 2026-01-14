@@ -95,8 +95,9 @@ void launch_game()
     game->board->printBackground();
     game->board->printGuide();
     game->board->afficherMinitel();
-    game->board->updateCorners(game);
-    
+    game->board->updateCorners(game, currentPlayer);
+    game->board->printBottom();
+    game->board->printCurrentPlayer(currentPlayer);
 
     Couple from(0,0);
     Couple to(0,0);
@@ -134,6 +135,10 @@ void launch_game()
             }
             game->board->updateDeplacementMinitel(from, to);
             nbActivePlayers -= game->checkMatAndPat(currentPlayer, players);
+
+            game->board->updateCorners(game, currentPlayer);
+            game->board->printCurrentPlayer(currentPlayer);
+            
         }
         currentPlayer = (currentPlayer + 1) % 4;
     }
@@ -186,7 +191,7 @@ int main(void)
 
     do {
         launch_game();
-    } while(askIntMinitel("Voulez vous refaire une partie ? (Non = 0 / Oui = autre chose)", 0, 1) != 0);
+    } while(askIntMinitel("Replay ? 1=Yes 0=No", 2, 1, 22, 1, 1) != 0);
     
 #ifdef PARTIE_FILE
     close(partie_fd);

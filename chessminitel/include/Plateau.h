@@ -39,6 +39,8 @@ class Plateau {
         void updateMinitelCase(Couple pos);
         void updateDeplacementMinitel(Couple pos1, Couple pos2);
         void printGuide();
-        void updateCorners(Game* game);
+        void updateCorners(Game* game, int current_player);
         void printBackground();
+        void printBottom();
+        void printCurrentPlayer(int current_player);
 };  

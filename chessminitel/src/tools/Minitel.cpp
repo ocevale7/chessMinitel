@@ -108,7 +108,8 @@ void moveCursorXY(int x, int y) {
 }
 
 void outMinitel(const char* str) {
-  moveCursorXY(0,0);
+  moveCursorXY(2,1);
+  set_fg_white(false);
   uint8_t cleanCode = 0x18;
   write_bytes(&cleanCode, 1);
   
@@ -119,17 +120,17 @@ void outMinitel(const char* str) {
  Code fait par PY Antonin pour le cours d'objet connecté de 3A ENSIMAG 2025-2026
 */
 
-int askIntMinitel(const char* label, int x, int y) {
-    moveCursorXY(0, y);
+int askIntMinitel(const char* label, int x_start, int y_start, int x_ask, int y_ask, int nb_digits) {
+    moveCursorXY(x_start, y_start);
     write_bytes((uint8_t*)label, strlen(label));
     
     char buffer[3] = {0};
     int i = 0;
     
-    // On place le curseur juste après le label (adapté à tes coordonnées 37)
-    moveCursorXY(x, y);
+    // On place le curseur juste après le label
+    moveCursorXY(x_ask, y_ask);
 
-    while (i < 2) {
+    while (i < nb_digits) {
         msg_t msg;
         msg_receive(&msg);
         char c = (char)msg.content.value;
@@ -147,18 +148,11 @@ void recupInputMinitel(Couple& from, Couple& to) {
     set_fg_white(false);
 
     // 1. Récupération du point de départ
-    from.x = askIntMinitel("Entrer cord X de la piece a bouger: ..", 37, 23);
-    from.y = askIntMinitel("Entrer cord Y de la piece a bouger: ..", 37, 24);
-
-    // on print from
-    std::string s_from = std::string("Depart     : (") + std::to_string(from.x) + ", " + std::to_string(from.y) + ")\n";
-    outMinitel(s_from.c_str());
+    from.x = askIntMinitel("x:..", 4, 22, 6,22, 2);
+    from.y = askIntMinitel("y:..", 4, 24, 6,24, 2);
 
     // 2. Récupération de la destination
-    to.x = askIntMinitel("Entrer cord X de la case dest     : ..", 37, 23);
-    to.y = askIntMinitel("Entrer cord Y de la case dest     : ..", 37, 24);
+    to.x = askIntMinitel("x:..", 12, 22, 14,22, 2);
+    to.y = askIntMinitel("y:..", 12, 24, 14,24, 2);
 
-    // on print to
-    std::string s_to = std::string("Destination : (") + std::to_string(to.x) + ", " + std::to_string(to.y) + ")\n";
-    outMinitel(s_to.c_str());
 }

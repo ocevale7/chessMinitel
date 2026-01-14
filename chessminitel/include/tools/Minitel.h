@@ -288,7 +288,7 @@ void outMinitel(const char* str);
 
 #include "CoupleList.h"
 
-int askIntMinitel(const char* label, int x, int y);
+int askIntMinitel(const char* label, int x_start, int y_start, int x_ask, int y_ask, int nb_digits);
 void recupInputMinitel(Couple& from, Couple& to);
 
 #endif // Fin Si (MINITEL1B_H)

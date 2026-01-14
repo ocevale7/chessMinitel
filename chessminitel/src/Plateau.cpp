@@ -255,22 +255,29 @@ void Plateau::printGuide(){
 }
 
 
-void Plateau::updateCorners(Game *game){
+void Plateau::updateCorners(Game *game, int current_player){
     
     uint8_t* arrowplayer0 = (uint8_t*)"\x22\x27";
     uint8_t* arrowplayer1 = (uint8_t*)"\x28\x35";
     uint8_t* arrowplayer2 = (uint8_t*)"\x78\x30";
     uint8_t* arrowplayer3 = (uint8_t*)"\x6A\x24";
-    
+    uint8_t* empty = (uint8_t*)"\x20";
+    uint8_t* pointleft = (uint8_t*)"\x24";
+    uint8_t* pointright = (uint8_t*)"\x28";
     
     // corner player 3
     graphic_mode();
-    moveCursorXY(11, 5);
+    moveCursorXY(10, 5);
     graphic_mode();
     set_bg_color(FOND_BLEU);
     set_fg_white(true);
+    if (current_player == 3){
+        write_bytes((uint8_t*)pointright,1);
+    }else{
+        write_bytes((uint8_t*)empty,1);
+    }
     write_bytes((uint8_t*)arrowplayer3,2);
-    moveCursorXY(8,7);
+    moveCursorXY(8,6);
     std::ostringstream ossp3;
     ossp3 << "3:" << std::setw(3) << std::setfill('0') << game->points[3];
     std::string scorep3 = ossp3.str();
@@ -279,11 +286,16 @@ void Plateau::updateCorners(Game *game){
 
     // corner player 0
 
-    moveCursorXY(33, 7);
+    moveCursorXY(32, 7);
     graphic_mode();
     set_bg_color(FOND_BLEU);
+    if (current_player == 0){
+        write_bytes((uint8_t*)pointright,1);
+    }else{
+        write_bytes((uint8_t*)empty,1);
+    }
     write_bytes((uint8_t*)arrowplayer0,2);
-    moveCursorXY(30,5);
+    moveCursorXY(30,6);
     std::ostringstream ossp0;
     ossp0 << "0:" << std::setw(3) << std::setfill('0') << game->points[0];
     std::string scorep0 = ossp0.str();
@@ -297,7 +309,12 @@ void Plateau::updateCorners(Game *game){
     graphic_mode();
     set_bg_color(FOND_BLEU);
     write_bytes((uint8_t*)arrowplayer2,2);
-    moveCursorXY(8,18);
+    if (current_player == 2){
+        write_bytes((uint8_t*)pointleft,1);
+    }else{
+        write_bytes((uint8_t*)empty,1);
+    }
+    moveCursorXY(8,17);
     std::ostringstream ossp2;
     ossp2 << "2:" << std::setw(3) << std::setfill('0') << game->points[2];
     std::string scorep2 = ossp2.str();
@@ -310,14 +327,18 @@ void Plateau::updateCorners(Game *game){
     graphic_mode();
     set_bg_color(FOND_BLEU);
     write_bytes((uint8_t*)arrowplayer1,2);
-    moveCursorXY(30,16);
+    if (current_player == 1){
+        write_bytes((uint8_t*)pointleft,1);
+    }else{
+        write_bytes((uint8_t*)empty,1);
+    }
+    moveCursorXY(30,17);
     std::ostringstream ossp1;
     ossp1 << "1:" << std::setw(3) << std::setfill('0') << game->points[1];
     std::string scorep1 = ossp1.str();
     text_mode();
     write_bytes((uint8_t*)scorep1.c_str(),strlen(scorep1.c_str()));
-    
-    
+
     text_mode();
 }
 
@@ -353,4 +374,80 @@ void Plateau::printBackground(){
             }
         }
     }
+}
+
+void Plateau::printBottom(){
+    for (int y=21; y<=24; y++){
+        moveCursorXY(0,y);
+        graphic_mode();
+
+        set_fg_black(false);
+        set_bg_color(FOND_JAUNE);
+        
+        if (y==23){
+            for (unsigned int x=0; x<41; x++){
+                write_bytes((uint8_t*)"\x20",1);
+            }
+        }else if (y==21){
+            write_bytes((uint8_t*)"\x20",1);
+            text_mode();
+            write_bytes((uint8_t*)"From:   To:",11);
+            graphic_mode();
+            for (unsigned int x=13; x<41; x++){
+                write_bytes((uint8_t*)"\x20",1);
+            }
+        }else if (y==22){
+            write_bytes((uint8_t*)"\x20\x20",2);
+            set_bg_color(FOND_BLEU);
+            write_bytes((uint8_t*)"\x20\x20\x20\x20\x20\x20",6);
+            set_bg_color(FOND_JAUNE);
+            write_bytes((uint8_t*)"\x20\x20",2);
+            set_bg_color(FOND_BLEU);
+            write_bytes((uint8_t*)"\x20\x20\x20\x20\x20\x20",6);
+            set_bg_color(FOND_JAUNE);
+            write_bytes((uint8_t*)"\x20",1);
+            set_bg_color(FOND_BLEU);
+            for (unsigned int x=0; x<19; x++){
+                write_bytes((uint8_t*)"\x20",1);
+            }
+            set_bg_color(FOND_JAUNE);
+            write_bytes((uint8_t*)"\x20\x20\x20\x20",4);
+        }else if (y==24){
+            write_bytes((uint8_t*)"\x20\x20",2);
+            set_bg_color(FOND_BLEU);
+            write_bytes((uint8_t*)"\x20\x20\x20\x20\x20\x20",6);
+            set_bg_color(FOND_JAUNE);
+            write_bytes((uint8_t*)"\x20\x20",2);
+            set_bg_color(FOND_BLEU);
+            write_bytes((uint8_t*)"\x20\x20\x20\x20\x20\x20",6);
+            set_bg_color(FOND_JAUNE);
+            for (unsigned int x=17; x<41; x++){
+                write_bytes((uint8_t*)"\x20",1);
+            }
+        }
+        
+    }
+}
+
+void Plateau::printCurrentPlayer(int current_player){
+
+    text_mode();
+    set_fg_white(true);
+
+    moveCursorXY(4, 22);
+    write_bytes((uint8_t*)"x:..",4);
+    moveCursorXY(4, 24);
+    write_bytes((uint8_t*)"y:..",4);
+
+    moveCursorXY(12, 22);
+    write_bytes((uint8_t*)"x:..",4);
+    moveCursorXY(12, 24);
+    write_bytes((uint8_t*)"y:..",4);
+
+
+    moveCursorXY(19,22);
+    
+    write_bytes((uint8_t*)"Current Player: ",16);
+    std::string player_str = std::to_string(current_player);
+    write_bytes((uint8_t*)player_str.c_str(),player_str.length());
 }
