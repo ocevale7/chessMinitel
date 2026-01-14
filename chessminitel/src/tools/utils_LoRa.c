@@ -110,9 +110,6 @@ int send_cmd(int argc, char **argv)
         return -1;
     }
 
-    printf("sending \"%s\" payload (%u bytes)\n",
-           argv[1], (unsigned)strlen(argv[1]) + 1);
-
     iolist_t iolist = {
         .iol_base = argv[1],
         .iol_len = (strlen(argv[1]) + 1)
@@ -145,8 +142,6 @@ int listen_cmd(int argc, char **argv)
     netopt_state_t state = NETOPT_STATE_RX;
 
     netdev->driver->set(netdev, NETOPT_STATE, &state, sizeof(state));
-
-    printf("Listen mode set\n");
 
     return 0;
 }

@@ -47,7 +47,7 @@ openocd --version
 
 Se placer dans le dossier **chessminitel** du projet puis lancer :
 
-```make -j 4 [JOUEUR=0123] [PARTIE=input.txt]```
+```make -j 4 [JOUEUR=0123] [RECORD={0 | 1}]```
 
 * L'option ```JOUEUR``` permet de définir quels joueurs sont associés à la carte courante.
 
