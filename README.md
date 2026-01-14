@@ -47,7 +47,17 @@ openocd --version
 
 Se placer dans le dossier **chessminitel** du projet puis lancer :
 
-```make -j 4 [JOUEUR=0123] [RECORD={0 | 1}]```
+```make -j 4```
+
+### 4. Flash 
+
+1. Brancher la carte en USB.
+
+2. Vérifier que l'utilisateur dispose des droits nécessaires (uDev, accès USB).
+
+3. Lancer la commande suivante dans le dossier **chessminitel** du projet :
+
+```make flash [JOUEUR=0123] [RECORD={0 | 1}]```
 
 * L'option ```JOUEUR``` permet de définir quels joueurs sont associés à la carte courante.
 
@@ -59,37 +69,11 @@ Se placer dans le dossier **chessminitel** du projet puis lancer :
 
     * Par défaut, les quatre joueurs sont regroupés sur un seul Minitel.
 
-* L'option ```PARTIE``` permet de faire jouer une partie pré-enregistrée sur le Minitel.
+* L'option ```RECORD``` permet de faire jouer une partie pré-enregistrée sur le Minitel.
 
-    * Une partie peut être enregistrée dans deux fichiers ```.txt``` distincts, afin de jouer sur deux Minitels différents et permettre la communication normale entre eux via LoRa.
+    * Une partie peut être enregistrée dans la matrice ```static const int partie[][4]``` du fichier main.cpp. Cette partie sera jouée automatiquement, sur un unique minitel.
 
-    * Par exemple :
-
-        - ```input1.txt``` contient les coups des joueurs 0 et 1.
-
-        - ```input2.txt``` contient les coups des joueurs 2 et 3.
-
-        - Sur le premier Minitel :
-
-            ```make -j4 JOUEUR=01 PARTIE=input1.txt```
-
-
-        - Sur le second Minitel :
-
-            ```make -j4 JOUEUR=23 PARTIE=input2.txt```
-
-
-        - La partie se joue alors entre les deux Minitels, avec communication LoRa pour transmettre les coups.
-
-### 4. Flash 
-
-1. Brancher la carte en USB.
-
-2. Vérifier que l'utilisateur dispose des droits nécessaires (uDev, accès USB).
-
-3. Lancer la commande suivante :
-
-```make flash```
+    * Par défaut, ce sont aux joueurs de jouer, donc ```RECORD``` est à ```0```.
 
 4. Une fois le flash terminé, débrancher et rebrancher la carte (le reset peut mal se faire sur certaines cartes). 
 
@@ -102,6 +86,8 @@ Les règles du jeu implémentées correspondent aux échecs à quatre joueurs : 
 * L'utilisateur peut interagir avec le jeu d'échecs à l'aide du clavier du Minitel.
 
 * Les coups sont saisis selon une notation simplifiée affichée à l'écran.
+
+![Photo du jeux](images/img_minitel.jpg)
 
 Les messages affichés guident l'utilisateur à chaque étape (sélection des coups, erreurs de saisie, état de la partie).
 
@@ -121,7 +107,7 @@ Le code est organisé de la manière suivante :
 
 * Une classe abstraite ```Piece```, dont héritent toutes les pièces du jeu, chacune disposant d'une classe dédiée.
 
-* Une classe ```Plateau```, chargée de la représentation et de la gestion du plateau.
+* Une classe ```Plateau```, chargée de la représentation et de la gestion du plateau, ainsi que de l'affichage de ce qu'il y a l'écran.
 
 * Des fonctions utilitaires pour la communication Minitel et LoRa.
 
@@ -158,7 +144,11 @@ Le code est organisé de la manière suivante :
 | Spécification | Description|
 |---------------|------------|
 | ```void afficherMinitel()``` | Affiche le plateau sur le Minitel |
-| ```void deplacer(Couple pos1, Couple pos2)``` | Déplace une pièce uniquement sur le plateau |
+| ```void deplacer(Couple pos1, Couple pos2)``` | Déplace une pièce uniquement sur le plateau | 
+| ```void printGuide()``` | Affiche le glossaire des pièces |
+| ```void updateCorners(Game* game, int current_player)``` | Affiche les coins de plateau (contenant les points)
+| ```void printBackground()``` | Affiche le background
+| ```void printBottom()``` | Affiche la boxe d'entrée des coups
 
 #### Classe ```Game```
 
