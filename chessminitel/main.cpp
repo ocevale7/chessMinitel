@@ -159,6 +159,9 @@ int main(void)
     // START OF THE CHESS GAME
 
     do {
+#if RECORD
+        current_coup = 0;
+#endif
         launch_game();
     } while(askIntMinitel("Replay ? 1=Yes 0=No", 2, 1, 22, 1, 1) != 0);
     
