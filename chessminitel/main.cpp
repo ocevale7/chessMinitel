@@ -8,9 +8,17 @@
 #include "include/tools/Minitel.h"
 #include "include/tools/LoRa.h"
 
-#ifdef PARTIE_FILE
-#include <fcntl.h>
-#include <unistd.h>
+#if RECORD
+
+static const int partie[][4] = {
+    {12, 6, 10, 6},
+    {6, 12, 6, 10},
+    {1, 6, 3, 6},
+    {6, 1, 6, 3}
+};
+
+int nb_coups = sizeof(partie) / sizeof(partie[0]);
+int current_coup = 0;
 #endif
 
 #define MINITEL_UART  UART_DEV(0)
@@ -45,42 +53,6 @@ static void rx_cb(void *uart, uint8_t c)
     msg_send(&msg, main_pid);
 }
 
-#ifdef PARTIE_FILE
-static int partie_fd = -1;
-
-bool getMoveFromFile(Couple &from, Couple &to)
-{
-    char buffer[64];
-    int idx = 0;
-    char c;
-
-    while (read(partie_fd, &c, 1) == 1) {
-        if (c == '\n') {
-            buffer[idx] = '\0';
-            break;
-        }
-        buffer[idx++] = c;
-        if (idx >= (int)sizeof(buffer) - 1) {
-            break;
-        }
-    }
-
-    if (idx == 0) {
-        return false; // fin du fichier
-    }
-
-    int fx, fy, tx, ty;
-    if (sscanf(buffer, "%d %d %d %d", &fx, &fy, &tx, &ty) != 4) {
-        return false;
-    }
-
-    from = Couple(fx, fy);
-    to   = Couple(tx, ty);
-    return true;
-}
-#endif
-
-
 void launch_game()
 {
     uart_write(MINITEL_UART, (uint8_t *)"\x0C", 1); 
@@ -101,17 +73,22 @@ void launch_game()
 
     Couple from(0,0);
     Couple to(0,0);
+
     while (nbActivePlayers > 1) {
         if (players[currentPlayer] != -1) {
             if(isMyTurn(currentPlayer)) {
-                //Couple from = Couple(0,0);
-                //Couple to = Couple(0,0);
-#ifdef PARTIE_FILE
-                if (!getMoveFromFile(from, to)) {
-                    outMinitel("Fin du fichier de partie.\n");
+#if RECORD
+                if(current_coup >= nb_coups) {
+                    xtimer_sleep(5);
                     break;
                 }
+                from.x = partie[current_coup][0];
+                from.y = partie[current_coup][1];
+                to.x = partie[current_coup][2];
+                to.y = partie[current_coup][3];
+                current_coup = current_coup + 1;
                 game->play(from, to, currentPlayer);
+                xtimer_sleep(2);
 #else
                 do {
                     recupInputMinitel(from, to);
@@ -123,8 +100,6 @@ void launch_game()
             } else {
                 int* coup_recu = (int*)malloc(MESSAGE_LENGTH * sizeof(int));
                 listen_for_message(coup_recu);
-                //Couple from(coup_recu[0], coup_recu[1]);
-                //Couple to(coup_recu[2], coup_recu[3]);
                 from.x = coup_recu[0];
                 from.y = coup_recu[1];
                 to.x = coup_recu[2];
@@ -182,19 +157,9 @@ int main(void)
 
     // START OF THE CHESS GAME
 
-#ifdef PARTIE_FILE
-    partie_fd = open(PARTIE_FILE, O_RDONLY);
-    if (partie_fd < 0) {
-        return 1;
-    }
-#endif
-
     do {
         launch_game();
     } while(askIntMinitel("Replay ? 1=Yes 0=No", 2, 1, 22, 1, 1) != 0);
     
-#ifdef PARTIE_FILE
-    close(partie_fd);
-#endif
     return 0;
 }

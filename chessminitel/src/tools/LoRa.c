@@ -53,6 +53,5 @@ void send_lora_message(int* coup_a_envoyer)
     snprintf(message, LORA_MESSAGE_BUFFER_SIZE, "%d,%d,%d,%d", 
              coup_a_envoyer[0], coup_a_envoyer[1], 
              coup_a_envoyer[2], coup_a_envoyer[3]);
-    printf("Sending message: %s\n", message);
     send_cmd(2, (char*[]){"send", message});
 }

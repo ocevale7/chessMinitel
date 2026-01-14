@@ -24,9 +24,8 @@ JOUEUR ?= "0123"
 CFLAGS += -DJOUEUR=\"$(JOUEUR)\"
 
 # Partie enregistrée
-ifdef PARTIE
-CFLAGS += -DPARTIE_FILE=\"$(PARTIE)\"
-endif
+RECORD ?= 0
+CFLAGS += -DRECORD=$(RECORD)
 
 # Include modules
 USEMODULE += xtimer       # for delays
