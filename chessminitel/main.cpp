@@ -112,7 +112,6 @@ void launch_game()
 
                 int coup_a_envoyer[4] = {from.x, from.y, to.x, to.y};
                 send_lora_message(coup_a_envoyer);
-                outMinitel("Coup envoye via LoRa.\n");
 #endif
             } else {
                 int* coup_recu = (int*)malloc(MESSAGE_LENGTH * sizeof(int));
