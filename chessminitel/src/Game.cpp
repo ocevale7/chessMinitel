@@ -215,7 +215,22 @@ bool Game::move(Couple from, Couple to, int currentPlayer) {
     return true;
 }
 
+bool verifPosition(Couple pos) {
+    if (pos.x >= 0 && pos.x <= 13) {
+        if (pos.x >= 11 || pos.x <= 2) {
+            return (pos.y >= 3 && pos.y <= 10);
+        } else {
+            return (pos.y >= 0 && pos.y <= 13);
+        }
+    }
+    return false;
+}
+
 bool Game::play(Couple from, Couple to, int currentPlayer) {
+    if (!verifPosition(from) || !verifPosition(to)) {
+        outMinitel("Position hors du plateau.");
+        return false;
+    }
     if(board->plateau[from.y][from.x] != nullptr) {
         if (board->plateau[from.y][from.x]->appartenancePlayer == currentPlayer) {
             if(board->plateau[from.y][from.x]->availableMoves(board)->isInside(to)) {
@@ -229,7 +244,6 @@ bool Game::play(Couple from, Couple to, int currentPlayer) {
     } else {
         outMinitel("Pas de piece a cette position !");
     }
-    
     return false;
 }
 

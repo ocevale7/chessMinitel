@@ -71,7 +71,9 @@ Se placer dans le dossier **chessminitel** du projet puis lancer :
 
 * L'option ```RECORD``` permet de faire jouer une partie pré-enregistrée sur le Minitel.
 
-    * Une partie peut être enregistrée dans la matrice ```static const int partie[][4]``` du fichier main.cpp. Cette partie sera jouée automatiquement, sur un unique minitel (les options ```RECORD``` et ```JOUEUR``` sont donc incompatibles)
+    * Une partie peut être enregistrée dans la matrice ```static const int partie[][4]``` du fichier main.cpp. Cette partie sera jouée automatiquement, sur un unique minitel (les options ```RECORD``` et ```JOUEUR``` sont donc incompatibles).
+
+    * Lors d'une partie enregistrée, si un coup n'est pas valide 
 
     * Par défaut, ce sont aux joueurs de jouer, donc ```RECORD``` est à ```0```.
 
