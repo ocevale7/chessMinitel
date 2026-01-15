@@ -134,6 +134,7 @@ bool Game::isEchecEtMat(int player) {
                     // Annuler le mouvement
                     board->plateau[from.y][from.x] = pieceFrom;
                     board->plateau[to.y][to.x] = pieceTo;
+                    board->plateau[from.y][from.x]->deplacer(from);
 
                     if(!stillInCheck) {
                         delete moves;
