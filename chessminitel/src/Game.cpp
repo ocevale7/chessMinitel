@@ -69,8 +69,8 @@ void Game::start() {
     board->plateau[6][0]  = new Roi(this, Couple(0, 6), 2);
     board->plateau[7][0]  = new Dame(this, Couple(0, 7), 2);
 
-    board->plateau[7][13]  = new Dame(this,Couple(13, 7) , 0);
-    board->plateau[6][13]  = new Roi(this, Couple(13, 6), 0);
+    board->plateau[6][13]  = new Dame(this,Couple(13, 6) , 0);
+    board->plateau[7][13]  = new Roi(this, Couple(13, 7), 0);
 }
 
 bool Game::isEchec(int player) {
