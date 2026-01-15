@@ -405,13 +405,13 @@ void Plateau::printBottom(){
             set_bg_color(FOND_BLEU);
             write_bytes((uint8_t*)"\x20\x20\x20\x20\x20\x20",6);
             set_bg_color(FOND_JAUNE);
-            write_bytes((uint8_t*)"\x20",1);
+            write_bytes((uint8_t*)"\x20\x20",2);
             set_bg_color(FOND_BLEU);
             for (unsigned int x=0; x<19; x++){
                 write_bytes((uint8_t*)"\x20",1);
             }
             set_bg_color(FOND_JAUNE);
-            write_bytes((uint8_t*)"\x20\x20\x20\x20",4);
+            write_bytes((uint8_t*)"\x20\x20\x20",3);
         }else if (y==24){
             write_bytes((uint8_t*)"\x20\x20",2);
             set_bg_color(FOND_BLEU);
@@ -445,7 +445,7 @@ void Plateau::printCurrentPlayer(int current_player){
     write_bytes((uint8_t*)"y:..",4);
 
 
-    moveCursorXY(19,22);
+    moveCursorXY(20,22);
     
     write_bytes((uint8_t*)"Current Player: ",16);
     std::string player_str = std::to_string(current_player);
