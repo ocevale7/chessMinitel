@@ -19,7 +19,7 @@ Nous avons dû aborder plusieurs sous-problèmes pour atteindre cet objectif :
 - **Protocole de communication** : Concevoir un protocole léger et robuste pour la transmission des états du jeu entre les Minitels via LoRa.
 - **Synchronisation de l'état du jeu** : Assurer que tous les Minitels affichent le même état du jeu en temps réel, malgré les pertes de paquets et les délais inhérents au réseau LoRa.
 
-Nous avons atteint nos objectifs en développant une application qui permet à quatre joueurs de participer à une partie d'échecs en réseau, avec une interface utilisateur fonctionnelle sur le Minitel et une communication fiable via LoRa. Le système gère efficacement les entrées utilisateur, met à jour l'affichage en temps réel, et maintient la synchronisation de l'état du jeu entre les différents nœuds.
+Nous avons atteint nos objectifs en développant une application qui permet à quatre joueurs de participer à une partie d'échecs en réseau, avec une interface utilisateur fonctionnelle sur le Minitel et une communication des coups via LoRa. La communication des coups n'est pas parfaite (notamment à cause de lectures erronées), il resterait à fiabiliser les échanges LoRa. Le système gère efficacement les entrées utilisateur, met à jour l'affichage en temps réel, et maintient la synchronisation de l'état du jeu entre les différents nœuds.
 
 ## 4. Matériel utilisé
 
@@ -40,12 +40,24 @@ Pour jouer un coup, un joueur utilise le clavier du minitel pour entrer les coor
 
 ## 6. Budget approximatif
 
-Main d'oeuvre = (7 * 3h de cours + 6 * 3h de travail sur créneau de fablab)* 3 personnes + ~24h de dev du jeux pour Valentin + ~6h de lecture de doc et dev affichage pour Anthonin + ~12h de lecture de doc et dev LoRa pour Noémie = 159 h
+Main d’oeuvre = (7 * **3 h de cours** + 6 * **3h de jeudi aprem**) * 3 personnes
+              + **~24h de dev du jeux** 
+              + **~6h de lecture doc et implémentation affichage** 
+              + **~12h de lecture doc plus implémentation LoRa** 
+              = **159h**
 
-Matériel = 1 à 4 Minitel (~50€ l’unité) + 1 à 4 wyres-base + 1 à 4 STLink + les ptites connectiques = 200 € + 
+Matériel = **1 à 4 Minitel** (~50€ l’unité) 
+         + **1 à 4 wyres-base** (~10 € l’unité) 
+         + **1 à 4 STLink** (~10€ l’unité) 
+         + **les petites connectiques** (5€) 
+         + **1 à 4 cartes de connexion Wyres/Minitel et connecteur DIN** (~15€ l’unité) 
+         = 200 + 40 + 5 + 40 + ~60 = **345 €**
 
 ## 7. Bilan du projet
 
+Nous avons rencontré plusieurs défis techniques au cours de ce projet, notamment la gestion des limitations du Minitel en termes d'affichage et de saisie, ainsi que la mise en place d'une communication fiable via LoRa. Le développement du protocole de communication reste à améliorer pour gérer les pertes de paquets et les lectures erronées. Nous avons cependant une implémentation de jeu d'échec à quatre joueurs fonctionnelle, avec une interface utilisateur bien adaptée au Minitel. Les coups sont bien envoyés entre les Minitels (mis à part les lectures erronées qui nous avons pu observer) et le plateau est mis à jour en temps réel.
+
+Nous avons également quelques ajouts majeurs par rapport au cahier des charges initial. Prémièrement, la possibilité de jouer à plusieurs joueurs sur le même Minitel, ce qui n'était pas prévu au départ. Deuxièmement, la possibilité de jouer une partie pré-enregistrée sur un unique Minitel, ce qui nous permet de voir l'affichage du plateau sur une partie complète sans avoir besoin de la jouer nous mêmes.
 
 ## 8. Idées d'améliorations
 
@@ -54,3 +66,4 @@ Matériel = 1 à 4 Minitel (~50€ l’unité) + 1 à 4 wyres-base + 1 à 4 STLi
 - Pouvoir se connecter depuis n’importe quelle plateforme
 - Connecter une autre forme d’input au lieu du clavier
 - Ajouter les coups spéciaux non implémentés (roque, prise en passant)
+- Améliorer le protocole de communication pour gérer les pertes de paquets et les lectures erronées
