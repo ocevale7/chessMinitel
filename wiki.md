@@ -30,19 +30,27 @@ Nous avons utilisé tout au long de ce projet trois cartes RIOT-OS avec chacune 
 
 Quatre amis, dont deux en colocation, souhaitent faire une partie d'échec sur minitel en 1 contre 1 contre 1 contre 1. Ces amis ne se trouvent pas au même endroit mais à chaque endroit il y a un minitel relié à une carte RiotOS avec un module LoRa. Ils lancent l'application sur leur minitel respectif et se connectent à la partie. Chacun peut alors voir l'état du plateau de jeu, les pièces en mouvement, et effectuer ses propres mouvements en utilisant le clavier du minitel. La communication entre les minitels est assurée par les modules LoRa, garantissant que chaque joueur voit les mises à jour en temps réel malgré la distance qui les sépare.
 
-Pour commencer la partie, chaque joueur flash sa carte RiotOS avec le firmware du jeu d'échecs. Une fois l'application lancée, chaque minitel est configuré pour se connecter au réseau LoRa et rejoindre la partie en cours. Les numéros des joueurs jouant sur le minitel doivent être spécifiés au moment du make (par défaut les quatre joueurs jouent sur le même minitel mais on peut en mettre de un à quatre sur le même minitel). Par exemple, pour jouer en tant que joueur 1 et 3 sur le même minitel, la commande serait : `make JOUEUR=13` (les joueurs vont de 0 à 3).
+Pour commencer la partie, chaque joueur flash sa carte RiotOS avec le firmware du jeu d'échecs. Une fois l'application lancée, chaque minitel est configuré pour se connecter au réseau LoRa et rejoindre la partie en cours. Les numéros des joueurs jouant sur le minitel doivent être spécifiés au moment du make flash (par défaut les quatre joueurs jouent sur le même minitel mais on peut en mettre de un à quatre sur le même minitel). Par exemple, pour jouer en tant que joueur 1 et 3 sur le même minitel, la commande serait : `make flash JOUEUR=13` (les joueurs vont de 0 à 3).
 
 Ils entament une partie, chaque joueur effectuant ses mouvements à tour de rôle. Le système gère la synchronisation des états du jeu, assurant que tous les joueurs voient les mêmes informations en temps réel.
 
-À la fin de la partie, le classement est affiché sur chaque minitel.
+Pour jouer un coup, un joueur utilise le clavier du minitel pour entrer les coordonnées x et y de la pièce qu'il souhaite déplacer, suivies des coordonnées x et y de la case de destination. Par exemple, pour déplacer une pièce de la case (6,12) à la case (7,11), le joueur entrerait "06 12 07 11" sur le clavier du minitel. Le système valide le coup en fonction des règles des échecs à quatre joueurs et met à jour l'état du jeu en conséquence. Si le coup est invalide, un message d'erreur est affiché, et le joueur doit réessayer. Si le coup est valide, l'état du plateau est mis à jour et la nouvelle position des pièces est affichée sur tous les minitels. La coordnnée x correspond à la colonne (de 0 à 13) et la coordonnée y à la ligne (de 0 à 13). Pour voir quel joueur doit jouer, un joueur peut regarder l'affichage `current player` qui indique le numéro du joueur censé jouer, un point apparaît également à côté de son score dans l'angle du plateau qui lui est associé. Le joueur 0 est le joueur sur la droite de l'écran, le joueur 1 est en bas, le joueur 2 est à gauche et le joueur 3 en haut.
+
+À la fin de la partie, le classement est affiché sur chaque minitel. Avec la proposition de rejouer une nouvelle partie.
 
 ## 6. Budget approximatif
 
-7 * 3 h de cours + 5 * 3h de jeudi aprem + ~15h de dev du jeux + ? 
+Main d'oeuvre = (7 * 3h de cours + 6 * 3h de travail sur créneau de fablab)* 3 personnes + ~24h de dev du jeux pour Valentin + ~6h de lecture de doc et dev affichage pour Anthonin + ~12h de lecture de doc et dev LoRa pour Noémie = 159 h
+
+Matériel = 1 à 4 Minitel (~50€ l’unité) + 1 à 4 wyres-base + 1 à 4 STLink + les ptites connectiques = 200 € + 
 
 ## 7. Bilan du projet
 
 
 ## 8. Idées d'améliorations
 
-Mettre un bot contre qui ont peut jouer, pouvoir avoir plusieurs types d'interface homme - machine
+- Mettre un bot contre qui on peut jouer
+- Pouvoir avoir plusieurs types d'interface homme - machine
+- Pouvoir se connecter depuis n’importe quelle plateforme
+- Connecter une autre forme d’input au lieu du clavier
+- Ajouter les coups spéciaux non implémentés (roque, prise en passant)
