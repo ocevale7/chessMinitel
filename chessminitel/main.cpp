@@ -95,8 +95,6 @@ void launch_game()
                 } while (!game->play(from, to, currentPlayer));
 
                 int coup_a_envoyer[4] = {from.x, from.y, to.x, to.y};
-                std::string s_coup = std::string("Envoie de :" ) + std::to_string(from.x) + ", " + std::to_string(from.y) + " -> " + std::to_string(to.x) + ", " + std::to_string(to.y); 
-                outMinitel(s_coup.c_str());
                 send_lora_message(coup_a_envoyer);
 #endif
             } else {
@@ -106,8 +104,6 @@ void launch_game()
                 from.y = coup_recu[1];
                 to.x = coup_recu[2];
                 to.y = coup_recu[3];
-                std::string s_coup = std::string("Coup recu :" ) + std::to_string(from.x) + ", " + std::to_string(from.y) + " -> " + std::to_string(to.x) + ", " + std::to_string(to.y); 
-                outMinitel(s_coup.c_str());
                 game->play(from, to, currentPlayer);
                 
                 free(coup_recu);
