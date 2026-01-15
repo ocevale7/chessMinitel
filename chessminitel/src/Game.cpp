@@ -202,6 +202,7 @@ bool Game::move(Couple from, Couple to, int currentPlayer) {
     if (isEchec(currentPlayer)) {
         board->plateau[from.y][from.x] = pieceFrom;
         board->plateau[to.y][to.x] = pieceTo;
+        outMinitel("Mouvement invalide.");
         return false;
     } else {
         if (pieceTo != nullptr) {
@@ -220,13 +221,13 @@ bool Game::play(Couple from, Couple to, int currentPlayer) {
             if(board->plateau[from.y][from.x]->availableMoves(board)->isInside(to)) {
                 return move(from, to, currentPlayer);
             } else {
-                outMinitel("Mouvement invalide.\n");
+                outMinitel("Mouvement invalide.");
             }
         } else {
-            outMinitel("Cette piece n'appartient pas au joueur courant !\n\n");
+            outMinitel("Mauvais joueur.");
         }
     } else {
-        outMinitel("Pas de piece a cette position !\n\n");
+        outMinitel("Pas de piece a cette position !");
     }
     
     return false;
