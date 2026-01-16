@@ -3,6 +3,8 @@
 extern lora_rx_msg_t last_rx;
 extern volatile bool has_rx;
 
+#define CHESS_PREFIX "CHESS:"
+
 void initialize_lora(void)
 {
     // Initialization code for LoRa module
@@ -14,9 +16,15 @@ void initialize_lora(void)
 
 void decompose_message(const char* message, int* coup_recu)
 {
-    // Example message format: "X_init,Y_init,X_final,Y_final"
     int x_init, y_init, x_final, y_final;
-    sscanf(message, "%d,%d,%d,%d", &x_init, &y_init, &x_final, &y_final);
+    
+    // Vérifier et ignorer le préfixe CHESS:
+    const char* data_start = message;
+    if (strncmp(message, CHESS_PREFIX, strlen(CHESS_PREFIX)) == 0) {
+        data_start = message + strlen(CHESS_PREFIX);
+    }
+    
+    sscanf(data_start, "%d,%d,%d,%d", &x_init, &y_init, &x_final, &y_final);
     coup_recu[0] = x_init;
     coup_recu[1] = y_init;
     coup_recu[2] = x_final;
@@ -26,10 +34,16 @@ void decompose_message(const char* message, int* coup_recu)
 void get_message_details(int* coup_recu)
 {
     while (1) {
-        if (has_rx) {
-            has_rx = false;
+        if (strncmp(last_rx.payload, CHESS_PREFIX, strlen(CHESS_PREFIX)) == 0) {
+            // Message recu commancant par notre prefixe
             decompose_message(last_rx.payload, coup_recu);
+            memset(last_rx.payload, 0, sizeof(last_rx.payload));
+            has_rx = false; 
             return;
+        } else {
+            // Autre message recu
+            memset(last_rx.payload, 0, sizeof(last_rx.payload));
+            has_rx = false;
         }
         xtimer_sleep(1);
     }
@@ -41,6 +55,9 @@ void listen_for_message(int* coup_recu)
         puts("Memory allocation failed");
         return;
     }
+
+    memset(last_rx.payload, 0, sizeof(last_rx.payload));
+    has_rx = false; 
 
     listen_cmd(1,(char*[]){"listen"});
 
