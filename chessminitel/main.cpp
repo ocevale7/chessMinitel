@@ -110,9 +110,6 @@ void launch_game()
             }
             game->board->updateDeplacementMinitel(from, to);
             nbActivePlayers -= game->checkMatAndPat(currentPlayer, players);
-
-            
-            
         }
         currentPlayer = (currentPlayer + 1) % 4;
         game->board->updateCorners(game, currentPlayer);

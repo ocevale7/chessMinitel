@@ -1,5 +1,5 @@
 #include "../../include/tools/LoRa.h"
-#include "../../include/tools/Minitel.h"
+
 
 extern lora_rx_msg_t last_rx;
 extern volatile bool has_rx;
@@ -26,6 +26,7 @@ void decompose_message(const char* message, int* coup_recu)
     }
     
     sscanf(data_start, "%d,%d,%d,%d", &x_init, &y_init, &x_final, &y_final);
+
     coup_recu[0] = x_init;
     coup_recu[1] = y_init;
     coup_recu[2] = x_final;
@@ -70,7 +71,8 @@ void listen_for_message(int* coup_recu)
 void send_lora_message(int* coup_a_envoyer)
 {
     char message[LORA_MESSAGE_BUFFER_SIZE];
-    snprintf(message, LORA_MESSAGE_BUFFER_SIZE, "%d,%d,%d,%d", 
+    snprintf(message, LORA_MESSAGE_BUFFER_SIZE, "%s%d,%d,%d,%d", 
+             CHESS_PREFIX,
              coup_a_envoyer[0], coup_a_envoyer[1], 
              coup_a_envoyer[2], coup_a_envoyer[3]);
     send_cmd(2, (char*[]){"send", message});
