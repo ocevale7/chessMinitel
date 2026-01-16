@@ -1,4 +1,5 @@
 #include "../../include/tools/LoRa.h"
+#include "../../include/tools/Minitel.h"
 
 extern lora_rx_msg_t last_rx;
 extern volatile bool has_rx;
@@ -34,16 +35,18 @@ void decompose_message(const char* message, int* coup_recu)
 void get_message_details(int* coup_recu)
 {
     while (1) {
-        if (strncmp(last_rx.payload, CHESS_PREFIX, strlen(CHESS_PREFIX)) == 0) {
-            // Message recu commancant par notre prefixe
-            decompose_message(last_rx.payload, coup_recu);
-            memset(last_rx.payload, 0, sizeof(last_rx.payload));
-            has_rx = false; 
-            return;
-        } else {
-            // Autre message recu
-            memset(last_rx.payload, 0, sizeof(last_rx.payload));
-            has_rx = false;
+        if(has_rx) {
+            if (strncmp(last_rx.payload, CHESS_PREFIX, strlen(CHESS_PREFIX)) == 0) {
+                // Message recu commancant par notre prefixe
+                decompose_message(last_rx.payload, coup_recu);
+                memset(last_rx.payload, 0, sizeof(last_rx.payload));
+                has_rx = false; 
+                return;
+            } else {
+                // Autre message recu
+                memset(last_rx.payload, 0, sizeof(last_rx.payload));
+                has_rx = false;
+            }
         }
         xtimer_sleep(1);
     }
