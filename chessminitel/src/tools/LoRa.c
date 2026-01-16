@@ -39,6 +39,7 @@ void get_message_details(int* coup_recu)
         if(has_rx) {
             if (strncmp(last_rx.payload, CHESS_PREFIX, strlen(CHESS_PREFIX)) == 0) {
                 // Message recu commancant par notre prefixe
+                printf("Received LoRa message: %s\n", last_rx.payload);
                 decompose_message(last_rx.payload, coup_recu);
                 memset(last_rx.payload, 0, sizeof(last_rx.payload));
                 has_rx = false; 
