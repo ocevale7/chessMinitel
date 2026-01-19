@@ -36,7 +36,7 @@ Nous avons utilisé tout au long de ce projet trois cartes wyres avec RIOT-OS, c
 
 La carte Wyres est la carte verte sur la photo, elle est équipée d'un module LoRa. La carte STLink est la carte bleue en dessous de la carte Wyres, elle permet de flasher le firmware sur la carte Wyres.
 
-![Minitel](images/image_montage.jpg)
+![Minitel](images/img_connecteur.jpg)
 
 Le minitel est ici relié à la carte Wyres via une carte d'interface conçue par le fablab pour adapter les niveaux de tension et les connecteurs. Le Minitel sert d'interface utilisateur pour le jeu d'échecs, tandis que la carte Wyres gère la logique du jeu et la communication via LoRa avec les autres Minitels.
 

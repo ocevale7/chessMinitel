@@ -71,9 +71,11 @@ Se placer dans le dossier **chessminitel** du projet puis lancer :
 
 * L'option ```RECORD``` permet de faire jouer une partie pré-enregistrée sur le Minitel.
 
-    * Une partie peut être enregistrée dans la matrice ```static const int partie[][4]``` du fichier main.cpp. Cette partie sera jouée automatiquement, sur un unique minitel (les options ```RECORD``` et ```JOUEUR``` sont donc incompatibles).
+    * Une partie peut être enregistrée dans la matrice ```static const int partie[][4]``` du fichier main.cpp. Cette partie sera jouée automatiquement, sur un **unique** minitel (sans communication LoRa donc).
 
-    * Lors d'une partie enregistrée, si un coup n'est pas valide 
+    * Pour faire jouer une partie que vous voulez, vous dever modifier le contenu du tableau ```partie```. Une ligne de ce tableau doit être composé de 4 int au format suivant : {X_case_départ, Y_case_départ, X_case_arrivée, Y_case_arrivée}. La ligne 0 correspond au premier coup du joueur 0, la ligne 1 au premier coup du joueur 1, etc... 
+
+    * Lors d'une partie enregistrée, si un coup n'est pas valide il est refusé par le moteur de jeu, et ce dernier va lire le coup suivant tout en concidérant que c'est toujours au joueur courant de jouer (et pas au suivant).
 
     * Par défaut, ce sont aux joueurs de jouer, donc ```RECORD``` est à ```0```.
 
@@ -112,6 +114,27 @@ Le code est organisé de la manière suivante :
 * Une classe ```Plateau```, chargée de la représentation et de la gestion du plateau, ainsi que de l'affichage de ce qu'il y a l'écran.
 
 * Des fonctions utilitaires pour la communication Minitel et LoRa.
+
+### Logique du moteur
+
+La logique du moteur de jeu est la suivante :
+
+```
+Tant qu'il reste au moins 2 joueurs qui peuvent jouer :
+    Si c'est au tour d'un joueur sur cette carte :
+        Tant que le coup n'est pas valide faire :
+            Récupérer le coup du joueur
+            Vérifier que le coup correspond à une pièce du joueur
+            Vérifier que le coup est dans la liste des coups jouable de la pièce
+            Vérifier que le coup ne met pas le joueur en échec
+        Jouer le coup
+        Envoyer le coup aux autres cartes
+    Sinon :
+        Attendre de recevoir un coup
+        Jouer le coup recu
+    Update l'affichage du plateau
+    Vérifier les échecs et mat et mettre à jour les joueurs pouvant jouer
+```
 
 ### Descriptions des classes
 
