@@ -4,7 +4,7 @@ Ardisson Noémie - Py Antonin - Boisset Valentin
 
 ## Manuel d'utilisation
 
-Ce document décrit pas à pas l'installation, la compilation, le flash et l'utilisation du projet ChessMinitel. Il est destiné à tout utilisateur disposant d'un environnement Linux et d'une carte compatible RIOT-OS.
+Ce document décrit pas à pas l'installation, la compilation, le flash et l'utilisation du projet ChessMinitel. Il est destiné à tout utilisateur disposant d'un environnement Linux et d'une carte compatible RIOT-OS. Pour avoir des détails concernant ce projet (matériel utilisé, contexte du projet, tenants et aboutissants, ...) vous pouvez lire le fichier ```wiki.md```.
 
 ### 1. Clonage du dépôt
 
@@ -53,7 +53,7 @@ Se placer dans le dossier **chessminitel** du projet puis lancer :
 
 1. Brancher la carte en USB.
 
-2. Vérifier que l'utilisateur dispose des droits nécessaires (uDev, accès USB).
+2. Vérifier que l'utilisateur dispose des droits nécessaires (udev, accès USB).
 
 3. Lancer la commande suivante dans le dossier **chessminitel** du projet :
 
@@ -71,13 +71,13 @@ Se placer dans le dossier **chessminitel** du projet puis lancer :
 
 * L'option ```RECORD``` permet de faire jouer une partie pré-enregistrée sur le Minitel.
 
-    * Une partie peut être enregistrée dans la matrice ```static const int partie[][4]``` du fichier main.cpp. Cette partie sera jouée automatiquement, sur un **unique** minitel (sans communication LoRa donc).
+    * Une partie peut être enregistrée dans la matrice ```static const int partie[][4]``` du fichier main.cpp. Cette partie sera jouée automatiquement, sur un **unique** Minitel (sans communication LoRa donc).
 
-    * Pour faire jouer une partie que vous voulez, vous dever modifier le contenu du tableau ```partie```. Une ligne de ce tableau doit être composé de 4 int au format suivant : ```{X_case_départ, Y_case_départ, X_case_arrivée, Y_case_arrivée}```. La ligne 0 du tableau correspond au premier coup du joueur 0, la ligne 1 au premier coup du joueur 1, etc... 
+    * Pour faire jouer une partie que vous voulez, vous devez modifier le contenu du tableau ```partie```. Une ligne de ce tableau doit être composée de 4 int au format suivant : ```{X_case_départ, Y_case_départ, X_case_arrivée, Y_case_arrivée}```. La ligne 0 du tableau correspond au premier coup du joueur 0, la ligne 1 au premier coup du joueur 1, etc... 
 
-    * Lors d'une partie enregistrée, si un coup n'est pas valide il est refusé par le moteur de jeu, et ce dernier va lire le coup suivant tout en concidérant que c'est toujours au joueur courant de jouer (et pas au suivant).
+    * Lors d'une partie enregistrée, si un coup n'est pas valide il est refusé par le moteur de jeu, et ce dernier va lire le coup suivant tout en considérant que c'est toujours au joueur courant de jouer (et pas au suivant).
 
-    * Par défaut, ce sont aux joueurs de jouer, donc ```RECORD``` est à ```0```.
+    * Par défaut, ce sont les joueurs qui jouent, donc ```RECORD``` est à ```0```.
 
 4. Une fois le flash terminé, débrancher et rebrancher la carte (le reset peut mal se faire sur certaines cartes). 
 
@@ -91,13 +91,13 @@ Les règles du jeu implémentées correspondent aux échecs à quatre joueurs : 
 
 * Les coups sont saisis selon une notation simplifiée affichée à l'écran.
 
-![Photo du jeux](images/img_minitel.jpg)
+![Photo du jeu](images/img_minitel.jpg)
 
 Les messages affichés guident l'utilisateur à chaque étape (sélection des coups, erreurs de saisie, état de la partie).
 
 ## Documentation du code
 
-Les dossiers **boards** et **RIOT-OS** contiennent le code nécessaire à l'utilisation d'une carte RIOT-wyres (voir : [Github Riot-OS](https://github.com/CampusIoT/RIOT-wyres/))
+Les dossiers **boards** et **RIOT-OS** contiennent le code nécessaire à l'utilisation d'une carte RIOT-wyres (voir [Github Riot-OS](https://github.com/CampusIoT/RIOT-wyres/))
 
 Le dossier **chessminitel** contient notre code. Voici un descriptif des classes et des fonctions principales :
 
@@ -111,7 +111,7 @@ Le code est organisé de la manière suivante :
 
 * Une classe abstraite ```Piece```, dont héritent toutes les pièces du jeu, chacune disposant d'une classe dédiée.
 
-* Une classe ```Plateau```, chargée de la représentation et de la gestion du plateau, ainsi que de l'affichage de ce qu'il y a l'écran.
+* Une classe ```Plateau```, chargée de la représentation et de la gestion du plateau, ainsi que de l'affichage de ce qu'il y a à l'écran.
 
 * Des fonctions utilitaires pour la communication Minitel et LoRa.
 
@@ -125,13 +125,13 @@ Tant qu'il reste au moins 2 joueurs qui peuvent jouer :
         Tant que le coup n'est pas valide faire :
             Récupérer le coup du joueur
             Vérifier que le coup correspond à une pièce du joueur
-            Vérifier que le coup est dans la liste des coups jouable de la pièce
+            Vérifier que le coup est dans la liste des coups jouables de la pièce
             Vérifier que le coup ne met pas le joueur en échec
         Jouer le coup
         Envoyer le coup aux autres cartes
     Sinon :
         Attendre de recevoir un coup
-        Jouer le coup recu
+        Jouer le coup reçu
     Update l'affichage du plateau
     Vérifier les échecs et mat et mettre à jour les joueurs pouvant jouer
 ```
@@ -171,7 +171,7 @@ Tant qu'il reste au moins 2 joueurs qui peuvent jouer :
 | ```void afficherMinitel()``` | Affiche le plateau sur le Minitel |
 | ```void deplacer(Couple pos1, Couple pos2)``` | Déplace une pièce uniquement sur le plateau | 
 | ```void printGuide()``` | Affiche le glossaire des pièces |
-| ```void updateCorners(Game* game, int current_player)``` | Affiche les coins de plateau (contenant les points)
+| ```void updateCorners(Game* game, int current_player)``` | Affiche les coins du plateau (contenant les points)
 | ```void printBackground()``` | Affiche le background
 | ```void printBottom()``` | Affiche la boxe d'entrée des coups
 
