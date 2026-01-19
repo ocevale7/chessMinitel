@@ -11,13 +11,14 @@ Notre projet était de développer un jeu d'échecs à quatre joueurs en réseau
 
 ![Photo de l'installation](images/image_montage.jpg)
 
-On voit sur l'image une installation avec un Minitel relié à une carte RiotOS (carte verte) équipée d'un module LoRa. Celle-ci est reliée à une carte STLink permettant de flasher le programme sur la cartes wyres. Le Minitel sert d'interface utilisateur pour le jeu d'échecs, tandis que la carte RiotOS gère la logique du jeu et la communication via LoRa avec les autres Minitels.
+On voit sur l'image une installation avec un Minitel relié à une carte wyres sous RiotOS (carte verte) équipée d'un module LoRa. Celle-ci est reliée à une carte STLink permettant de flasher le programme sur la cartes wyres. Le Minitel sert d'interface utilisateur pour le jeu d'échecs, tandis que la carte RiotOS gère la logique du jeu et la communication via LoRa avec les autres Minitels.
 
 ## 3. Problématique
 
-Le problème que nous avons identifié est de démontrer la faisabilité et la fiabilité de la communication en réseau LoRa pour une application interactive et critique en temps réel (un jeu), en utilisant des matériels hétérogènes et contraints (Minitel, RiotOS, LoRa). Spécifiquement, il s'agit de résoudre la complexité d'assurer une synchronisation parfaite de l'état du jeu sur quatre nœuds distincts malgré les contraintes du réseau LoRa (débit faible, latence variable, taille limitée des messages, pas de garantie de réception). Ce problème est crucial car il met en lumière les défis techniques liés à l'utilisation de technologies anciennes (Minitel) combinées à des technologies modernes (LoRa, RiotOS) pour créer une expérience utilisateur fluide et cohérente dans un contexte de jeu en réseau.
+Le problème que nous avons identifié est de démontrer la faisabilité et la fiabilité de la communication en réseau LoRa pour une application interactive et critique en temps réel (un jeu), en utilisant des matériels hétérogènes et contraints (Minitel, RiotOS, LoRa). Spécifiquement, il s'agit de résoudre la complexité d'assurer une synchronisation parfaite de l'état du jeu sur quatre nœuds distincts malgré les contraintes du réseau LoRa (débit faible, latence variable, taille limitée des messages, pas de garantie de réception). Ce problème met en lumière les défis techniques liés à l'utilisation de technologies anciennes (Minitel) combinées à des technologies modernes (LoRa, RiotOS) pour créer une expérience utilisateur fluide et cohérente dans un contexte de jeu en réseau.
 
 Nous avons dû aborder plusieurs sous-problèmes pour atteindre cet objectif :
+- **Développement d'un moteur de jeux d'échec** : Implémenter la logique du jeu.
 - **Gestion des entrées utilisateur** : Capturer et interpréter les commandes du clavier du Minitel de manière efficace.
 - **Affichage graphique** : Adapter l'affichage des pièces d'échecs sur l'écran du Minitel, qui a des limitations graphiques.
 - **Protocole de communication** : Concevoir un protocole léger et robuste pour la transmission des états du jeu entre les Minitels via LoRa.
@@ -29,7 +30,7 @@ Nous avons atteint nos objectifs en développant une application qui permet à q
 
 ### 4.1 Matériel
 
-Nous avons utilisé tout au long de ce projet trois cartes wyres avec RIOT-OS, chacune avec un STLink permettant de la programmer. La plupart du temps nous n'avons utilisé qu'un minitel pendant les séances pour développer l'affichage ou pour mettre en place la récupération des input clavier celui-ci étant toujours associé à une carte afin de passer de 3,3 V à 5V et inversement. Dans les faits, le but est qu'une partie puisse se jouer avec de un à quatre minitels distincts chacun avec sa carte RIOT-OS et sa carte pour l'amplification.
+Nous avons utilisé tout au long de ce projet trois cartes wyres avec RIOT-OS, chacune avec un STLink permettant de la programmer. La plupart du temps nous n'avons utilisé qu'un minitel pendant les séances pour développer l'affichage ou pour mettre en place la récupération des input clavier celui-ci étant toujours associé à une carte afin d'adapter la tension entre la carte et le minitel (la carte ayant besoin de 3.3V et le minitel pouvant sortir des niveaux de tension entre 4 et 12V). Dans les faits, le but est qu'une partie puisse se jouer avec de un à quatre minitels distincts chacun avec sa carte RIOT-OS et sa carte pour l'amplification.
 
 ![Carte Wyres-Base](images/image_carte_wyres_stlink.jpg)
 
@@ -57,7 +58,7 @@ Nous avons programmé l'interface utilisateur sur le Minitel en utilisant les ca
 
 La saisie des coups se fait via le clavier du Minitel, en utilisant une notation simplifiée pour indiquer les positions des pièces sur le plateau. Ainsi, les joueurs peuvent entrer leurs mouvements de manière intuitive, malgré les limitations du clavier du Minitel. Nous avons également implémenté des messages d'erreur à l'écran pour guider les joueurs tout au long de la partie (quand un coup est invalide par exemple). 
 
-L'affichage des pièces et du plateau a été optimisé pour s'adapter aux contraintes colorimétriques du Minitel. En effet, le Minitel ne peut afficher que 8 couleurs différentes, nous avons donc choisi des représentations de pièces qui restent distinctes malgré cette limitation. Les cases du plateau sont également colorées de manière à maximiser le contraste entre les différentes pièces. De plus, les pièces sont affichées dans deux sens différents selon le joueur auquel elles appartiennent, afin de faciliter la reconnaissance des pièces pour chaque joueur. Ainsi, les pièces des joueurs 1 et 3 sont affichées verticalement, tandis que celles des joueurs 0 et 2 sont affichées horizontalement. Cela permet de n'avoir besoin que de 2 "couleurs" différentes pour représenter les pièces, tout en assurant une bonne lisibilité pour chaque joueur.
+L'affichage des pièces et du plateau a été optimisé pour s'adapter aux contraintes colorimétriques du Minitel. En effet, le Minitel ne peut afficher que 8 niveaux de gris, nous avons donc choisi des représentations de pièces qui restent distinctes malgré cette limitation. Les cases du plateau sont également colorées de manière à maximiser le contraste entre les différentes pièces. De plus, les pièces sont affichées dans deux sens différents selon le joueur auquel elles appartiennent, afin de faciliter la reconnaissance des pièces pour chaque joueur. Ainsi, les pièces des joueurs 1 et 3 sont affichées verticalement, tandis que celles des joueurs 0 et 2 sont affichées horizontalement. Cela permet de n'avoir besoin que de 2 "couleurs" différentes pour représenter les pièces, tout en assurant une bonne lisibilité pour chaque joueur.
 
 ![Interface sur le Minitel](images/image_plateau_minitel.jpg)
 
@@ -71,6 +72,7 @@ Le jeu a été testé principalement avec un seul Minitel connecté à une carte
 
 Le code source du jeu d'échec est codé en C++ et respècte les règles des échecs à quatre joueurs. Un coup spécial n'est pas cependant pas implémenté, il s'agit du roque. Chaque pièce est représentée par une classe dédiée, héritant d'une classe abstraite Piece. La logique du jeu est gérée par une classe Game, qui maintient l'état global du jeu et gère les tours de jeu. Le plateau est représenté par une classe Plateau, qui gère l'affichage sur le Minitel et la représentation interne du plateau. Les entrées utilisateur sont capturées via le clavier du Minitel, et les coups sont validés par la logique de jeu. En vérifiant la validité des coups, le système assure que les joueurs respectent les règles du jeu, et affiche des messages d'erreur en cas de coup invalide.
 
+Pour plus de détails concentrant la compilation et l'implémentation du jeux, vous pouvez consulter le README du projet.
 
 ## 5. Scénario d'utilisation
 
