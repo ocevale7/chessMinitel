@@ -76,7 +76,6 @@ void launch_game()
 
     while (nbActivePlayers > 1) {
         if (players[currentPlayer] != -1) {
-            printf("Player %d's turn. ", currentPlayer);
             if(isMyTurn(currentPlayer)) {
 #if RECORD
                 if(current_coup >= nb_coups) {
@@ -99,7 +98,6 @@ void launch_game()
                 send_lora_message(coup_a_envoyer);
 #endif
             } else {
-                printf("Waiting for LoRa message...\n");
                 int* coup_recu = (int*)malloc(MESSAGE_LENGTH * sizeof(int));
                 listen_for_message(coup_recu);
                 from.x = coup_recu[0];
