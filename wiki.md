@@ -1,5 +1,7 @@
 # Wiki Chessminitel
 
+Dépôt GitHub : https://github.com/ocevale7/chessMinitel
+
 ## 1. Composition de l'équipe
 - ARDISSON Noémie
 - BOISSET Valentin
