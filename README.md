@@ -73,7 +73,7 @@ Se placer dans le dossier **chessminitel** du projet puis lancer :
 
     * Une partie peut être enregistrée dans la matrice ```static const int partie[][4]``` du fichier main.cpp. Cette partie sera jouée automatiquement, sur un **unique** minitel (sans communication LoRa donc).
 
-    * Pour faire jouer une partie que vous voulez, vous dever modifier le contenu du tableau ```partie```. Une ligne de ce tableau doit être composé de 4 int au format suivant : {X_case_départ, Y_case_départ, X_case_arrivée, Y_case_arrivée}. La ligne 0 correspond au premier coup du joueur 0, la ligne 1 au premier coup du joueur 1, etc... 
+    * Pour faire jouer une partie que vous voulez, vous dever modifier le contenu du tableau ```partie```. Une ligne de ce tableau doit être composé de 4 int au format suivant : ```{X_case_départ, Y_case_départ, X_case_arrivée, Y_case_arrivée}```. La ligne 0 du tableau correspond au premier coup du joueur 0, la ligne 1 au premier coup du joueur 1, etc... 
 
     * Lors d'une partie enregistrée, si un coup n'est pas valide il est refusé par le moteur de jeu, et ce dernier va lire le coup suivant tout en concidérant que c'est toujours au joueur courant de jouer (et pas au suivant).
 
